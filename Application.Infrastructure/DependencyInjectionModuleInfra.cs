@@ -10,7 +10,7 @@ namespace Application.Infrastructure
         {
 
             services.AddRavenDB();
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

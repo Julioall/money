@@ -1,6 +1,5 @@
 ﻿using Application.Domain.Model;
 using Application.Service.Dtos;
-using Application.Service.Interface;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +7,12 @@ using System.Text;
 
 namespace Application.Service.Service
 {
-    public class TokenService : ITokenService
+    public class TokenService
     {
 
-        private readonly IUserService _userService;
+        private readonly UserService _userService;
 
-        public TokenService(IUserService userService)
+        public TokenService(UserService userService)
         {
             _userService = userService;
         }

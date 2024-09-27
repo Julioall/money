@@ -1,5 +1,5 @@
 ﻿using Application.Service.Dtos;
-using Application.Service.Interface;
+using Application.Service.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,11 +7,11 @@ namespace Application.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class UserAccountController : ControllerBase
     {
-        private readonly ITokenService _tokenService;
+        private readonly TokenService _tokenService;
 
-        public AuthenticationController(ITokenService tokenService)
+        public UserAccountController(TokenService tokenService)
         {
             _tokenService = tokenService;
         }

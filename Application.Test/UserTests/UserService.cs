@@ -1,19 +1,19 @@
 ﻿using Application.Domain.Model.User;
 using Raven.Client.Documents;
-using Application.Service.Interface;
 using Application.Test.Setup;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Service.Service;
 
 namespace Application.Test.UserTests
 {
     public class UserServiceTests : TestHelper
     {
-        private readonly IUserService _userService;
+        private readonly UserService _userService;
         private readonly IDocumentStore _documentStore;
 
         public UserServiceTests() : base()
         {
-            _userService = ServiceProvider.GetRequiredService<IUserService>();
+            _userService = ServiceProvider.GetRequiredService<UserService>();
             _documentStore = ServiceProvider.GetRequiredService<IDocumentStore>();
         }
 
@@ -110,7 +110,9 @@ namespace Application.Test.UserTests
                 Profile = new UserProfile
                 {
                     Name = "Test User"
-                }
+                },
+                Finance = new UserFinance()
+
             };
         }
 

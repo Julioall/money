@@ -8,8 +8,7 @@ namespace Application.Service
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddRavenDB();
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

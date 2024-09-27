@@ -21,8 +21,8 @@ namespace Application.Test.Setup
 
             var documentStore = embeddedServer.GetDocumentStore("EmbeddedDatabase");
             services.AddSingleton<IDocumentStore>(documentStore);
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<UserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

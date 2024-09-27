@@ -1,10 +1,8 @@
 ﻿using Application.Domain.Model.Enums;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
 
 namespace Application.Domain.Model.Finance
 {
-    public class FinancialTransaction
+    public class Transaction
     {
         public string? Id { get; set; }
         public required string UserId { get; set; }

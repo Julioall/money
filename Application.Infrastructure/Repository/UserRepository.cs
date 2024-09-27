@@ -4,11 +4,11 @@ using Raven.Client.Documents;
 
 namespace Application.Infrastructure.Repository
 {
-    public class UserRepositoryRavenDB : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IDocumentStore _documentStore;
 
-        public UserRepositoryRavenDB(IDocumentStore documentStore)
+        public UserRepository(IDocumentStore documentStore)
         {
             _documentStore = documentStore;
         }

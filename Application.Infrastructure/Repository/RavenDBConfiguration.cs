@@ -40,7 +40,7 @@ namespace Application.Infrastructure.Repository
             documentStore.Initialize();
 
             services.AddSingleton<IDocumentStore>(documentStore);
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         private static X509Certificate2 GetCertificateFromStore()

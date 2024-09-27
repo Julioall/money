@@ -1,10 +1,9 @@
 ﻿using Application.Domain.Interface;
 using Application.Domain.Model.User;
-using Application.Service.Interface;
 
 namespace Application.Service.Service
 {
-    public class UserService : IUserService
+    public class UserService
     {
         private readonly IUserRepository _userRepository;
 
