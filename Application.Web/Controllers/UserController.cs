@@ -1,5 +1,5 @@
-﻿using Application.Domain.Model.User;
-using Application.Service.Service;
+﻿using Application.Domain.Model;
+using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

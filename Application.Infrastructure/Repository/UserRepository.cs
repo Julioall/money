@@ -1,5 +1,5 @@
 ﻿using Application.Domain.Interface;
-using Application.Domain.Model.User;
+using Application.Domain.Model;
 using Raven.Client.Documents;
 
 namespace Application.Infrastructure.Repository

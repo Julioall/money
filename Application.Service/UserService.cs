@@ -1,7 +1,7 @@
 ﻿using Application.Domain.Interface;
-using Application.Domain.Model.User;
+using Application.Domain.Model;
 
-namespace Application.Service.Service
+namespace Application.Service
 {
     public class UserService
     {

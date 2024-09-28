@@ -15,7 +15,7 @@ public class Program
         // Service configuration
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-
+        builder.Services.AddHttpContextAccessor();
         // Disable Swagger (if necessary)
         // If you do not want to activate it anymore, completely remove these lines
         // builder.Services.AddSwaggerGen(options =>

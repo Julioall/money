@@ -1,5 +1,6 @@
 ﻿using Application.Domain.Interface;
 using Application.Infrastructure.Repository;
+using Application.Infrastructure.Repository.RavenDB;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Infrastructure

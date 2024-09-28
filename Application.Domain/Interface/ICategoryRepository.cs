@@ -1,17 +1,17 @@
-﻿using Application.Domain.Model.Finance;
+﻿using Application.Domain.Model;
 
 namespace Application.Domain.Interface
 {
     public interface ICategoryRepository
     {
-        Task AddAsync(Category category);
+        Task AddAsync(string userId, Category category);
 
-        Task DeleteAsync(string id);
+        Task DeleteAsync(string userId, string categoryId);
 
-        Task UpdateAsync(Category category);
+        Task UpdateAsync(string userId, Category category);
 
-        Task<IEnumerable<Category>> GetAllAsync();
+        Task<IEnumerable<Category>> GetAllAsync(string userId);
 
-        Task<Category> GetByIdAsync(string id);
+        Task<Category> GetByIdAsync(string userId, string categoryId);
     }
 }

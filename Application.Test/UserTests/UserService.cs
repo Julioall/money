@@ -1,8 +1,8 @@
-﻿using Application.Domain.Model.User;
-using Raven.Client.Documents;
+﻿using Raven.Client.Documents;
 using Application.Test.Setup;
 using Microsoft.Extensions.DependencyInjection;
-using Application.Service.Service;
+using Application.Domain.Model;
+using Application.Service;
 
 namespace Application.Test.UserTests
 {

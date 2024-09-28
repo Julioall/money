@@ -1,6 +1,6 @@
 ﻿using Application.Domain.Interface;
 using Application.Infrastructure.Repository;
-using Application.Service.Service;
+using Application.Service;
 
 namespace Application.Api
 {
@@ -11,7 +11,7 @@ namespace Application.Api
             services.AddScoped<UserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<UserService, UserService>();
-            services.AddScoped<TokenService, TokenService>();
+            services.AddScoped<AuthenticationService, AuthenticationService>();
         }
     }
 }

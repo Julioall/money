@@ -9,6 +9,7 @@ namespace Application.Service
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<AuthenticationService>();
         }
     }
 }

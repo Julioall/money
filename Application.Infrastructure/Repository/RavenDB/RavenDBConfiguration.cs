@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Application.Infrastructure.Repository
+namespace Application.Infrastructure.Repository.RavenDB
 {
     public static class RavenDBConfiguration
     {

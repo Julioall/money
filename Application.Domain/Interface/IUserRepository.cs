@@ -1,4 +1,4 @@
-﻿using Application.Domain.Model.User;
+﻿using Application.Domain.Model;
 
 namespace Application.Domain.Interface
 {
