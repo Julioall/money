@@ -48,7 +48,7 @@ namespace Application.Service
             return token;
         }
 
-        public string GetUserIdLoged()
+        public async Task<string> GetUserIdLoged()
         {
             var user = _httpContextAccessor.HttpContext?.User;
 
@@ -56,7 +56,9 @@ namespace Application.Service
                 throw new Exception("User is not authenticated");
 
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
+            var userInDataBase = await _userService.GetByIdAsync(userId);
+            if (userInDataBase == null)
+                throw new Exception("User loged not found in database");
             if (string.IsNullOrEmpty(userId))
                 throw new Exception("User ID claim not found");
 

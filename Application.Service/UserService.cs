@@ -1,50 +1,79 @@
 ﻿using Application.Domain.Interface;
 using Application.Domain.Model;
+using FluentValidation;
 
 namespace Application.Service
 {
     public class UserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IValidator<User> _userValidator;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IValidator<User> userValidator)
         {
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
+            _userValidator = userValidator ?? throw new ArgumentNullException(nameof(userValidator));
         }
 
-        public Task AddAsync(User user)
+        public async Task<User> AddAsync(User user)
         {
-            return _userRepository.AddAsync(user);
+            if (user == null)
+                throw new ArgumentNullException(nameof(user), "User cannot be null.");
+
+            var validationResult = _userValidator.Validate(user);
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
+
+            return await _userRepository.AddAsync(user);
         }
 
-        public Task DeleteAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            return _userRepository.DeleteAsync(id);
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id), "User ID cannot be null or empty.");
+
+            await _userRepository.DeleteAsync(id);
         }
 
-        public Task UpdateAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
-            return _userRepository.UpdateAsync(user);
+            if (user == null)
+                throw new ArgumentNullException(nameof(user), "User cannot be null.");
+
+            var validationResult = _userValidator.Validate(user);
+            if (!validationResult.IsValid)
+                throw new ValidationException(validationResult.Errors);
+
+            return await _userRepository.UpdateAsync(user);
         }
 
-        public Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _userRepository.GetAllAsync();
+            return await _userRepository.GetAllAsync();
         }
 
-        public Task<User> GetByIdAsync(string id)
+        public async Task<User> GetByIdAsync(string id)
         {
-            return _userRepository.GetByIdAsync(id);
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentNullException(nameof(id), "User ID cannot be null or empty.");
+
+            return await _userRepository.GetByIdAsync(id);
         }
 
-        public Task<User> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
-            return _userRepository.GetByEmailAsync(email);
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentNullException(nameof(email), "Email cannot be null or empty.");
+
+            return await _userRepository.GetByEmailAsync(email);
         }
 
-        public Task<User> GetByRoleAsync(string role)
+        public async Task<User> GetByRoleAsync(string role)
         {
-            return _userRepository.GetByRoleAsync(role);
+            if (string.IsNullOrEmpty(role))
+                throw new ArgumentNullException(nameof(role), "Role cannot be null or empty.");
+
+            return await _userRepository.GetByRoleAsync(role);
         }
     }
 }

@@ -12,32 +12,50 @@ namespace Application.Service
             _transactionRepository = transactionRepository;
         }
 
-        public async Task<Transaction> CreateTransactionAsync(Transaction transaction)
+        public async Task<Transaction>AddAsync(Transaction transaction)
         {
+            if (transaction == null)
+                throw new ArgumentNullException(nameof(transaction), "Transaction cannot be null.");
+
             await _transactionRepository.AddAsync(transaction);
             return transaction;
         }
 
-        public async Task<bool> DeleteTransactionAsync(string userId, string transactionId)
+        public async Task<bool> DeleteAsync(string userId, string transactionId)
         {
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            if (string.IsNullOrEmpty(transactionId))
+                throw new ArgumentNullException(nameof(transactionId), "Transaction ID cannot be null or empty.");
+
             await _transactionRepository.DeleteAsync(userId, transactionId);
             return true;
         }
 
-        public async Task<Transaction> UpdateTransactionAsync(Transaction transaction)
+        public async Task<Transaction> UpdateAsync(Transaction transaction)
         {
+            if (transaction == null)
+                throw new ArgumentNullException(nameof(transaction), "Transaction cannot be null.");
+
             await _transactionRepository.UpdateAsync(transaction);
             return transaction;
         }
 
-        public async Task<IEnumerable<Transaction>> GetAllTransactionsAsync(string userId)
+        public async Task<IEnumerable<Transaction>> GetAllAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
             return await _transactionRepository.GetAllAsync(userId);
         }
 
-        public async Task<Transaction> GetTransactionByIdAsync(string userId, string transactionId)
+        public async Task<Transaction> GetByIdAsync(string userId, string transactionId)
         {
-            return await _transactionRepository.GetByIdAsync(userId, transactionId);
+            if (string.IsNullOrEmpty(transactionId))
+                throw new ArgumentNullException(nameof(transactionId), "Transaction ID cannot be null or empty.");
+
+            return await _transactionRepository.GetByIdAsync(transactionId);
         }
     }
 }

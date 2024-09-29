@@ -4,14 +4,10 @@ namespace Application.Domain.Interface
 {
     public interface ITransactionRepository
     {
-        Task AddAsync(Transaction transaction);
-
-        Task DeleteAsync(string userId, string transactionId);
-
-        Task UpdateAsync(Transaction transaction);
-
+        Task<Transaction> AddAsync(Transaction transaction);
+        Task<bool> DeleteAsync(string userId, string transactionId);
+        Task<Transaction> UpdateAsync(Transaction transaction);
         Task<IEnumerable<Transaction>> GetAllAsync(string userId);
-
-        Task<Transaction> GetByIdAsync(string userId, string transactionId);
+        Task<Transaction> GetByIdAsync(string transactionId);
     }
 }

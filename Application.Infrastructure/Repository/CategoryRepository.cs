@@ -10,78 +10,92 @@ namespace Application.Infrastructure.Repository
 
         public CategoryRepository(IDocumentStore documentStore)
         {
-            _documentStore = documentStore;
+             _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        public async Task AddAsync(string userId, Category category)
+        public async Task<Category> AddAsync(string userId, Category category)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user?.Finance != null)
-                {
-                    user.Finance.Categories.Add(category);
-                    await session.StoreAsync(user);
-                    await session.SaveChangesAsync();
-                }
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                user.Finance.Categories.Add(category);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+
+                return category;
             }
         }
 
-        public async Task DeleteAsync(string userId, string categoryId)
+
+        public async Task<bool> DeleteAsync(string userId, string categoryId)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user?.Finance != null)
-                {
-                    var category = user.Finance.Categories.FirstOrDefault(c => c.Id == categoryId);
-                    if (category != null)
-                    {
-                        user.Finance.Categories.Remove(category);
-                        await session.StoreAsync(user);
-                        await session.SaveChangesAsync();
-                    }
-                }
+                if (user == null)
+                    return false;
+
+                var categoryToRemove = user.Finance.Categories.FirstOrDefault(a => a.Id == categoryId);
+                if (categoryToRemove == null)
+                    return false;
+
+                user.Finance.Categories.Remove(categoryToRemove);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+                return true;
             }
         }
+
 
         public async Task<IEnumerable<Category>> GetAllAsync(string userId)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
                 return user?.Finance?.Categories ?? new List<Category>();
             }
         }
+
 
         public async Task<Category> GetByIdAsync(string userId, string categoryId)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
                 return user?.Finance?.Categories.FirstOrDefault(c => c.Id == categoryId);
             }
         }
 
-        public async Task UpdateAsync(string userId, Category updatedCategory)
+        public async Task<Category> UpdateAsync(string userId, Category updatedCategory)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user?.Finance != null)
-                {
-                    var existingCategory = user.Finance.Categories.FirstOrDefault(c => c.Id == updatedCategory.Id);
-                    if (existingCategory != null)
-                    {
-                        existingCategory.Name = updatedCategory.Name;
-                        existingCategory.Description = updatedCategory.Description;
-                        existingCategory.Type = updatedCategory.Type;
-                        existingCategory.IconUrl = updatedCategory.IconUrl;
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
 
-                        await session.StoreAsync(user);
-                        await session.SaveChangesAsync();
-                    }
-                }
+                var existingCategory = user.Finance.Categories.FirstOrDefault(c => c.Id == updatedCategory.Id);
+                if (existingCategory == null)
+                    throw new KeyNotFoundException($"Category with ID '{updatedCategory.Id}' not found.");
+
+                existingCategory.Name = updatedCategory.Name;
+                existingCategory.Description = updatedCategory.Description;
+                existingCategory.Type = updatedCategory.Type;
+                existingCategory.IconUrl = updatedCategory.IconUrl;
+
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+
+                return existingCategory;
             }
         }
     }

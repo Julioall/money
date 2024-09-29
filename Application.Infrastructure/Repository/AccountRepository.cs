@@ -10,67 +10,76 @@ namespace Application.Infrastructure.Repository
 
         public AccountRepository(IDocumentStore documentStore)
         {
-            _documentStore = documentStore;
+             _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
         }
-        public async Task AddAsync(string userId, Account account)
+
+        public async Task<Account> AddAsync(string userId, Account account)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user != null)
-                {
-                    user.Finance.Accounts.Add(account);
-                    await session.StoreAsync(user);
-                    await session.SaveChangesAsync();
-                }
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                user.Finance.Accounts.Add(account);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+                return account;
             }
         }
 
-        public async Task UpdateAsync(string userId, Account account)
+        public async Task<Account> UpdateAsync(string userId, Account account)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user != null)
-                {
-                    var existingAccount = user.Finance.Accounts.FirstOrDefault(a => a.Id == account.Id);
-                    if (existingAccount != null)
-                    {
-                        existingAccount.AccountName = account.AccountName;
-                        existingAccount.Balance = account.Balance;
-                        existingAccount.HideBalance = account.HideBalance;
-                        existingAccount.IconUrl = account.IconUrl;
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
 
-                        await session.StoreAsync(user);
-                        await session.SaveChangesAsync();
-                    }
-                }
+                var existingAccount = user.Finance.Accounts.FirstOrDefault(a => a.Id == account.Id);
+                if (existingAccount == null)
+                    throw new InvalidOperationException("Account not found.");
+
+                existingAccount.AccountName = account.AccountName;
+                existingAccount.Balance = account.Balance;
+                existingAccount.HideBalance = account.HideBalance;
+                existingAccount.IconUrl = account.IconUrl;
+
+                await session.SaveChangesAsync();
+                return existingAccount;
             }
         }
 
-        public async Task DeleteAsync(string userId, string accountId)
+
+        public async Task<bool> DeleteAsync(string userId, string accountId)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
-                if (user != null)
-                {
-                    var accountToRemove = user.Finance.Accounts.FirstOrDefault(a => a.Id == accountId);
-                    if (accountToRemove != null)
-                    {
-                        user.Finance.Accounts.Remove(accountToRemove);
-                        await session.StoreAsync(user);
-                        await session.SaveChangesAsync();
-                    }
-                }
+                if (user == null)
+                    return false;
+
+                var accountToRemove = user.Finance.Accounts.FirstOrDefault(a => a.Id == accountId);
+                if (accountToRemove == null)
+                    return false; 
+
+                user.Finance.Accounts.Remove(accountToRemove);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+
+                return true;
             }
         }
+
 
         public async Task<IEnumerable<Account>> GetAllAsync(string userId)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
                 return user?.Finance.Accounts ?? new List<Account>();
             }
         }
@@ -80,6 +89,9 @@ namespace Application.Infrastructure.Repository
             using (var session = _documentStore.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
                 return user?.Finance?.Accounts.FirstOrDefault(c => c.Id == accountsId);
             }
         }

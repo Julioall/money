@@ -11,29 +11,57 @@ namespace Application.Service
         {
             _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));
         }
-        public Task AddAsync(string userId, Category category)
+
+        public async Task<Category> AddAsync(string userId, Category category)
         {
-            return _categoryRepository.AddAsync(userId, category);
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            if (category == null)
+                throw new ArgumentNullException(nameof(category), "Category cannot be null.");
+
+            return await _categoryRepository.AddAsync(userId, category);
         }
 
-        public Task DeleteAsync(string userId, string id)
+        public async Task<bool> DeleteAsync(string userId, string categoryId)
         {
-            return _categoryRepository.DeleteAsync(userId, id);
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            if (string.IsNullOrEmpty(categoryId))
+                throw new ArgumentNullException(nameof(categoryId), "Category ID cannot be null or empty.");
+
+            return await _categoryRepository.DeleteAsync(userId, categoryId);
         }
 
-        public Task UpdateAsync(string userId, Category category)
+        public async Task<Category> UpdateAsync(string userId, Category category)
         {
-            return _categoryRepository.UpdateAsync(userId, category);
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            if (category == null)
+                throw new ArgumentNullException(nameof(category), "Category cannot be null.");
+
+            return await _categoryRepository.UpdateAsync(userId, category);
         }
 
-        public Task<IEnumerable<Category>> GetAllAsync(string userId)
+        public async Task<IEnumerable<Category>> GetAllAsync(string userId)
         {
-            return _categoryRepository.GetAllAsync(userId);
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            return await _categoryRepository.GetAllAsync(userId);
         }
 
-        public Task<Category> GetByIdAsync(string userId, string id)
+        public async Task<Category> GetByIdAsync(string userId, string categoryId)
         {
-            return _categoryRepository.GetByIdAsync(userId, id);
+            if (string.IsNullOrEmpty(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
+            if (string.IsNullOrEmpty(categoryId))
+                throw new ArgumentNullException(nameof(categoryId), "Category ID cannot be null or empty.");
+
+            return await _categoryRepository.GetByIdAsync(userId, categoryId);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using Application.Domain.Interface;
+using Application.Domain.Model;
+using Application.Dominio.Validation;
 using Application.Infrastructure.Repository;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Service
@@ -10,6 +13,7 @@ namespace Application.Service
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<AuthenticationService>();
+            services.AddScoped<IValidator<User>, UserValidator>();
         }
     }
 }
