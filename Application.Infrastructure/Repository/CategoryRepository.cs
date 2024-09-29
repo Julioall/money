@@ -1,0 +1,102 @@
+﻿using Application.Domain.Interface;
+using Application.Domain.Model;
+using Raven.Client.Documents;
+
+namespace Application.Infrastructure.Repository
+{
+    public class CategoryRepository : ICategoryRepository
+    {
+        private readonly IDocumentStore _documentStore;
+
+        public CategoryRepository(IDocumentStore documentStore)
+        {
+             _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
+        }
+
+        public async Task<Category> AddAsync(string userId, Category category)
+        {
+            using (var session = _documentStore.OpenAsyncSession())
+            {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                user.Finance.Categories.Add(category);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+
+                return category;
+            }
+        }
+
+
+        public async Task<bool> DeleteAsync(string userId, string categoryId)
+        {
+            using (var session = _documentStore.OpenAsyncSession())
+            {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    return false;
+
+                var categoryToRemove = user.Finance.Categories.FirstOrDefault(a => a.Id == categoryId);
+                if (categoryToRemove == null)
+                    return false;
+
+                user.Finance.Categories.Remove(categoryToRemove);
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+                return true;
+            }
+        }
+
+
+        public async Task<IEnumerable<Category>> GetAllAsync(string userId)
+        {
+            using (var session = _documentStore.OpenAsyncSession())
+            {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                return user?.Finance?.Categories ?? new List<Category>();
+            }
+        }
+
+
+        public async Task<Category> GetByIdAsync(string userId, string categoryId)
+        {
+            using (var session = _documentStore.OpenAsyncSession())
+            {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                return user?.Finance?.Categories.FirstOrDefault(c => c.Id == categoryId);
+            }
+        }
+
+        public async Task<Category> UpdateAsync(string userId, Category updatedCategory)
+        {
+            using (var session = _documentStore.OpenAsyncSession())
+            {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                var existingCategory = user.Finance.Categories.FirstOrDefault(c => c.Id == updatedCategory.Id);
+                if (existingCategory == null)
+                    throw new KeyNotFoundException($"Category with ID '{updatedCategory.Id}' not found.");
+
+                existingCategory.Name = updatedCategory.Name;
+                existingCategory.Description = updatedCategory.Description;
+                existingCategory.Type = updatedCategory.Type;
+                existingCategory.IconUrl = updatedCategory.IconUrl;
+
+                await session.StoreAsync(user);
+                await session.SaveChangesAsync();
+
+                return existingCategory;
+            }
+        }
+    }
+}

@@ -4,6 +4,7 @@ using Application.Infrastructure;
 using Application.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 public class Program
@@ -12,41 +13,39 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Service configuration
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-
+        builder.Services.AddHttpContextAccessor();
         // Disable Swagger (if necessary)
         // If you do not want to activate it anymore, completely remove these lines
-        // builder.Services.AddSwaggerGen(options =>
-        // {
-        //     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Application API", Version = "v1" });
-        //     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        //     {
-        //         Name = "Authorization",
-        //         Type = SecuritySchemeType.ApiKey,
-        //         Scheme = "Bearer",
-        //         BearerFormat = "JWT",
-        //         In = ParameterLocation.Header,
-        //         Description = "Bearer Token Authentication"
-        //     });
-        //     options.AddSecurityRequirement(new OpenApiSecurityRequirement
-        //     {
-        //         {
-        //             new OpenApiSecurityScheme
-        //             {
-        //                 Reference = new OpenApiReference
-        //                 {
-        //                     Type = ReferenceType.SecurityScheme,
-        //                     Id = "Bearer"
-        //                 }
-        //             },
-        //             new string[] {}
-        //         }
-        //     });
-        // });
+        builder.Services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Application API", Version = "v1" });
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Bearer Token Authentication"
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
+            });
+        });
 
-        // Add JWT configuration
         builder.Services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,7 +76,6 @@ public class Program
             };
         });
 
-        // Register dependency injection modules
         DependencyInjectionModuleInfra.RegisterServices(builder.Services);
         DependencyInjectionModuleService.RegisterServices(builder.Services);
         DependencyInjectionModuleWeb.RegisterServices(builder.Services);
@@ -95,11 +93,11 @@ public class Program
         });
 
         // Keep Swagger disabled in all environments
-        // if (app.Environment.IsDevelopment())
-        // {
-        //     app.UseSwagger();
-        //     app.UseSwaggerUI();
-        // }
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         app.UseHttpsRedirection();
 

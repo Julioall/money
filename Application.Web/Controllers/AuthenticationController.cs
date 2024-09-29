@@ -1,5 +1,5 @@
-﻿using Application.Service.Dtos;
-using Application.Service.Interface;
+﻿using Application.Service;
+using Application.Service.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +9,11 @@ namespace Application.Api.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ITokenService _tokenService;
+        private readonly AuthenticationService _authenticationService;
 
-        public AuthenticationController(ITokenService tokenService)
+        public AuthenticationController(AuthenticationService authenticationService)
         {
-            _tokenService = tokenService;
+            _authenticationService = authenticationService;
         }
 
         [AllowAnonymous]
@@ -25,7 +25,7 @@ namespace Application.Api.Controllers
                 return BadRequest("Login information is missing.");
             }
 
-            var token = await _tokenService.GenerateToken(loginDto);
+            var token = await _authenticationService.GenerateToken(loginDto);
             if (string.IsNullOrEmpty(token))
             {
                 return Unauthorized("Invalid login credentials.");

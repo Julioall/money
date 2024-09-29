@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../core/model/User';
+import { User } from '../../core/model/entities/user';
 import { NotificationService } from '../../core/service/notification/notification.service';
 import { AuthService } from '../../core/service/auth/auth.service';
 import {
@@ -8,6 +8,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms'; // Importações necessárias
+import { UserFinance } from '../../core/model/entities/userFinance';
 
 @Component({
   selector: 'app-auth',
@@ -93,27 +94,24 @@ export class AuthComponent implements OnInit {
     this.signupSubmitted = true;
     if (this.signupForm.valid) {
       const { fullName, email, password } = this.signupForm.value;
-
+  
       const newUser: User = {
-        Account: {
-          Email: email,
-          Password: password,
-          Role: 'user',
-          DateJoined: new Date(),
+        account: {
+          email: email,
+          password: password,
+          role: 'User',
+          dateJoined: new Date(),
         },
-        Profile: {
-          Name: fullName,
-          DateOfBirth: undefined,
-          ProfilePictureUrl: '',
-          AnimeList: [],
+        profile: {
+          name: fullName,
+          dateOfBirth: undefined,
+          profilePictureUrl: '',
         },
+        finance: new UserFinance()
       };
-
+  
       this.authService.signup(newUser).subscribe({
         next: () => {
-          this.successMessage = 'Registration successful!';
-          this.errorMessage = '';
-          
           this.notificationService.showSuccess('Registration successful!');
           
           setTimeout(() => {
@@ -124,9 +122,9 @@ export class AuthComponent implements OnInit {
         error: () => {
           this.notificationService.showError('Error during registration. Please try again.');
         },
-      });      
+      });
     } else {
       this.notificationService.showError('Please fill out the form correctly.');
     }
-  }
+  }  
 }

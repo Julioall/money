@@ -1,38 +1,39 @@
 ﻿using Application.Domain.Interface;
-using Application.Domain.Model.User;
+using Application.Domain.Model;
 using Raven.Client.Documents;
 
 namespace Application.Infrastructure.Repository
 {
-    public class UserRepositoryRavenDB : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly IDocumentStore _documentStore;
 
-        public UserRepositoryRavenDB(IDocumentStore documentStore)
+        public UserRepository(IDocumentStore documentStore)
         {
-            _documentStore = documentStore;
+            _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
         }
 
-        public async Task AddAsync(User user)
+        public async Task<User> AddAsync(User user)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
                 await session.StoreAsync(user);
-                var userDataBase = user;
                 await session.SaveChangesAsync();
+                return user;
             }
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
-                var user = await session.LoadAsync<User>(id.ToString());
-                if (user != null)
-                {
-                    session.Delete(user);
-                    await session.SaveChangesAsync();
-                }
+                var user = await session.LoadAsync<User>(id);
+                if (user == null)
+                    return false;
+
+                session.Delete(user);
+                await session.SaveChangesAsync();
+                return true;
             }
         }
 
@@ -48,7 +49,7 @@ namespace Application.Infrastructure.Repository
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
-                return await session.LoadAsync<User>(id.ToString());
+                return await session.LoadAsync<User>(id);
             }
         }
 
@@ -65,18 +66,25 @@ namespace Application.Infrastructure.Repository
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
-                var users = await session.Query<User>().ToListAsync();
-
-                return users.FirstOrDefault(u => u.Account.Email == email);
+                return await session.Query<User>()
+                                    .FirstOrDefaultAsync(u => u.Account.Email == email);
             }
         }
 
-        public async Task UpdateAsync(User user)
+        public async Task<User> UpdateAsync(User user)
         {
             using (var session = _documentStore.OpenAsyncSession())
             {
-                await session.StoreAsync(user);
+                var existingUser = await session.LoadAsync<User>(user.Id);
+                if (existingUser == null)
+                    throw new InvalidOperationException("User not found.");
+
+                existingUser.Account = user.Account;
+                existingUser.Profile = user.Profile;
+                existingUser.Finance = user.Finance;
+
                 await session.SaveChangesAsync();
+                return existingUser;
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Application.Domain.Interface;
 using Application.Infrastructure.Repository;
-using Application.Service.Interface;
-using Application.Service.Service;
+using Application.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
 using Raven.Embedded;
@@ -21,8 +20,8 @@ namespace Application.Test.Setup
 
             var documentStore = embeddedServer.GetDocumentStore("EmbeddedDatabase");
             services.AddSingleton<IDocumentStore>(documentStore);
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<UserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.Domain.Interface;
 using Application.Infrastructure.Repository;
+using Application.Infrastructure.Repository.RavenDB;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Infrastructure
@@ -10,7 +11,7 @@ namespace Application.Infrastructure
         {
 
             services.AddRavenDB();
-            services.AddScoped<IUserRepository, UserRepositoryRavenDB>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
