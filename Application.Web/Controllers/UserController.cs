@@ -36,6 +36,9 @@ namespace Application.Api.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+                return BadRequest("ID cannot be null or empty.");
+
             var user = await _userService.GetByIdAsync(id);
             if (user == null)
                 return NotFound($"User with ID {id} not found.");
@@ -56,6 +59,9 @@ namespace Application.Api.Controllers
         [HttpGet("get/{id}")]
         public async Task<ActionResult<User>> GetById(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+                return BadRequest("ID cannot be null or empty.");
+
             var user = await _userService.GetByIdAsync(id);
             if (user == null)
                 return NotFound($"User with ID {id} not found.");
@@ -64,27 +70,26 @@ namespace Application.Api.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpGet("role/{role}")]
+        [HttpGet("get-by-role/{role}")]
         public async Task<ActionResult<IEnumerable<User>>> GetByRole(string role)
         {
-            if (string.IsNullOrEmpty(email))
-                return BadRequest("Email cannot be null or empty.");
+            if (string.IsNullOrWhiteSpace(role))
+                return BadRequest("Role cannot be null or empty.");
+
             var users = await _userService.GetByRoleAsync(role);
             return Ok(users);
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpGet("username/{email}")]
+        [HttpGet("get-by-email/{email}")]
         public async Task<ActionResult<User>> GetByEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrWhiteSpace(email))
                 return BadRequest("Email cannot be null or empty.");
 
             var user = await _userService.GetByEmailAsync(email);
             if (user == null)
-            {
                 return NotFound($"User with email {email} not found.");
-            }
 
             return Ok(user);
         }
