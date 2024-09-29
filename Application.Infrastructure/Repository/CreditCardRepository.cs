@@ -45,7 +45,7 @@ namespace Application.Infrastructure.Repository
                 if (existingCreditCard == null)
                     throw new InvalidOperationException("Credit card not found.");
 
-                existingCreditCard.Name = creditCard.Name;
+                existingCreditCard.CardName = creditCard.CardName;
                 existingCreditCard.Limit = creditCard.Limit;
                 existingCreditCard.ClosingDate = creditCard.ClosingDate;
                 existingCreditCard.DueDate = creditCard.DueDate;

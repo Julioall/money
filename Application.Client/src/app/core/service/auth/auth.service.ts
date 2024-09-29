@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { User } from '../../model/User';
+import { User } from '../../model/entities/user';
 import { jwtDecode } from 'jwt-decode';  // Ajuste na importação
 import { environment } from '../../../environment/environment';
 
@@ -47,7 +47,7 @@ export class AuthService {
   signup(user: User): Observable<any> {
     return this.http.post<any>(this.apiUrl, user).pipe(
       catchError(error => {
-        return throwError(() => new Error('Sign up failed'));
+        return throwError(() => new Error('Sign up failed', error));
       })
     );
   }
