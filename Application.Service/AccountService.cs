@@ -14,7 +14,7 @@ namespace Application.Service
 
         public async Task<Account> AddAsync(string userId, Account account)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (account == null)
@@ -26,10 +26,10 @@ namespace Application.Service
 
         public async Task<bool> DeleteAsync(string userId, string accountId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(accountId))
+            if (string.IsNullOrWhiteSpace(accountId))
                 throw new ArgumentNullException(nameof(accountId), "Account ID cannot be null or empty.");
 
             return await _accountRepository.DeleteAsync(userId, accountId);
@@ -37,7 +37,7 @@ namespace Application.Service
 
         public async Task<Account> UpdateAsync(string userId, Account account)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (account == null)
@@ -49,7 +49,7 @@ namespace Application.Service
 
         public async Task<IEnumerable<Account>> GetAllAsync(string userId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             return await _accountRepository.GetAllAsync(userId);
@@ -57,10 +57,10 @@ namespace Application.Service
 
         public async Task<Account> GetByIdAsync(string userId, string accountId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(accountId))
+            if (string.IsNullOrWhiteSpace(accountId))
                 throw new ArgumentNullException(nameof(accountId), "Account ID cannot be null or empty.");
 
             return await _accountRepository.GetByIdAsync(userId, accountId);

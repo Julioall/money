@@ -14,7 +14,7 @@ namespace Application.Service
 
         public async Task<CreditCard> AddAsync(string userId, CreditCard creditCard)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (creditCard == null)
@@ -27,10 +27,10 @@ namespace Application.Service
 
         public async Task<bool> DeleteAsync(string userId, string creditCardId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(creditCardId))
+            if (string.IsNullOrWhiteSpace(creditCardId))
                 throw new ArgumentNullException(nameof(creditCardId), "Credit Card ID cannot be null or empty.");
 
             await _creditCardRepository.DeleteAsync(userId, creditCardId);
@@ -39,7 +39,7 @@ namespace Application.Service
 
         public async Task<CreditCard> UpdateAsync(string userId, CreditCard creditCard)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (creditCard == null)
@@ -51,7 +51,7 @@ namespace Application.Service
 
         public async Task<IEnumerable<CreditCard>> GetAllAsync(string userId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             return await _creditCardRepository.GetAllAsync(userId);
@@ -59,10 +59,10 @@ namespace Application.Service
 
         public async Task<CreditCard> GetByIdAsync(string userId, string creditCardId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(creditCardId))
+            if (string.IsNullOrWhiteSpace(creditCardId))
                 throw new ArgumentNullException(nameof(creditCardId), "Credit Card ID cannot be null or empty.");
 
             return await _creditCardRepository.GetByIdAsync(userId, creditCardId);

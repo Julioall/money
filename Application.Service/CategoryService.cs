@@ -14,7 +14,7 @@ namespace Application.Service
 
         public async Task<Category> AddAsync(string userId, Category category)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (category == null)
@@ -25,10 +25,10 @@ namespace Application.Service
 
         public async Task<bool> DeleteAsync(string userId, string categoryId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(categoryId))
+            if (string.IsNullOrWhiteSpace(categoryId))
                 throw new ArgumentNullException(nameof(categoryId), "Category ID cannot be null or empty.");
 
             return await _categoryRepository.DeleteAsync(userId, categoryId);
@@ -36,7 +36,7 @@ namespace Application.Service
 
         public async Task<Category> UpdateAsync(string userId, Category category)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             if (category == null)
@@ -47,7 +47,7 @@ namespace Application.Service
 
         public async Task<IEnumerable<Category>> GetAllAsync(string userId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
             return await _categoryRepository.GetAllAsync(userId);
@@ -55,10 +55,10 @@ namespace Application.Service
 
         public async Task<Category> GetByIdAsync(string userId, string categoryId)
         {
-            if (string.IsNullOrEmpty(userId))
+            if (string.IsNullOrWhiteSpace(userId))
                 throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
 
-            if (string.IsNullOrEmpty(categoryId))
+            if (string.IsNullOrWhiteSpace(categoryId))
                 throw new ArgumentNullException(nameof(categoryId), "Category ID cannot be null or empty.");
 
             return await _categoryRepository.GetByIdAsync(userId, categoryId);

@@ -10,7 +10,6 @@ namespace Application.Service
 {
     public class AuthenticationService
     {
-
         private readonly UserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -24,28 +23,31 @@ namespace Application.Service
         {
             var user = await _userService.GetByEmailAsync(loginDto.Email);
 
-            if (user is null || loginDto is null || user?.Account?.Email != loginDto?.Email || user?.Account?.Password != loginDto?.Password)
-            {
+            if (user == null || loginDto == null || user.Account.Email != loginDto.Email || user.Account.Password != loginDto.Password)
                 return string.Empty;
-            }
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AplicationConstants.JWT_SIGNING_KEY ?? string.Empty));
-            var signinCredentials = new SigningCredentials(secretKey, algorithm: SecurityAlgorithms.HmacSha256);
+            if (string.IsNullOrEmpty(AplicationConstants.JWT_SIGNING_KEY))
+                throw new Exception("JWT signing key is not configured.");
+
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AplicationConstants.JWT_SIGNING_KEY));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.Account.Email),
+                new Claim(ClaimTypes.Role, user.Account.Role)
+            };
+
             var tokenOptions = new JwtSecurityToken(
                 issuer: AplicationConstants.JWT_ISSUER,
                 audience: AplicationConstants.JWT_AUDIENCE,
-                claims:
-                [
-                    new Claim(type: ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(type: ClaimTypes.Name, user.Account.Email),
-                    new Claim(type: ClaimTypes.Role, user.Account.Role)
-                ],
+                claims: claims,
                 expires: DateTime.Now.AddHours(2),
                 signingCredentials: signinCredentials
-                );
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            );
 
-            return token;
+            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
         public async Task<string> GetUserIdLoged()
@@ -53,14 +55,15 @@ namespace Application.Service
             var user = _httpContextAccessor.HttpContext?.User;
 
             if (user == null || !user.Identity.IsAuthenticated)
-                throw new Exception("User is not authenticated");
+                return null;
 
             var userId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var userInDataBase = await _userService.GetByIdAsync(userId);
-            if (userInDataBase == null)
-                throw new Exception("User loged not found in database");
-            if (string.IsNullOrEmpty(userId))
-                throw new Exception("User ID claim not found");
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new Exception("User ID claim not found.");
+
+            var userInDatabase = await _userService.GetByIdAsync(userId);
+            if (userInDatabase == null)
+                throw new Exception("User logged not found in database.");
 
             return userId;
         }
