@@ -1,5 +1,4 @@
 ﻿using Application.Service;
-using Application.Service.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +25,7 @@ namespace Application.Api.Controllers
             }
 
             var token = await _authenticationService.GenerateToken(loginDto);
+            await _authenticationService.RegisterLastLoginAsync(loginDto);
             if (string.IsNullOrEmpty(token))
             {
                 return Unauthorized("Invalid login credentials.");

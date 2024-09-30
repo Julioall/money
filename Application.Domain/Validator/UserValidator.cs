@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Application.Domain.Model;
 
-namespace Application.Dominio.Validation
+namespace Application.Domain.Validator
 {
     public class UserValidator : AbstractValidator<User>
     {
