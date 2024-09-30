@@ -66,14 +66,14 @@ export class AuthComponent implements OnInit {
     }, 350);
   }
 
-  onLogin(): void {
+  async onLogin(): Promise<void> {
     this.loginSubmitted = true;
     if (this.loginForm.invalid) {
       this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
     const { email, password } = this.loginForm?.value;
-    this.authService.login(email, password).subscribe({
+    await (await this.authService.login(email, password)).subscribe({
       next: (response: { token: any }) => {
         if (response && response.token) {
           this.authService.saveToken(response.token);

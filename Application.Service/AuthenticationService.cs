@@ -1,10 +1,11 @@
-﻿using Application.Domain.Model;
-using Application.Service.Dtos;
+﻿using Application.Domain.Dtos;
+using Application.Domain.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace Application.Service
 {
@@ -22,10 +23,10 @@ namespace Application.Service
         public async Task<string> GenerateToken(LoginDto loginDto)
         {
             var user = await _userService.GetByEmailAsync(loginDto.Email);
-
+            
             if (user == null || loginDto == null || user.Account.Email != loginDto.Email || user.Account.Password != loginDto.Password)
                 return string.Empty;
-
+            
             if (string.IsNullOrEmpty(AplicationConstants.JWT_SIGNING_KEY))
                 throw new Exception("JWT signing key is not configured.");
 
@@ -67,5 +68,38 @@ namespace Application.Service
 
             return userId;
         }
+
+        public async Task RegisterLastLoginAsync(LoginDto loginDto)
+        {
+            if (string.IsNullOrWhiteSpace(loginDto.Email))
+                throw new ArgumentNullException(nameof(loginDto.Email), "User E-mail cannot be null or empty.");
+
+            var user = await _userService.GetByEmailAsync(loginDto.Email);
+            if (user == null)
+                throw new KeyNotFoundException($"User with E-mail {loginDto.Email} not found.");
+
+            user.Account.LastLogin = DateTime.UtcNow;
+            user.Account.LastLoginIp = loginDto.IpAddress;
+            user.Account.LastLoginOperatingSystem = loginDto.OperatingSystem;
+            user.Account.LastLoginBrowser = loginDto.Browser;
+            user.Account.LastLoginLocation = await  GetLocationFromIpAsync(loginDto.IpAddress);
+            await _userService.UpdateAsync(user);
+        }
+        public async Task<string> GetLocationFromIpAsync(string ip)
+        {
+            var client = new HttpClient();
+
+            var response = await client.GetStringAsync($"http://ip-api.com/json/{ip}");
+
+            var locationData = JsonSerializer.Deserialize<IpLocationDto>(response);
+
+            if (locationData != null && locationData.Status == "success")
+            {
+                return $"{locationData.City}, {locationData.RegionName}, {locationData.Country}";
+            }
+
+            return "Location data not available";
+        }
+
     }
 }

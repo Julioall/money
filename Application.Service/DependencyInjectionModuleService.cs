@@ -1,6 +1,6 @@
 ﻿using Application.Domain.Interface;
 using Application.Domain.Model;
-using Application.Dominio.Validation;
+using Application.Domain.Validator;
 using Application.Infrastructure.Repository;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
