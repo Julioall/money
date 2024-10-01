@@ -3,25 +3,25 @@
     <div class="form-container sign-up-container">
       <form *ngIf="signupFormVisible" [formGroup]="signupForm">
         <h1>Create Account</h1>
-        <div *ngIf="false" class="social-container">
-          <a type="button" class="social social-button" id="google-signup-btn"><i class="fa fa-google"></i></a>
-          <a class="social"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-          <a class="social"><i class="fa fa-twitter"></i></a>
+        <div class="d-inline-flex justify-content-center align-items-center my-2">
+          <a class="me-3 fs-2" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
+          <a class="me-3 fs-2"><i class="fa-brands fa-square-facebook"></i></a>
+          <a class="fs-2"><i class="fa-brands fa-square-twitter"></i></a>
         </div>
-        <span *ngIf="false">or use your email to register</span>
+        <span>or use your email to register</span>
         <input type="text" placeholder="Full Name" formControlName="fullName" />
-        <div *ngIf="signupForm.get('fullName')?.invalid && (signupForm.get('fullName')?.touched || signupSubmitted)">
+        <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
           <small class="text-danger">Name is required.</small>
         </div>
 
         <input type="email" placeholder="Email" formControlName="email" />
-        <div *ngIf="(signupForm.get('email')?.invalid && (signupForm.get('email')?.touched || signupSubmitted))">
+        <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
           <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</small>
           <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format.</small>
         </div>
 
         <input type="password" placeholder="Password" formControlName="password" />
-        <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.touched || signupSubmitted)">
+        <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
           <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">Password is required.</small>
           <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at least 6 characters.</small>
         </div>
@@ -33,28 +33,30 @@
       <form *ngIf="loginFormVisible" [formGroup]="loginForm">
         <h1>Login</h1>
 
-        <div *ngIf="false" class="social-container">
-          <a type="button" class="social social-button" id="google-login-btn"><i class="fa fa-google"></i></a>
-          <a class="social"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-          <a class="social"><i class="fa fa-twitter"></i></a>
+        <div class="d-inline-flex justify-content-center align-items-center my-2" style="width: 50px; font-size: 2rem;">
+          <a class="me-3 fs-2" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
+          <a class="me-3 fs-2"><i class="fa-brands fa-square-facebook"></i></a>
+          <a class="fs-2"><i class="fa-brands fa-square-twitter"></i></a>
         </div>
 
-        <span *ngIf="false">or use your account</span>
+        <span>or use your account</span>
 
         <input type="email" placeholder="Email" formControlName="email" />
-        <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.touched || loginSubmitted)">
+        <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
           <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
           <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
         </div>
 
         <input type="password" placeholder="Password" formControlName="password" />
-        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.touched || loginSubmitted)">
+        <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
           <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
           <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 6 characters.</small>
         </div>
 
-        <button class="my-2" type="submit" (click)="onLogin()">Login</button>
+        <button class="my-2" type="submit" (click)="onLogin()">Sing in</button>
+        <span class="mobile">Don't have an account? <a>Sign up</a></span>
         <a>Forgot your password?</a>
+
       </form>
     </div>
     <div class="overlay-container">
