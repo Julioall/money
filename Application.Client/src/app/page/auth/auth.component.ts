@@ -3,12 +3,9 @@ import { Router } from '@angular/router';
 import { User } from '../../core/model/entities/user';
 import { NotificationService } from '../../core/service/notification/notification.service';
 import { AuthService } from '../../core/service/auth/auth.service';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms'; // Importações necessárias
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'; 
 import { UserFinance } from '../../core/model/entities/userFinance';
+import { firstValueFrom } from 'rxjs';  // Importa firstValueFrom
 
 @Component({
   selector: 'app-auth',
@@ -25,6 +22,7 @@ export class AuthComponent implements OnInit {
   errorMessage: string = '';
   loginFormVisible: boolean = true;
   signupFormVisible: boolean = false;
+  isLoading: boolean = false;  // Novo estado para mostrar carregamento
 
   constructor(
     private fb: FormBuilder,
@@ -72,59 +70,55 @@ export class AuthComponent implements OnInit {
       this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
-    const { email, password } = this.loginForm?.value;
-    await (await this.authService.login(email, password)).subscribe({
-      next: (response: { token: any }) => {
-        if (response && response.token) {
-          this.authService.saveToken(response.token);
-          this.notificationService.showSuccess('Login successfully!');
-          this.loginForm?.reset();
-          this.router.navigate(['/home']);
-        }
-      },
-      error: () => {
-        this.notificationService.showError(
-          'Login error. Please check your credentials.'
-        );
-      },
-    });
+    
+    const { email, password } = this.loginForm.value;
+    try {
+      const response = await firstValueFrom(await this.authService.login(email, password));
+      if (response?.token) {
+        this.authService.saveToken(response.token);
+        this.notificationService.showSuccess('Login successfully!');
+        this.loginForm.reset();
+        this.router.navigate(['/home']);
+      }
+    } catch (error) {
+      this.notificationService.showError('Login error. Please check your credentials.');
+    }
   }
 
   onSignup(): void {
     this.signupSubmitted = true;
-    if (this.signupForm.valid) {
-      const { fullName, email, password } = this.signupForm.value;
-  
-      const newUser: User = {
-        account: {
-          email: email,
-          password: password,
-          role: 'User',
-          dateJoined: new Date(),
-        },
-        profile: {
-          name: fullName,
-          dateOfBirth: undefined,
-          profilePictureUrl: '',
-        },
-        finance: new UserFinance()
-      };
-  
-      this.authService.signup(newUser).subscribe({
-        next: () => {
-          this.notificationService.showSuccess('Registration successful!');
-          
-          setTimeout(() => {
-            this.showSignIn();
-            this.loginForm?.patchValue({ email, password });
-          }, 2000);
-        },
-        error: () => {
-          this.notificationService.showError('Error during registration. Please try again.');
-        },
-      });
-    } else {
+    if (this.signupForm.invalid) {
       this.notificationService.showError('Please fill out the form correctly.');
+      return;
     }
-  }  
+
+    const { fullName, email, password } = this.signupForm.value;
+    const newUser: User = {
+      account: {
+        email: email,
+        password: password,
+        role: 'User',
+        dateJoined: new Date(),
+      },
+      profile: {
+        name: fullName,
+        dateOfBirth: undefined,
+        profilePictureUrl: '',
+      },
+      finance: new UserFinance(),
+    };
+
+    this.authService.signup(newUser).subscribe({
+      next: () => {
+        this.notificationService.showSuccess('Registration successful!');
+        setTimeout(() => {
+          this.showSignIn();
+          this.loginForm.patchValue({ email, password });
+        }, 2000);
+      },
+      error: () => {
+        this.notificationService.showError('Error during registration. Please try again.');
+      }
+    });
+  }
 }

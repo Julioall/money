@@ -1,21 +1,88 @@
-<header class="header">
-    <div class="navbar-container">
-        <a id="main-logo" aria-label="Logo"><i class="fa-solid fa-wallet"></i>Money</a>
-        <nav class="navbar">
-            <ul class="navbar-menu">
-                <li><a aria-label="Go to home">Home</a></li>
-                <li><a aria-label="Go to launch">Launch</a></li>
-                <li><a aria-label="Go to reports">Reports</a></li>
-                <li><a aria-label="Go to spending limit">Spending Limit</a></li>
-            </ul>
-        </nav>
-        <nav>
-            <ul class="navbar-menu">
-                <li><a aria-label="Go to settings"><i class="fa-solid fa-gear"></i></a></li>
-                <li><a aria-label="Go to notifications"><i class="fa-solid fa-bell"></i></a></li>
-                <li><a aria-label="Go to profile"><i class="fa-solid fa-user"></i></a></li>
-            </ul>
-        </nav>
+<header class="header d-flex justify-content-center align-items-center">
+  <div
+    class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom"
+  >
+    <div id="main-logo" class="col-2">
+        <a class="navbar-brand d-flex justify-content-start align-items-center fs-6 fw-bold"><i class="fa-solid fa-wallet me-2"></i>Money</a>
     </div>
+
+    <div class="col">
+        <ul class="nav navbar-menu col-12 col-md-auto mb-2 justify-content-center mb-md-0 fs-6 fw-bold">
+            <li class="nav-link px-2"><a aria-label="Go to home">Home</a></li>
+            <li class="nav-link px-2"><a aria-label="Go to launch">Launch</a></li>
+            <li class="nav-link px-2"><a aria-label="Go to reports">Reports</a></li>
+            <li class="nav-link px-2"><a aria-label="Go to spending limit">Spending Limit</a>
+      </li>
+    </ul>
+    </div>
+
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <div class="dropdown text-end  me-3">
+        <a
+          type="button"
+          class="me-2d-block link-dark text-decoration-none dropdown-toggle"
+          id="dropdownSettings"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-gear"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end text-small"
+          aria-labelledby="dropdownSettings"
+        >
+        <li><a class="dropdown-item">Categories</a></li>
+        <li><a class="dropdown-item">Accounts</a></li>
+        <li><a class="dropdown-item">Credit Cards</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-muted fs-6">Preferences</a></li>
+        <li><a class="dropdown-item text-muted fs-6">My Plan</a></li>
+        <li><a class="dropdown-item text-muted fs-6 ">Tags</a></li>
+        <li><a class="dropdown-item text-muted fs-6">Alerts</a></li>
+        <li><a class="dropdown-item text-muted fs-6">Activities</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-muted fs-6">more options</a></li>
+        </ul>
+      </div>
+      <div class="dropdown text-end  me-3">
+        <a
+          type="button"
+          class="me-2d-block link-dark text-decoration-none dropdown-toggle"
+          id="dropdownNotification"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-bell"></i>
+        </a>
+        <ul *ngIf="false"
+          class="dropdown-menu dropdown-menu-end text-small"
+          aria-labelledby="dropdownNotification"
+        >
+          <li><a class="dropdown-item">Profile</a></li>
+          <li><a class="dropdown-item">Settings</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item">Sign out</a></li>
+        </ul>
+      </div>
+      <div class="dropdown text-end">
+        <a
+          class="d-block link-dark text-decoration-none dropdown-toggle"
+          id="dropdownProfile"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fa-solid fa-user"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end text-small"
+          aria-labelledby="dropdownProfile"
+        >
+          <li><a class="dropdown-item text-center fs-1"><i id="profile-icon" class="fas fa-user-circle"></i></a></li>
+          <li><a class="dropdown-item text-center">My Account</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item text-center" (click)="onClickLogout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </header>
-  
