@@ -54,7 +54,7 @@ export class AuthComponent implements OnInit {
     }, 350);
   }
 
-  showSignIn(): void {
+  showLogin(): void {
     this.rightPanelActive = '';
     setTimeout(() => {
       this.loginFormVisible = true;
@@ -112,7 +112,7 @@ export class AuthComponent implements OnInit {
       next: () => {
         this.notificationService.showSuccess('Registration successful!');
         setTimeout(() => {
-          this.showSignIn();
+          this.showLogin();
           this.loginForm.patchValue({ email, password });
         }, 2000);
       },
