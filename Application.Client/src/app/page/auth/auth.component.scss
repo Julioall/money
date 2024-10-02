@@ -11,6 +11,7 @@ form {
   background-color: #16c64f;
   padding: 50px;
   border-radius: 10px;
+  min-width: 450px;
 }
 
 p {
@@ -19,8 +20,7 @@ p {
 }
 
 h1 {
-  font-size: 2.5rem;
-  padding-bottom: 2.5rem;
+  font-size: 2.75rem;
 }
 
 .link {
@@ -91,5 +91,6 @@ input {
 
   .container-fluid form {
     height: 100vh !important;
+    min-width: 400px;
   }
 }

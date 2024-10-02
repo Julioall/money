@@ -1,70 +1,71 @@
 <div class="container-fluid d-flex justify-content-center align-items-center vh-100 p-0">
-  <div class="col col-lg-3 col-md-6 col-sm-9">
+  <div class="col col-md-auto">
+    <form class="d-flex justify-content-center align-items-center flex-column" *ngIf="loginFormVisible"
+      [formGroup]="loginForm">
+      <h1 class="fw-bold">Login</h1>
+
+      <div class="d-inline-flex justify-content-center align-items-center text-center my-2"
+        style="width: 50px; font-size: 2rem;">
+        <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
+        <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
+        <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
+      </div>
+
+      <span>or use your account</span>
+
+      <input type="email" placeholder="Email" formControlName="email" />
+      <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
+        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
+        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
+      </div>
+
+      <input type="password" placeholder="Password" formControlName="password" />
+      <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
+        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is
+          required.</small>
+        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at
+          least 6 characters.</small>
+      </div>
+
+      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onLogin()">Sing in</button>
+      <span class="mobile text-center">Don't have an account? <a class="link fw-bold mt-2"
+          (click)="showSignUp()">Register</a></span>
+      <a>Forgot your password?</a>
+    </form>
+
     <form class="d-flex justify-content-center align-items-center flex-column text-center" *ngIf="signupFormVisible"
-    [formGroup]="signupForm">
-    <h1 class="fw-bold m-0">Create Account</h1>
-    <div class="d-inline-flex justify-content-center align-items-center my-2 rouded">
-      <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
-      <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
-      <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
-    </div>
-    <span>or use your email to register</span>
-    <input type="text" placeholder="Full Name" formControlName="fullName" />
-    <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
-      <small class="text-danger">Name is required.</small>
-    </div>
+      [formGroup]="signupForm">
+      <h1 class="fw-bold m-0">Create Account</h1>
+      <div class="d-inline-flex justify-content-center align-items-center my-2 rouded">
+        <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
+        <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
+        <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
+      </div>
+      <span>or use your email to register</span>
+      <input type="text" placeholder="Full Name" formControlName="fullName" />
+      <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
+        <small class="text-danger">Name is required.</small>
+      </div>
 
-    <input type="email" placeholder="Email" formControlName="email" />
-    <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
-      <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</small>
-      <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format.</small>
-    </div>
+      <input type="email" placeholder="Email" formControlName="email" />
+      <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
+        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</small>
+        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format.</small>
+      </div>
 
-    <input type="password" placeholder="Password" formControlName="password" />
-    <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
-      <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">Password is
-        required.</small>
-      <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at
-        least 6 characters.</small>
-    </div>
+      <input type="password" placeholder="Password" formControlName="password" />
+      <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
+        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">Password is
+          required.</small>
+        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at
+          least 6 characters.</small>
+      </div>
 
-    <button class="btn fw-bold text-uppercase mt-2" type="submit" (click)="onSignup()">Register</button>
-    <span class="mobile text-center">
-      Already have an account? 
-      <a class="link fw-bold mt-2" (click)="showLogin()">Sign in</a>
-    </span>
-  </form>
-
-  <form class="d-flex justify-content-center align-items-center flex-column" *ngIf="loginFormVisible"
-    [formGroup]="loginForm">
-    <h1 class="fw-bold m-0">Login</h1>
-
-    <div class="d-inline-flex justify-content-center align-items-center text-center my-2"
-      style="width: 50px; font-size: 2rem;">
-      <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
-      <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
-      <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
-    </div>
-
-    <span>or use your account</span>
-
-    <input type="email" placeholder="Email" formControlName="email" />
-    <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
-      <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
-      <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
-    </div>
-
-    <input type="password" placeholder="Password" formControlName="password" />
-    <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
-      <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is
-        required.</small>
-      <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at
-        least 6 characters.</small>
-    </div>
-
-    <button class="btn fw-bold text-uppercase my-2" type="submit" (click)="onLogin()">Sing in</button>
-    <span class="mobile text-center">Don't have an account? <a class="link fw-bold mt-2" (click)="showSignUp()">Register</a></span>
-    <a>Forgot your password?</a>
-  </form>
+      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onSignup()">Register</button>
+      <span class="mobile text-center">
+        Already have an account?
+        <a class="link fw-bold mt-2" (click)="showLogin()">Sign in</a>
+      </span>
+    </form>
   </div>
 </div>
