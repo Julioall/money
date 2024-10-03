@@ -1,4 +1,4 @@
-<header class="header d-flex justify-content-center align-items-center">
+<header *ngIf="isLoggedIn" class="header d-flex justify-content-center align-items-center">
   <div class="container nav-container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between p-2"
   >
     <div id="main-logo" class="col-2">
@@ -7,7 +7,7 @@
 
     <div class="col">
         <ul class="nav navbar-menu col-12 col-md-auto mb-2 justify-content-center mb-md-0 ">
-            <li class="nav-link px-2"><a aria-label="Go to home">Home</a></li>
+            <li class="nav-link px-2"><a aria-label="Go to overview">Overview</a></li>
             <li class="nav-link px-2"><a aria-label="Go to launch">Launch</a></li>
             <li class="nav-link px-2"><a aria-label="Go to reports">Reports</a></li>
             <li class="nav-link px-2"><a aria-label="Go to spending limit">Spending Limit</a>

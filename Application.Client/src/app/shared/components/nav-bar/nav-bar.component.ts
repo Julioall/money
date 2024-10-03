@@ -9,6 +9,7 @@ import { NotificationService } from '../../../core/service/notification/notifica
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
+  isLoggedIn: boolean = false;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -16,6 +17,9 @@ export class NavBarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.loggedIn$.subscribe(loggedIn => {
+      this.isLoggedIn = loggedIn;
+    });
   }
 
   onClickLogout() {
@@ -25,6 +29,7 @@ export class NavBarComponent implements OnInit {
   }
   private _logOut() {
     this.authService.removeToken()
+    this.isLoggedIn = false;
     this.router.navigate(['/auth']);
   }
 }

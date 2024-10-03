@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../core/service/auth/auth.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class OverviewComponent implements OnInit {
   token: string | null | undefined;
   isLoggedIn = false;
 

@@ -78,7 +78,7 @@ export class AuthComponent implements OnInit {
         this.authService.saveToken(response.token);
         this.notificationService.showSuccess('Login successfully!');
         this.loginForm.reset();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/overview']);
       }
     } catch (error) {
       this.notificationService.showError('Login error. Please check your credentials.');
