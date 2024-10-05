@@ -1,4 +1,4 @@
-.header {
+header {
   background-color: #16c64f;
   font-family: sans-serif;
 }
@@ -7,19 +7,8 @@
   flex-shrink: 0;
 }
 
-#main-logo {
-  color: #f2ede4;
-}
 
-.navbar-menu a {
-  color: #f2ede4;
-  text-decoration: none;
-  padding: 10px 15px;
-  font-weight: 600;
-}
-
-
-i{
+i, a {
   color: #f2ede4;
 }
 

@@ -12,12 +12,18 @@ import { LoadingInterceptor } from './core/service/loading/loading.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { SettingsModule } from './page/settings/settings.module';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { CategoriesComponent } from './shared/components/categories/categories.component';
+import { CreditCardComponent } from './shared/components/credit-card/credit-card.component';
+import { AccountsComponent } from './shared/components/accounts/accounts.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     NavBarComponent,
+    CategoriesComponent,
+    CreditCardComponent,
+    AccountsComponent
   ],
   imports: [
     BrowserModule,
