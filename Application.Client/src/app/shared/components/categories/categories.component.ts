@@ -13,8 +13,8 @@ export class CategoriesComponent implements OnInit {
   isExpenseCategory: boolean = true;
   isIncomeCategory: boolean = false;
   incomeCategories: Category[] = [];
-  expenseCategories: Category[] = []; // Lista para despesas
-  forms: { [key: string]: boolean } = {}; // Para gerenciar o estado dos formulários de subcategorias
+  expenseCategories: Category[] = [];
+  forms: { [key: string]: boolean } = {};
 
   constructor(
     private _categoriesRepository: CategoriesRepositoryService,

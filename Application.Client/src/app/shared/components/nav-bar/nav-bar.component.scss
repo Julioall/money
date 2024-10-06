@@ -12,13 +12,40 @@ i, a {
 #profile-icon{
   color: $green-primary !important;
 }
+
+.dropdown-menu{
+  background: $neutral-white-100;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .17);
+  transform: translate(-203px, 35px) !important;
+}
+
+.dropdown-menu {
+  position: relative;
+}
+
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 15px solid $neutral-white-100;
+  z-index: 1;
+}
+
 .dropdown-item{
   width: 230px;
   color: $gray-light !important;
   font-weight: 500;
-
 }
-.dropdown-menu{
-  background: $neutral-white-100;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, .17);
+
+.dropdown-item:hover {
+  color: $green-primary !important;
+  text-decoration: none;
+}
+
+.dropdown-item:focus,
+.dropdown-item.active {
+  background-color: $green-light; /* Cor verde ou qualquer outra cor que você preferir */
 }
