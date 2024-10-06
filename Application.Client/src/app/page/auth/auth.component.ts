@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { User } from '../../core/model/entities/user';
 import { NotificationService } from '../../core/service/notification/notification.service';
 import { AuthService } from '../../core/service/auth/auth.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'; 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserFinance } from '../../core/model/entities/userFinance';
 import { firstValueFrom } from 'rxjs';  // Importa firstValueFrom
 
@@ -18,11 +18,8 @@ export class AuthComponent implements OnInit {
   signupForm!: FormGroup;
   signupSubmitted: boolean = false;
   rightPanelActive: string = '';
-  successMessage: string = '';
-  errorMessage: string = '';
   loginFormVisible: boolean = true;
   signupFormVisible: boolean = false;
-  isLoading: boolean = false;  // Novo estado para mostrar carregamento
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +67,7 @@ export class AuthComponent implements OnInit {
       this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
-    
+
     const { email, password } = this.loginForm.value;
     try {
       const response = await firstValueFrom(await this.authService.login(email, password));
@@ -78,7 +75,7 @@ export class AuthComponent implements OnInit {
         this.authService.saveToken(response.token);
         this.notificationService.showSuccess('Login successfully!');
         this.loginForm.reset();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/overview']);
       }
     } catch (error) {
       this.notificationService.showError('Login error. Please check your credentials.');

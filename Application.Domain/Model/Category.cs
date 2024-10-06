@@ -8,6 +8,7 @@ namespace Application.Domain.Model
         public required string Name { get; set; }
         public string? Description { get; set; }
         public CategoryType? Type { get; set; }
-        public required string IconUrl { get; set; }
+        public required string ClassIcon { get; set; }
+        public required string ClassBackground { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../../model/entities/user';
 import { jwtDecode } from 'jwt-decode'; 
@@ -12,8 +12,15 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/User/add`;
-
-  constructor(private http: HttpClient, private router: Router) {}
+  private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  public loggedIn$ = this.loggedInSubject.asObservable();
+  
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.checkLoginStatus();
+  }
 
   async login(email: string, password: string): Promise<Observable<any>> {
     const url = `${environment.apiUrl}/Authentication/login`;
@@ -38,6 +45,7 @@ export class AuthService {
       map((response) => {
         if (response && response.token) {
           this.saveToken(response.token);
+          this.loggedInSubject.next(true);
         }
         return response;
       }),
@@ -88,6 +96,15 @@ export class AuthService {
   isLoggedIn(): boolean {
     const token = this.getToken();
     return token !== null && !this.isTokenExpired(token);
+  }
+
+  private checkLoginStatus(): void {
+    const isLoggedIn = this.isLoggedIn();
+    this.loggedInSubject.next(isLoggedIn);
+  }
+
+  updateLoginStatus(): void {
+    this.checkLoginStatus();
   }
 
   getAuthHeaders(): HttpHeaders {

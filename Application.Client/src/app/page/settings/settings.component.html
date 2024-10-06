@@ -1,0 +1,25 @@
+<div class="container-fluid d-flex justify-content-center align-items-start vh-100">
+  <div class="container-lg vh-100">
+    <div class="row mt-5 p-5">
+      <div class="col-2">
+        <nav class="row nav px-4">
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/categories">Categories</a>
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/accounts">Accounts</a>
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/credit-cards">Credit Cards</a>
+
+          <hr class="line-divider w-75 text-center"/>
+
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/preferences">Preferences</a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/plan">Plan</a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/tags">Tags</a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/alerts">Alerts</a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/activities">Activities</a>
+        </nav>
+
+      </div>
+      <div class="col vh-100">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

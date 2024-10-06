@@ -1,9 +1,10 @@
 import { CategoryType } from "../enums/categoryType.enum";
 
 export class Category {
-    id?: string;
+    id!: string;
     name!: string;
     description?: string;
     type!: CategoryType;
-    iconUrl!: string;
+    classIcon?: string;
+    classBackground?: string;
 }
