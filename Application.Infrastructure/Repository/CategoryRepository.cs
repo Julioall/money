@@ -90,7 +90,8 @@ namespace Application.Infrastructure.Repository
                 existingCategory.Name = updatedCategory.Name;
                 existingCategory.Description = updatedCategory.Description;
                 existingCategory.Type = updatedCategory.Type;
-                existingCategory.IconUrl = updatedCategory.IconUrl;
+                existingCategory.ClassIcon = updatedCategory.ClassIcon;
+                existingCategory.ClassBackground = updatedCategory.ClassBackground;
 
                 await session.StoreAsync(user);
                 await session.SaveChangesAsync();

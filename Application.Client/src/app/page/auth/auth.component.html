@@ -28,9 +28,9 @@
       </div>
 
       <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onLogin()">Sing in</button>
-      <span class="mobile text-center">Don't have an account? <a class="link fw-bold mt-2"
+      <span class="mobile text-center">Don't have an account? <a class="link fw-bold"
           (click)="showSignUp()">Register</a></span>
-      <a>Forgot your password?</a>
+      <span>Lost your password? <a class="link fw-bold">Get it back</a></span>
     </form>
 
     <form class="d-flex justify-content-center align-items-center flex-column text-center" *ngIf="signupFormVisible"

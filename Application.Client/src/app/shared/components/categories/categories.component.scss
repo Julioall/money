@@ -1,0 +1,12 @@
+@import "../../../../assets/theme.scss";
+.ative-income
+{
+  border-bottom: solid 2px $green-primary;
+}
+.ative-expense{
+  border-bottom: solid 2px $red-primary;
+}
+.card-body i{
+  width: 30px;
+  height: 30px;
+}

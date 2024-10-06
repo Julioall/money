@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+// Red tones
+$red-primary: #d72638;
+$red-light: #fee6e6;
+
+//Yellow tones
+$yellow-primary: #ffc400;
+$yellow-light: #fffae2;
+
+// Green Tones
+$green-light: #dffce9;
+$green-primary: #16c64f;
+$green-primary-dark: #129e3f;
+$green-primary-darker: #0d772f;
+$green-secondary: #008440;
+
+// Green-Gray Tones
+$green-gray-dark: #1a201e;
+$green-gray-light: #2f473f;
+
+// Gray Tones
+$gray-dark: #2e312d;
+$gray-primary: #1a1c19;
+$gray: #777;
+$gray-light: #858782;
+$gray-x-light: #ddd;
+// Neutral Colors
+$neutral-white-100: #fefdf9;
+$neutral-white-200: #f2f4ef;
+$neutral-white-300: #e9f7ee;
+
+// Background classes
+.bg-neutral-white-100 {
+  background-color: $neutral-white-100 !important;
+}
+
+.bg-neutral-white-200 {
+  background-color: $neutral-white-200 !important;
+}
+
+.bg-neutral-white-300 {
+  background-color: $neutral-white-300 !important;
+}
+
+.bg-green-light {
+  background-color: $green-light !important;
+}
+
+.bg-green-primary {
+  background-color: $green-primary !important;
+}
+
+.bg-green-primary-dark {
+  background-color: $green-primary-dark !important;
+}
+
+.bg-green-primary-darker {
+  background-color: $green-primary-darker !important;
+}
+
+.bg-green-secondary {
+  background-color: $green-secondary !important;
+}
+
+.bg-green-gray-light {
+  background-color: $green-gray-light !important;
+}
+
+.bg-green-gray-dark {
+  background-color: $green-gray-dark !important;
+}
+
+.bg-gray-dark {
+  background-color: $gray-dark !important;
+}
+
+.bg-gray-primary {
+  background-color: $gray-primary !important;
+}
+
+.bg-gray-light {
+  background-color: $gray-light !important;
+}
+
+.bg-red-primary {
+  background-color: $red-primary !important;
+}
+
+.bg-red-light {
+  background-color: $red-light !important;
+}
+
+.bg-yellow-primary {
+  background-color: $yellow-primary !important;
+}
+
+.bg-yellow-light {
+  background-color: $yellow-light !important;
+}
+
+// Text color classes
+.text-neutral-white-100 {
+  color: $neutral-white-100 !important;
+}
+
+.text-neutral-white-200 {
+  color: $neutral-white-200 !important;
+}
+
+.text-neutral-white-300 {
+  color: $neutral-white-300 !important;
+}
+
+.text-green-light {
+  color: $green-light !important;
+}
+
+.text-green-primary {
+  color: $green-primary !important;
+}
+
+.text-green-primary-dark {
+  color: $green-primary-dark !important;
+}
+
+.text-green-primary-darker {
+  color: $green-primary-darker !important;
+}
+
+.text-green-secondary {
+  color: $green-secondary !important;
+}
+
+.text-green-gray-light {
+  color: $green-gray-light !important;
+}
+
+.text-green-gray-dark {
+  color: $green-gray-dark !important;
+}
+
+.text-gray-dark {
+  color: $gray-dark !important;
+}
+
+.text-gray-primary {
+  color: $gray-primary !important;
+}
+
+.text-gray-light {
+  color: $gray-light !important;
+}
+
+.text-gray{
+  color: $gray !important;
+}
+
+.text-red-primary {
+  color: $red-primary !important;
+}
+
+.text-red-light {
+  color: $red-light !important;
+}
+
+.text-yellow-primary {
+  color: $yellow-primary !important;
+}
+
+.text-yellow-light {
+  color: $yellow-light !important;
+}
+
+// Tamanho das fontes do projeto
+.text-x-small {
+  font-size: 13px !important;
+}
+
+.text-small {
+  font-size: 16px !important;
+}
+
+.text-medium {
+  font-size: 22px !important;
+}
+
+.text-large {
+  font-size: 28px !important;
+}
+
+.text-x-large {
+  font-size: 34px !important;
+}
+
+.text-xx-large {
+  font-size: 40px !important;
+}
+
+.text-xxx-large {
+  font-size: 48px !important;
+}
+
+// Cores de fundo personalizadas
+.bg-blue {
+  background-color: var(--bs-blue) !important;
+}
+
+.bg-indigo {
+  background-color: var(--bs-indigo) !important;
+}
+
+.bg-purple {
+  background-color: var(--bs-purple) !important;
+}
+
+.bg-pink {
+  background-color: var(--bs-pink) !important;
+}
+
+.bg-red {
+  background-color: var(--bs-red) !important;
+}
+
+.bg-orange {
+  background-color: var(--bs-orange) !important;
+}
+
+.bg-yellow {
+  background-color: var(--bs-yellow) !important;
+}
+
+.bg-green {
+  background-color: var(--bs-green) !important;
+}
+
+.bg-teal {
+  background-color: var(--bs-teal) !important;
+}
+
+.bg-cyan {
+  background-color: var(--bs-cyan) !important;
+}
+
+// Cores de texto personalizadas para tabela de cores da selecao de categoria cor
+
+.text-blue {
+  color: var(--bs-blue) !important;
+}
+
+.text-indigo {
+  color: var(--bs-indigo) !important;
+}
+
+.text-purple {
+  color: var(--bs-purple) !important;
+}
+
+.text-pink {
+  color: var(--bs-pink) !important;
+}
+
+.text-red {
+  color: var(--bs-red) !important;
+}
+
+.text-orange {
+  color: var(--bs-orange) !important;
+}
+
+.text-yellow {
+  color: var(--bs-yellow) !important;
+}
+
+.text-green {
+  color: var(--bs-green) !important;
+}
+
+.text-teal {
+  color: var(--bs-teal) !important;
+}
+
+.text-cyan {
+  color: var(--bs-cyan) !important;
+}

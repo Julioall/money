@@ -25,7 +25,7 @@ namespace Application.Api.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("categories")]
+        [HttpPost()]
         public async Task<IActionResult> Add([FromBody] Category category)
         {
             if (category == null)
@@ -36,7 +36,7 @@ namespace Application.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { categoryId = createdCategory.Id }, createdCategory);
         }
 
-        [HttpDelete("categories/{categoryId}")]
+        [HttpDelete("{categoryId}")]
         public async Task<IActionResult> Delete(string categoryId)
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -48,7 +48,7 @@ namespace Application.Api.Controllers
             return NoContent();
         }
 
-        [HttpPut("categories")]
+        [HttpPut()]
         public async Task<IActionResult> Updatey([FromBody] Category category)
         {
             if (category == null)
@@ -59,7 +59,7 @@ namespace Application.Api.Controllers
             return Ok(updatedCategory);
         }
 
-        [HttpGet("categories")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -67,7 +67,7 @@ namespace Application.Api.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("categories/{categoryId}")]
+        [HttpGet("{categoryId}")]
         public async Task<IActionResult> GetById(string categoryId)
         {
             var userId = await _authenticationService.GetUserIdLoged();

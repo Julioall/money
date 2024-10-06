@@ -1,28 +1,28 @@
-<header *ngIf="isLoggedIn" class="border-bottom lh-1 py-2 fw-bold">
+<header *ngIf="isLoggedIn" class="border-bottom lh-1 py-3">
   <div class="container">
     <div class="row">
       <div class="col d-flex align-items-center justify-content-start">
-        <a class="navbar-brand d-flex justify-content-start align-items-center"><i
+        <a class="navbar-brand d-flex justify-content-start align-items-center fw-bold text-medium"><i
             class="fa-solid fa-wallet me-2"></i>Money</a>
       </div>
       <div class="col-6 d-flex align-items-center justify-content-center">
         <nav class="nav justify-content-between">
-            <a class="nav-item nav-link" aria-label="Go to overview">Overview</a>
-            <a class="nav-item nav-link" aria-label="Go to launch">Launch</a>
-            <a class="nav-item nav-link" aria-label="Go to reports">Reports</a>
-            <a class="nav-item nav-link" aria-label="Go to spending limit">Spending Limit</a>
+            <a class="nav-item nav-link text-small text-green-light" aria-label="Go to overview">Overview</a>
+            <a class="nav-item nav-link text-small text-green-light" aria-label="Go to reports">Reports</a>
+            <a class="nav-item nav-link text-small text-green-light" aria-label="Go to spending limit">Spending Limit</a>
+            <a class="nav-item nav-link text-small text-green-light" aria-label="Go to launch">Launch</a>
         </nav>
       </div>
       <div class="col d-flex align-items-center justify-content-end">
         <div class="dropdown me-4">
           <a type="button" class="me-2d-block text-decoration-none dropdown-toggle" id="dropdownSettings"
             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-gear"></i>
+            <i class="fa-solid fa-gear text-small"></i>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownSettings">
-            <li><a class="dropdown-item">Categories</a></li>
-            <li><a class="dropdown-item">Accounts</a></li>
-            <li><a class="dropdown-item">Credit Cards</a></li>
+          <ul class="dropdown-menu dropdown-menu-end text-small settings-adm" aria-labelledby="dropdownSettings">
+            <li><a class="dropdown-item" routerLink="/settings/categories">Categories</a></li>
+            <li><a class="dropdown-item" routerLink="/settings/accounts">Accounts</a></li>
+            <li><a class="dropdown-item" routerLink="/settings/cards">Credit Cards</a></li>
             <li>
               <hr class="dropdown-divider" />
             </li>
@@ -40,7 +40,7 @@
         <div class="dropdown me-4">
           <a type="button" class="me-2d-block text-decoration-none dropdown-toggle"
             id="dropdownNotification" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell text-small"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownNotification">
             <li><a class="dropdown-item">Profile</a></li>
@@ -54,7 +54,7 @@
         <div class="dropdown">
           <a class="d-block text-decoration-none dropdown-toggle" id="dropdownProfile"
             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-user"></i>
+            <i class="#profile-icon fa-solid fa-user text-small"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownProfile">
             <li><a class="dropdown-item text-center fs-1"><i id="profile-icon" class="fas fa-user-circle"></i></a>

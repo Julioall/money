@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, children: [
     { path: 'categories', component: CategoriesComponent },
     { path: 'accounts', component: AccountsComponent },
-    { path: 'cards', component: CreditCardComponent },
+    { path: 'credit-cards', component: CreditCardComponent },
     { path: '', redirectTo: 'categories', pathMatch: 'full' },
   ] },
 ];
