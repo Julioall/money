@@ -6,20 +6,20 @@
 
       <div class="d-inline-flex justify-content-center align-items-center text-center my-2"
         style="width: 50px; font-size: 2rem;">
-        <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
-        <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
-        <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
+        <a class="me-3" id="google-login-btn"><i class="fa-brands fa-square-google-plus text-large"></i></a>
+        <a class="me-3"><i class="fa-brands fa-square-facebook text-large"></i></a>
+        <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
 
       <span>or use your account</span>
 
-      <input type="email" placeholder="Email" formControlName="email" />
+      <input class="text-small" type="email" placeholder="Email" formControlName="email" />
       <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
         <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
         <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
       </div>
 
-      <input type="password" placeholder="Password" formControlName="password" />
+      <input class="text-small" type="password" placeholder="Password" formControlName="password" />
       <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
         <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is
           required.</small>
@@ -37,23 +37,23 @@
       [formGroup]="signupForm">
       <h1 class="fw-bold m-0">Create Account</h1>
       <div class="d-inline-flex justify-content-center align-items-center my-2 rouded">
-        <a class="me-3 fs-1" id="google-login-btn"><i class="fa-brands fa-square-google-plus"></i></a>
-        <a class="me-3 fs-1"><i class="fa-brands fa-square-facebook"></i></a>
-        <a class="fs-1"><i class="fa-brands fa-square-twitter"></i></a>
+        <a class="me-3" id="google-login-btn"><i class="fa-brands fa-square-google-plus text-large"></i></a>
+        <a class="me-3"><i class="fa-brands fa-square-facebook text-large"></i></a>
+        <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
       <span>or use your email to register</span>
-      <input type="text" placeholder="Full Name" formControlName="fullName" />
+      <input class="text-small" type="text" placeholder="Full Name" formControlName="fullName" />
       <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
         <small class="text-danger">Name is required.</small>
       </div>
 
-      <input type="email" placeholder="Email" formControlName="email" />
+      <input class="text-small" type="email" placeholder="Email" formControlName="email" />
       <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
         <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</small>
         <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format.</small>
       </div>
 
-      <input type="password" placeholder="Password" formControlName="password" />
+      <input class="text-small" type="password" placeholder="Password" formControlName="password" />
       <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
         <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">Password is
           required.</small>

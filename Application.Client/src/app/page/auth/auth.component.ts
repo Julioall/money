@@ -43,22 +43,18 @@ export class AuthComponent implements OnInit {
 
   showSignUp(): void {
     this.rightPanelActive = 'right-panel-active';
-    setTimeout(() => {
-      this.signupFormVisible = true;
-      this.loginFormVisible = false;
-      this.loginSubmitted = false;
-      this.loginForm.reset();
-    }, 350);
+    this.signupFormVisible = true;
+    this.loginFormVisible = false;
+    this.loginSubmitted = false;
+    this.loginForm.reset();
   }
 
   showLogin(): void {
     this.rightPanelActive = '';
-    setTimeout(() => {
-      this.loginFormVisible = true;
-      this.signupFormVisible = false;
-      this.signupSubmitted = false;
-      this.signupForm.reset();
-    }, 350);
+    this.loginFormVisible = true;
+    this.signupFormVisible = false;
+    this.signupSubmitted = false;
+    this.signupForm.reset();
   }
 
   async onLogin(): Promise<void> {
@@ -108,10 +104,8 @@ export class AuthComponent implements OnInit {
     this.authService.signup(newUser).subscribe({
       next: () => {
         this.notificationService.showSuccess('Registration successful!');
-        setTimeout(() => {
-          this.showLogin();
-          this.loginForm.patchValue({ email, password });
-        }, 2000);
+        this.showLogin();
+        this.loginForm.patchValue({ email, password });
       },
       error: () => {
         this.notificationService.showError('Error during registration. Please try again.');
