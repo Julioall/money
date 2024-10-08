@@ -1,4 +1,4 @@
-# Profit-Pay
+# Money
 ProfitPay é uma aplicação de gerenciamento financeiro pessoal e familiar projetada para simplificar o controle de despesas e maximizar lucros nos investimentos. 
 
 Os padrões de commit são essenciais para manter a clareza e a organização em projetos de desenvolvimento.
