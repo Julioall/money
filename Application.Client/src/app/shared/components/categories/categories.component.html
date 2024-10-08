@@ -1,13 +1,24 @@
 <div class="container-lg bg-neutral-white-100 rounded-4 p-3 p-sm-5">
   <div class="row">
     <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold ">Categories</h1>
-    <button (click)="onAddIncome()" *ngIf="isIncomeCategory"
-      class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center ng-star-inserted text-small"><i
-        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i>Income Category</button>
-    <button (click)="onAddExpense()" *ngIf="isExpenseCategory"
-      class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center ng-star-inserted text-small"><i
+    <button
+        type="button" data-bs-toggle="modal" data-bs-target="#incomeModal"
+        *ngIf="isIncomeCategory"
+        class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
+        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
+        class="ms-3 d-none d-sm-block">Income Category</span></button>
+        <app-modal [idModal]="'incomeModal'" [title]="'Título Personalizado'" (action)="onAddIncome()">
+          <h1>Aqui sera o modal Income Category</h1>
+        </app-modal>
+    <button
+        *ngIf="isExpenseCategory"
+        type="button" data-bs-toggle="modal" data-bs-target="#expenseModal"
+        class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
         class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
         class="ms-3 d-none d-sm-block">Expense Category</span></button>
+        <app-modal [idModal]="'expenseModal'" [title]="'Título Personalizado'" (action)="onAddIncome()">
+          <h1>Aqui sera o modal Expense Category</h1>
+        </app-modal>
   </div>
   <div class="row mt-5">
     <div class="col mt-5">

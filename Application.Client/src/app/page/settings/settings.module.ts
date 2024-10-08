@@ -5,13 +5,15 @@ import { CategoriesComponent } from '../../shared/components/categories/categori
 import { AccountsComponent } from '../../shared/components/accounts/accounts.component';
 import { CreditCardComponent } from '../../shared/components/credit-card/credit-card.component';
 import { RouterModule } from '@angular/router';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 
 @NgModule({
   declarations: [
     SettingsComponent,
     CategoriesComponent,
     AccountsComponent,
-    CreditCardComponent
+    CreditCardComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
