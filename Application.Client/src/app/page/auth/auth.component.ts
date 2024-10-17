@@ -5,7 +5,7 @@ import { NotificationService } from '../../core/service/notification/notificatio
 import { AuthService } from '../../core/service/auth/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserFinance } from '../../core/model/entities/userFinance';
-import { firstValueFrom } from 'rxjs';  // Importa firstValueFrom
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-auth',

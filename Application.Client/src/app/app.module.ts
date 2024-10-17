@@ -11,7 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './core/service/loading/loading.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { SettingsModule } from './page/settings/settings.module';
-import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [

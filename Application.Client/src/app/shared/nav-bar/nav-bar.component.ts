@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/service/auth/auth.service';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../../core/service/notification/notification.service';
+import { AuthService } from '../../core/service/auth/auth.service';
+import { NotificationService } from '../../core/service/notification/notification.service';
 
 @Component({
   selector: 'app-nav-bar',

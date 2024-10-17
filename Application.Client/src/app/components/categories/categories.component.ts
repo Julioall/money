@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../../core/model/entities/category';
-import { CategoriesRepositoryService } from '../../../core/repository/categories/categories-repository.service';
-import { CategoryType } from '../../../core/model/enums/categoryType.enum';
-import { NotificationService } from '../../../core/service/notification/notification.service';
+import { Category } from '../../core/model/entities/category';
+import { CategoriesRepositoryService } from '../../core/service/categories/categories-repository.service';
+import { NotificationService } from '../../core/service/notification/notification.service';
+import { CategoryType } from '../../core/model/enums/categoryType.enum';
 
 @Component({
   selector: 'app-categories',
