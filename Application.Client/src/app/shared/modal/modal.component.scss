@@ -1,0 +1,11 @@
+@import "../../../assets/theme.scss";
+.modal-dialog {
+    --bs-modal-width: 576px;
+    --bs-modal-margin: 8.75rem;
+    border-radius: 12px;
+}
+.modal-content{
+    border-radius: 12px;
+    background-color: $neutral-white-100;
+}
+  

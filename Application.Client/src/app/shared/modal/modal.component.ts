@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, input } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -8,6 +8,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class ModalComponent {
   @Input() title?: string;
   @Input() idModal?: string;
+  @Input() textButton?: string = "Save";
+  @Input() withCancel?: boolean = false;
   @Output() action = new EventEmitter<void>();
 
   onActionClick() {
