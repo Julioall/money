@@ -15,6 +15,14 @@ export class CategoriesComponent implements OnInit {
   incomeCategories: Category[] = [];
   expenseCategories: Category[] = [];
   forms: { [key: string]: boolean } = {};
+  selectedColorIncome: string = '';
+  selectedColorExpense: string = '';
+  customizedColors: string[] = [
+    'afafaf', '787878', 'fca52d', 'ffa490', 'f98159',
+    'fb6467', 'ff494d', '94cd7a', '86bb5d', 'ec61a1',
+    'ff5692', 'e454ed', '82c8f1', '5096de', '5161b9',
+    '8976bf', '7253c8', 'd9aa6a', '855f2a'
+  ];
 
   constructor(
     private _categoriesRepository: CategoriesRepositoryService,
@@ -45,13 +53,23 @@ export class CategoriesComponent implements OnInit {
   onAddIncome() {
     this._notificationService.showWarning(`TODO - Ainda precisa ser implementado!!!`);
   }
+
   onAddExpense() {
     this._notificationService.showWarning(`TODO - Ainda precisa ser implementado!!!`);
   }
+
   onRemove(_t27: Category) {
     this._notificationService.showWarning(`TODO - Ainda precisa ser implementado!!!`);
   }
+
   onEdit(_t27: Category) {
     this._notificationService.showWarning(`TODO - Ainda precisa ser implementado!!!`);
+  }
+
+  onColorSelectedIncome(color: string): void {
+    this.selectedColorIncome = color;
+  }
+  onColorSelectedExpense(color: string): void {
+    this.selectedColorExpense = color;
   }
 }

@@ -1,0 +1,8 @@
+<div class="color-picker-container" [ngClass]="{ 'color-picker-wide': true }">
+  <a
+     *ngFor="let color of colors"
+     [ngClass]="isColorActive(color)"
+     (click)="selectColor(color)"
+     [ngStyle]="getColorStyle(color)">
+  </a>
+</div>

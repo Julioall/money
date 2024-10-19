@@ -6,6 +6,7 @@ import { CategoriesComponent } from '../../components/categories/categories.comp
 import { AccountsComponent } from '../../components/accounts/accounts.component';
 import { CreditCardComponent } from '../../components/credit-card/credit-card.component';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { ModalComponent } from '../../shared/modal/modal.component';
     CategoriesComponent,
     AccountsComponent,
     CreditCardComponent,
-    ModalComponent
+    ModalComponent,
+    ColorPickerComponent
   ],
   imports: [
     CommonModule,

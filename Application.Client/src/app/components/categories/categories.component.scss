@@ -11,8 +11,57 @@
   height: 40px;
 }
 .iconSelected{
-  width: 77px;
-  height: 77px;
+  width: 70px;
+  height: 70px;
   border-radius: 100%;
-  border: solid 6px #e9e9e9;
+  border: solid 5px #e9e9e9;
+}
+#nameCategory
+{
+  border: 3px solid #ebebeb !important;
+  border-radius: 6px !important;
+  background: #fefdf9 !important;
+  line-height: 18px !important;
+  padding: 7px 8px !important;
+  float: left !important;
+  border-radius: 3px !important;
+  transition: all .15s ease-out 0s !important;
+  color: #2e312d !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+}
+#nameCategory:focus{
+  border-color: $green-primary !important;
+}
+
+label{
+  font-size: 13px;
+  line-height: 13px;
+  color: #858782;
+  text-align: left;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.circle-container {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.circle:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+.circle:active
+{
+
 }
