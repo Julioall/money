@@ -21,6 +21,10 @@ namespace Application.Infrastructure.Repository
                 if (user == null)
                     throw new InvalidOperationException("User not found.");
 
+                var nextNumber = GetNextCategoryNumber(user.Finance.Categories);
+
+                category.Id = $"category-{nextNumber}";
+
                 user.Finance.Categories.Add(category);
                 await session.StoreAsync(user);
                 await session.SaveChangesAsync();
@@ -62,7 +66,6 @@ namespace Application.Infrastructure.Repository
             }
         }
 
-
         public async Task<Category> GetByIdAsync(string userId, string categoryId)
         {
             using (var session = _documentStore.OpenAsyncSession())
@@ -90,14 +93,34 @@ namespace Application.Infrastructure.Repository
                 existingCategory.Name = updatedCategory.Name;
                 existingCategory.Description = updatedCategory.Description;
                 existingCategory.Type = updatedCategory.Type;
-                existingCategory.ClassIcon = updatedCategory.ClassIcon;
-                existingCategory.ClassBackground = updatedCategory.ClassBackground;
+                existingCategory.Icon = updatedCategory.Icon;
+                existingCategory.Background = updatedCategory.Background;
 
                 await session.StoreAsync(user);
                 await session.SaveChangesAsync();
 
                 return existingCategory;
             }
+        }
+
+        private int GetNextCategoryNumber(IEnumerable<Category> categories)
+        {
+            var lastCategory = categories
+                .Where(c => c.Id.StartsWith("category-"))
+                .OrderByDescending(c => c.Id)
+                .FirstOrDefault();
+
+            int nextNumber = 1;
+            if (lastCategory != null)
+            {
+                var lastIdParts = lastCategory.Id.Split('-');
+                if (lastIdParts.Length == 2 && int.TryParse(lastIdParts[1], out int lastNumber))
+                {
+                    nextNumber = lastNumber + 1;
+                }
+            }
+
+            return nextNumber;
         }
     }
 }

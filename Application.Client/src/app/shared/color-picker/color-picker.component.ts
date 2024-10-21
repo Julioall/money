@@ -21,6 +21,10 @@ export class ColorPickerComponent {
   }
 
   getColorStyle(color: string): { [key: string]: string } {
-    return { 'background-color': `#${color}` };
+    return { 'background-color': color };
+  }
+
+  resetSelection(): void {
+    this.selectedColor = '';
   }
 }

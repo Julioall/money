@@ -4,22 +4,20 @@ import { SettingsComponent } from './settings.component';
 import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from '../../components/categories/categories.component';
 import { AccountsComponent } from '../../components/accounts/accounts.component';
-import { CreditCardComponent } from '../../components/credit-card/credit-card.component';
-import { ModalComponent } from '../../shared/modal/modal.component';
-import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     SettingsComponent,
     CategoriesComponent,
     AccountsComponent,
-    CreditCardComponent,
-    ModalComponent,
-    ColorPickerComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class SettingsModule { }

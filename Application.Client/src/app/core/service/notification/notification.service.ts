@@ -9,14 +9,14 @@ export class NotificationService {
 
   showSuccess(message: string, title: string = 'Success') {
     this.toast.success(message, title, {
-      timeOut: 1000,
+      timeOut: 3000,
       positionClass: 'toast-top-right'
     });
   }
 
   showError(message: string, title: string = 'Error') {
     this.toast.error(message, title, {
-      timeOut: 1000,
+      timeOut: 3000,
       progressBar: true,
       positionClass: 'toast-top-right'
     });
@@ -24,7 +24,7 @@ export class NotificationService {
 
   showWarning(message: string, title: string = 'Warning') {
     this.toast.warning(message, title, {
-      timeOut: 1000,
+      timeOut: 3000,
       progressBar: true,
       positionClass: 'toast-top-right'
     });

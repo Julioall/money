@@ -9,10 +9,15 @@ export class ModalComponent {
   @Input() title?: string;
   @Input() idModal?: string;
   @Input() textButton?: string = "Save";
-  @Input() withCancel?: boolean = false;
+  @Input() isCancelEnabled?: boolean = false;
   @Output() action = new EventEmitter<void>();
+  @Output() close = new EventEmitter<void>();
 
   onActionClick() {
     this.action.emit();
+  }
+  
+  onClosedClick(){
+    this.close.emit();
   }
 }

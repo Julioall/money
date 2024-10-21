@@ -1,6 +1,6 @@
 <div class="container-lg bg-neutral-white-100 rounded-4 p-3 p-sm-5">
   <div class="row">
-    <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold ">Categories</h1>
+    <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">Categories</h1>
     <button type="button" data-bs-toggle="modal" data-bs-target="#incomeModal" *ngIf="isIncomeCategory"
       class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
         class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
@@ -22,38 +22,38 @@
         <div class="row mt-5">
           <div class="col-12" *ngIf="isIncomeCategory">
             <ul class="p-0">
-              <li *ngFor="let item of incomeCategories">
-                <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1"
-                  id="category-{{item.id}}">
+              <li *ngFor="let item of incomeCategories; let i = index">
+                <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1" id="category-{{i}}">
                   <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="d-flex align-items-center"><i
-                        [ngClass]="[item.classIcon || 'fa-solid fa-file', item.classBackground || 'bg-gray-dark']"
-                        class="d-flex align-items-center justify-content-center text-small me-3 text-neutral-white-100  rounded-5"></i>
-                      {{ item.name }}</span>
+                    <span class="d-flex align-items-center">
+                      <i [ngClass]="item.icon || 'fa-solid fa-file'"
+                        [ngStyle]="{'background-color': item.background || 'bg-text-gray-dark'}"
+                        class="d-flex align-items-center justify-content-center text-small me-3 text-neutral-white-100 rounded-5"></i>
+                      {{ item.name }}
+                    </span>
                     <div>
                       <button (click)="onEdit(item)" class="bg-transparent">
                         <i
-                          class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
+                          class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light rounded-5"></i>
                       </button>
                       <button (click)="onRemove(item)" class="bg-transparent">
                         <i
-                          class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
+                          class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light rounded-5"></i>
                       </button>
                     </div>
                   </div>
                 </div>
-                <div class="border-bottom border-1  border-opacity-75 bg-opacity-50 border-gray"></div>
+                <div class="border-bottom border-1 border-opacity-75 bg-opacity-50 border-gray"></div>
               </li>
             </ul>
           </div>
           <div class="col-12" *ngIf="isExpenseCategory">
             <ul class="p-0">
-              <li *ngFor="let item of expenseCategories">
-                <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1"
-                  id="category-{{item.id}}">
+              <li *ngFor="let item of expenseCategories; let i = index">
+                <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1" id="category-{{i}}">
                   <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="d-flex align-items-center"><i
-                        [ngClass]="[item.classIcon || 'fa-solid fa-file', item.classBackground || 'bg-gray-dark']"
+                    <span class="d-flex align-items-center"><i [ngClass]="item.icon || 'fa-solid fa-file'"
+                        [ngStyle]="{'background-color': item.background || 'bg-text-gray-dark'}"
                         class="d-flex align-items-center justify-content-center text-small me-3 text-neutral-white-100  rounded-5"></i>
                       {{ item.name }}</span>
                     <div>
@@ -75,35 +75,78 @@
         </div>
       </div>
     </div>
-    <app-modal [idModal]="'incomeModal'" [title]="'Título Personalizado'" (action)="onAddIncome()"
-      [textButton]="'Create Income'">
-      <p class="text-gray-dark text-small mb-5">Creating income category</p>
-      <div class="d-flex align-items-center justify-content-start border-bottom border-1 border-opacity-75 mb-4 pb-4">
-        <div class="iconSelected me-3" [ngStyle]="{'background-color': '#'+selectedColorIncome}"></div>
-        <div class="category-name col">
-          <label for="nameCategory text-gray-light">Category name</label>
-          <input class="mt-0" id="nameCategory" type="text">
+    <form [formGroup]="categoryForm">
+      <app-modal [idModal]="'incomeModal'" [title]="'Título Personalizado'" [textButton]="'Create Income'"
+        (action)="onAddIncome()" (close)="onClosedModal()">
+        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">Creating income category</p>
+        <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <div class="d-flex align-items-center justify-content-start">
+            <div class="category-name col">
+              <label for="nameCategoryIncome" class="text-gray-dark mb-4">Category name</label>
+              <input class="nameCategory mt-0" id="nameCategoryIncome" type="text" formControlName="incomeCategoryName"
+                placeholder="Enter category name">
+            </div>
+            <div class="d-flex justify-content-end align-items-end mx-3">
+              <div
+                class="d-flex align-items-center justify-content-center text-large text-neutral-white-100 iconSelected mt-4"
+                [ngStyle]="{'background-color': selectedColorIncome}">
+                <i [ngClass]="selectedIconIncome"></i>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="categoryForm.get('incomeCategoryName')?.invalid && isSubmitted">
+            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['required']">Category name is required.</small>
+            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['minlength']">Category name must be at least 3 characters long.</small>
+          </div>
         </div>
-      </div>
-      <div class="circle-container d-flex align-items-center justify-content-start border-bottom border-1 border-opacity-75 mb-4 pb-4">
-        <p class="text-gray-dark text-small mb-5">Choose a color</p>
-        <app-color-picker [colors]="customizedColors" (colorSelected)="onColorSelectedIncome($event)"></app-color-picker>
-      </div>
-    </app-modal>
-    <app-modal [idModal]="'expenseModal'" [title]="'Título Personalizado'" (action)="onAddIncome()"
-      [textButton]="'Create Expense'">
-      <p class="text-gray-dark text-small mb-5">Creating expense category</p>
-      <div class="d-flex align-items-center justify-content-start border-bottom border-1 border-opacity-75 mb-4 pb-4">
-        <div class="iconSelected me-3" [ngStyle]="{'background-color': '#'+selectedColorExpense}"></div>
-        <div class="category-name col">
-          <label for="nameCategory text-gray-light">Category name</label>
-          <input class="mt-0" id="nameCategory" type="text">
+        <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <p class="text-gray-dark mb-4">Choose a color</p>
+          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedIncome($event)"></app-color-picker>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedColorIncome">Color is required.</small>
         </div>
-      </div>
-      <div class="circle-container d-flex align-items-center justify-content-start border-bottom border-1 border-opacity-75 mb-4 pb-4">
-        <p class="text-gray-dark text-small mb-5">Choose a color</p>
-        <app-color-picker [colors]="customizedColors" (colorSelected)="onColorSelectedExpense($event)"></app-color-picker>
-      </div>
-    </app-modal>
+        <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <p class="text-gray-dark mb-4">Choose an icon</p>
+          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedIncome($event)">
+          </app-icon-picker>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">Icon is required.</small>
+        </div>
+      </app-modal>
+
+      <app-modal [idModal]="'expenseModal'" [title]="'Título Personalizado'" [textButton]="'Create Expense'"
+        (action)="onAddExpense()" (close)="onClosedModal()">
+        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">Creating expense category</p>
+        <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <div class="d-flex align-items-center justify-content-start">
+            <div class="category-name col">
+              <label for="nameCategoryExpense" class="text-gray-dark mb-4">Category name</label>
+              <input class="nameCategory mt-0" id="nameCategoryExpense" type="text" formControlName="expenseCategoryName"
+                placeholder="Enter category name">
+            </div>
+            <div class="d-flex justify-content-end align-items-end mx-3">
+              <div
+                class="d-flex align-items-center justify-content-center text-large text-neutral-white-100 iconSelected mt-4"
+                [ngStyle]="{'background-color': selectedColorExpense}">
+                <i [ngClass]="selectedIconExpense"></i>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="categoryForm.get('expenseCategoryName')?.invalid && isSubmitted">
+            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['required']">Category name is required.</small>
+            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['minlength']">Category name must be at least 3 characters long.</small>
+          </div>
+        </div>
+        <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <p class="text-gray-dark mb-4">Choose a color</p>
+          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedExpense($event)"></app-color-picker>
+            <small class="text-danger" *ngIf="isSubmitted && !selectedColorExpense">Color is required.</small>
+        </div>
+        <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
+          <p class="text-gray-dark mb-4">Choose an icon</p>
+          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedExpense($event)">
+          </app-icon-picker>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">Icon is required.</small>
+        </div>
+      </app-modal>
+    </form>
   </div>
 </div>

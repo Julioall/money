@@ -1,0 +1,8 @@
+<div class="icon-picker-container">
+  <a
+    *ngFor="let icon of icons"
+    [ngClass]="isIconActive(icon)"
+    (click)="selectIcon(icon)">
+    <i [class]="'text-gray-light '+icon"></i>
+  </a>
+</div>

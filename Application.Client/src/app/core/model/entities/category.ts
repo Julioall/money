@@ -5,6 +5,6 @@ export class Category {
     name!: string;
     description?: string;
     type!: CategoryType;
-    classIcon?: string;
-    classBackground?: string;
+    icon?: string;
+    background?: string;
 }
