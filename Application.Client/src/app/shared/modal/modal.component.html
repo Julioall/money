@@ -1,0 +1,16 @@
+<div class="modal fade" id={{idModal}} tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header border-0 px-4 pt-4 pb-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onClosedClick()"></button>
+      </div>
+      <div class="modal-body px-5 py-2">
+        <ng-content></ng-content>
+      </div>
+      <div [ngClass]="{'d-flex justify-content-center': !isCancelEnabled}" class="modal-footer border-0 px-5 py-2 mb-4">
+        <button *ngIf="isCancelEnabled" type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" (click)="onClosedClick()">Cancel</button>
+        <button type="button" class="buttonAction btn fw-bold" (click)="onActionClick()">{{textButton}}</button>
+      </div>
+    </div>
+  </div>
+</div>

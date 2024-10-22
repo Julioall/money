@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { BaseRepositoryService } from '../baseRepository.service';
 import { Category } from '../../model/entities/category';
-import { NotificationService } from '../../service/notification/notification.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root',

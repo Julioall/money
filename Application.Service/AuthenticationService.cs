@@ -85,6 +85,7 @@ namespace Application.Service
             user.Account.LastLoginLocation = await  GetLocationFromIpAsync(loginDto.IpAddress);
             await _userService.UpdateAsync(user);
         }
+        
         public async Task<string> GetLocationFromIpAsync(string ip)
         {
             var client = new HttpClient();

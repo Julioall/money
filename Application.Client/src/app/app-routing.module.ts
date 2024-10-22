@@ -3,9 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { OverviewComponent } from './page/overview/overview.component';
 import { AuthComponent } from './page/auth/auth.component';
 import { SettingsComponent } from './page/settings/settings.component';
-import { CategoriesComponent } from './shared/components/categories/categories.component';
-import { AccountsComponent } from './shared/components/accounts/accounts.component';
-import { CreditCardComponent } from './shared/components/credit-card/credit-card.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { AccountsComponent } from './components/accounts/accounts.component';
+import { CreditCardComponent } from './components/credit-card/credit-card.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },

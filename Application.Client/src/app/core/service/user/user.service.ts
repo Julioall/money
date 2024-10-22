@@ -9,12 +9,12 @@ import { environment } from '../../../environment/environment.produ';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = environment.apiUrl + '/user'; // Altere para a URL da sua API
+  private apiUrl = environment.apiUrl + '/user';
 
   constructor(private http: HttpClient) {}
 
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token'); // Ou de onde você estiver armazenando o token
+    const token = localStorage.getItem('token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

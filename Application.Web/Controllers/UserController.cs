@@ -11,10 +11,15 @@ namespace Application.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly CategoryService _categoryService;
 
-        public UserController(UserService userService)
+        public UserController(
+            UserService userService,
+            CategoryService categoryService
+        )
         {
             _userService = userService;
+            _categoryService = categoryService;
         }
 
         [AllowAnonymous]
@@ -29,6 +34,7 @@ namespace Application.Api.Controllers
                 return BadRequest("This email is already registered.");
 
             var createdUser = await _userService.AddAsync(user);
+            _categoryService.AddDefaultCategoryAsync(createdUser.Id);
             return CreatedAtAction(nameof(GetById), new { id = createdUser.Id }, new { message = "User added successfully." });
         }
 

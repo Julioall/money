@@ -5,7 +5,7 @@ import { NotificationService } from '../../core/service/notification/notificatio
 import { AuthService } from '../../core/service/auth/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserFinance } from '../../core/model/entities/userFinance';
-import { firstValueFrom } from 'rxjs';  // Importa firstValueFrom
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -41,24 +41,20 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  showSignUp(): void {
+  showSignUp() {
     this.rightPanelActive = 'right-panel-active';
-    setTimeout(() => {
-      this.signupFormVisible = true;
-      this.loginFormVisible = false;
-      this.loginSubmitted = false;
-      this.loginForm.reset();
-    }, 350);
+    this.signupFormVisible = true;
+    this.loginFormVisible = false;
+    this.loginSubmitted = false;
+    this.loginForm.reset();
   }
 
-  showLogin(): void {
+  showLogin() {
     this.rightPanelActive = '';
-    setTimeout(() => {
-      this.loginFormVisible = true;
-      this.signupFormVisible = false;
-      this.signupSubmitted = false;
-      this.signupForm.reset();
-    }, 350);
+    this.loginFormVisible = true;
+    this.signupFormVisible = false;
+    this.signupSubmitted = false;
+    this.signupForm.reset();
   }
 
   async onLogin(): Promise<void> {
@@ -82,7 +78,7 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  onSignup(): void {
+  onSignup() {
     this.signupSubmitted = true;
     if (this.signupForm.invalid) {
       this.notificationService.showError('Please fill out the form correctly.');
@@ -108,10 +104,8 @@ export class AuthComponent implements OnInit {
     this.authService.signup(newUser).subscribe({
       next: () => {
         this.notificationService.showSuccess('Registration successful!');
-        setTimeout(() => {
-          this.showLogin();
-          this.loginForm.patchValue({ email, password });
-        }, 2000);
+        this.showLogin();
+        this.loginForm.patchValue({ email, password });
       },
       error: () => {
         this.notificationService.showError('Error during registration. Please try again.');
