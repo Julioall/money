@@ -41,7 +41,7 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  showSignUp(): void {
+  showSignUp() {
     this.rightPanelActive = 'right-panel-active';
     this.signupFormVisible = true;
     this.loginFormVisible = false;
@@ -49,7 +49,7 @@ export class AuthComponent implements OnInit {
     this.loginForm.reset();
   }
 
-  showLogin(): void {
+  showLogin() {
     this.rightPanelActive = '';
     this.loginFormVisible = true;
     this.signupFormVisible = false;
@@ -78,7 +78,7 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  onSignup(): void {
+  onSignup() {
     this.signupSubmitted = true;
     if (this.signupForm.invalid) {
       this.notificationService.showError('Please fill out the form correctly.');

@@ -11,7 +11,7 @@ export class IconPickerComponent {
 
   selectedIcon: string = '';
 
-  selectIcon(icon: string): void {
+  selectIcon(icon: string) {
     this.selectedIcon = icon;
     this.iconSelected.emit(icon);
   }
@@ -20,7 +20,7 @@ export class IconPickerComponent {
     return this.selectedIcon === icon ? 'icon-active' : '';
   }
 
-  resetSelection(): void {
+  resetSelection() {
     this.selectedIcon = '';
   }
 }

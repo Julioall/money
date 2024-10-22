@@ -11,7 +11,7 @@ export class ColorPickerComponent {
 
   selectedColor: string = '';
 
-  selectColor(color: string): void {
+  selectColor(color: string) {
     this.selectedColor = color;
     this.colorSelected.emit(color);
   }
@@ -24,7 +24,7 @@ export class ColorPickerComponent {
     return { 'background-color': color };
   }
 
-  resetSelection(): void {
+  resetSelection() {
     this.selectedColor = '';
   }
 }

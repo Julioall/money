@@ -28,6 +28,8 @@ export class CategoriesComponent implements OnInit {
   selectedColorExpense: string = '';
   selectedIconIncome: string = '';
   selectedIconExpense: string = '';
+  idExpenseModal: string =  'expenseModal';
+  idIncomeModal: string = 'incomeModal';
   colors: string[] = [
     '#ED1B25', '#A41A44', '#7A2990', '#392B8A', '#2F5AA8', '#018CCD', '#60AF46', '#CDDB26', '#F6ED24', '#F7BA12', '#F9971D', '#F14B21', "#F26A6A", "#C94B67", "#A158B5", "#5D4FB1", "#4B7EC2", "#42B8E1", "#88C876", "#E1ED6C", "#F8F17D", "#F8CD5C"
   ];
@@ -312,13 +314,16 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  onClosedModal(){
-    try {
-      this.resetSelections()
-      this.iconPicker.resetSelection();
-      this.colorPicker.resetSelection();
-    } catch (error) {
-      this._notificationService.showError(`An error occurred while adding the income category: ${error}`);
+  private closeModal() {
+    const idModal = this.isIncomeCategory ? this.idIncomeModal : this.idExpenseModal;
+    const modal = document.getElementById(idModal);
+
+    if (modal != null) {
+      const closeButton = modal.querySelector('.btn-close');
+
+      if (closeButton != null) {
+        (closeButton as HTMLElement).click();
+      }
     }
   }
 
@@ -346,7 +351,7 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  private isValidCategoryData(): boolean {
+  private isValidCategoryData() {
     this.isSubmitted = true;
     const categoryName = this.isIncomeCategory
       ? this.categoryForm.get('incomeCategoryName')?.value
@@ -366,7 +371,6 @@ export class CategoriesComponent implements OnInit {
 
     return isCategoryNameValid && isIconSelected && isColorSelected;
   }
-
 
   addCategory() {
     const categoryName = this.isIncomeCategory ? this.categoryForm.get('incomeCategoryName')?.value : this.categoryForm.get('expenseCategoryName')?.value;
@@ -389,7 +393,7 @@ export class CategoriesComponent implements OnInit {
           this.expenseCategories.push(category);
         }
         this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category added successfully!`);
-        this.onClosedModal();
+        this.closeModal()
         this.resetSelections();
       },
       error: (error) => {
@@ -398,13 +402,15 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  private resetSelections(): void {
+  resetSelections() {
     this.selectedColorIncome = '';
     this.selectedColorExpense = '';
     this.selectedIconIncome = '';
     this.selectedIconExpense = '';
     this.isSubmitted = false;
     this.categoryForm.reset();
+    this.iconPicker.resetSelection();
+    this.colorPicker.resetSelection();
   }
 
   onRemove(_t27: Category) {
@@ -415,19 +421,19 @@ export class CategoriesComponent implements OnInit {
     this._notificationService.showSuccess(`TODO - Ainda precisa ser implementado!!!`);
   }
 
-  onColorSelectedIncome(color: string): void {
+  onColorSelectedIncome(color: string) {
     this.selectedColorIncome = color;
   }
 
-  onColorSelectedExpense(color: string): void {
+  onColorSelectedExpense(color: string) {
     this.selectedColorExpense = color;
   }
 
-  onIconSelectedExpense(icon: string): void {
+  onIconSelectedExpense(icon: string) {
     this.selectedIconExpense = icon;
   }
 
-  onIconSelectedIncome(icon: string): void {
+  onIconSelectedIncome(icon: string) {
     this.selectedIconIncome = icon;
   }
 }

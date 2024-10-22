@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../../model/entities/user';
-import { jwtDecode } from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../environment/environment';
 import { Router } from '@angular/router';
 
@@ -14,7 +14,7 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}/User/add`;
   private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   public loggedIn$ = this.loggedInSubject.asObservable();
-  
+
   constructor(
     private http: HttpClient,
     private router: Router
@@ -25,7 +25,7 @@ export class AuthService {
   async login(email: string, password: string): Promise<Observable<any>> {
     const url = `${environment.apiUrl}/Authentication/login`;
     const deviceInfo = this.getDeviceInfo();
-    
+
     const body = {
       Email: email,
       Password: password,
@@ -40,7 +40,7 @@ export class AuthService {
     } catch (error) {
       console.error('Could not retrieve IP address, proceeding without it.', error);
     }
-    
+
     return this.http.post<any>(url, body).pipe(
       map((response) => {
         if (response && response.token) {
@@ -64,12 +64,12 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logout() {
     this.removeToken();
     this.router.navigate(['/login']);
   }
 
-  saveToken(token: string): void {
+  saveToken(token: string) {
     localStorage.setItem('token', token);
   }
 
@@ -77,7 +77,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  removeToken(): void {
+  removeToken() {
     localStorage.removeItem('token');
   }
 
@@ -98,12 +98,12 @@ export class AuthService {
     return token !== null && !this.isTokenExpired(token);
   }
 
-  private checkLoginStatus(): void {
+  private checkLoginStatus() {
     const isLoggedIn = this.isLoggedIn();
     this.loggedInSubject.next(isLoggedIn);
   }
 
-  updateLoginStatus(): void {
+  updateLoginStatus() {
     this.checkLoginStatus();
   }
 
