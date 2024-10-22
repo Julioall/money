@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit {
   isExpenseCategory: boolean = true;
   isIncomeCategory: boolean = false;
   isSubmitted: boolean = false;
+  isEditing: boolean = false;
   incomeCategories: Category[] = [];
   expenseCategories: Category[] = [];
   categoryForm: FormGroup;
@@ -327,6 +328,13 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  onActionModal(){
+    if (this.isEditing){
+      // Usar uma ação generica e dentro dela tomar as decições de edicao e adição
+    }
+
+    
+  }
   onAddIncome() {
     try {
       if (this.isValidCategoryData()) {
@@ -413,27 +421,53 @@ export class CategoriesComponent implements OnInit {
     this.colorPicker.resetSelection();
   }
 
-  onRemove(_t27: Category) {
-    this._notificationService.showSuccess(`TODO - Ainda precisa ser implementado!!!`);
+  onRemove(categoria: Category) {
+    try{
+
+    } catch (error) {
+      this._notificationService.showError(`An error occurred while removing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}`);
+    }
   }
 
-  onEdit(_t27: Category) {
-    this._notificationService.showSuccess(`TODO - Ainda precisa ser implementado!!!`);
-  }
+  onEdit(categoria: Category) {
+    try {
+      if (!categoria || !categoria.background || !categoria.icon) {
+        throw new Error('Invalid category data');
+      }
 
-  onColorSelectedIncome(color: string) {
+      if (this.isIncomeCategory) {
+        this.categoryForm.get('incomeCategoryName')?.setValue(categoria.name)
+        this.selectedColorIncome = categoria.background;
+        this.selectedIconIncome = categoria.icon;
+      } else {
+        this.categoryForm.get('expenseCategoryName')?.setValue(categoria.name)
+        this.selectedColorExpense = categoria.background;
+        this.selectedIconExpense = categoria.icon;
+      }
+
+      this.colorPicker.selectedColor = categoria.background;
+      this.iconPicker.selectedIcon = categoria.icon;
+
+    } catch (error) {
+      this._notificationService.showError(
+        `An error occurred while editing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}}`
+      );
+    }
+  }
+  
+  onSelectIncomeColor(color: string) {
     this.selectedColorIncome = color;
   }
 
-  onColorSelectedExpense(color: string) {
+  onSelectExpenseColor(color: string) {
     this.selectedColorExpense = color;
   }
 
-  onIconSelectedExpense(icon: string) {
+  onSelectExpenseIcon(icon: string) {
     this.selectedIconExpense = icon;
   }
 
-  onIconSelectedIncome(icon: string) {
+  onSelectIncomeIcon(icon: string) {
     this.selectedIconIncome = icon;
   }
 }

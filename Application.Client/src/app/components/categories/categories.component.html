@@ -3,11 +3,11 @@
     <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">Categories</h1>
     <button *ngIf="isIncomeCategory" type="button" data-bs-toggle="modal" data-bs-target="#incomeModal"
         class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
-        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
+        class="fa fa-plus-circle text-green-primary-darker text-medium"></i><span
         class="ms-3 d-none d-sm-block">Income Category</span></button>
     <button *ngIf="isExpenseCategory" type="button" data-bs-toggle="modal" data-bs-target="#expenseModal"
       class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
-        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
+        class="fa fa-plus-circle text-green-primary-darker text-medium"></i><span
         class="ms-3 d-none d-sm-block">Expense Category</span></button>
   </div>
   <div class="row mt-5">
@@ -57,7 +57,7 @@
                         class="d-flex align-items-center justify-content-center text-small me-3 text-neutral-white-100  rounded-5"></i>
                       {{ item.name }}</span>
                     <div>
-                      <button (click)="onEdit(item)" class="bg-transparent">
+                      <button (click)="onEdit(item)" class="bg-transparent" type="button" data-bs-toggle="modal" [attr.data-bs-target]="isIncomeCategory ? '#incomeModal' : '#expenseModal'">
                         <i
                           class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
                       </button>
@@ -101,12 +101,12 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose a color</p>
-          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedIncome($event)"></app-color-picker>
+          <app-color-picker [colors]="colors" (colorSelected)="onSelectIncomeColor($event)"></app-color-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedColorIncome">Color is required.</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose an icon</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedIncome($event)">
+          <app-icon-picker [icons]="icons" (iconSelected)="onSelectIncomeIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">Icon is required.</small>
         </div>
@@ -137,12 +137,12 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose a color</p>
-          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedExpense($event)"></app-color-picker>
+          <app-color-picker [colors]="colors" (colorSelected)="onSelectExpenseColor($event)"></app-color-picker>
             <small class="text-danger" *ngIf="isSubmitted && !selectedColorExpense">Color is required.</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose an icon</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedExpense($event)">
+          <app-icon-picker [icons]="icons" (iconSelected)="onSelectExpenseIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">Icon is required.</small>
         </div>
