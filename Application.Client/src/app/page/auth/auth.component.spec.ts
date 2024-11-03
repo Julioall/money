@@ -1,7 +1,8 @@
-/* tslint:disable:no-unused-variable */
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AuthComponent } from './auth.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ToastrModule } from 'ngx-toastr';
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -9,6 +10,11 @@ describe('AuthComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        ToastrModule.forRoot(),
+      ],
       declarations: [ AuthComponent ]
     })
     .compileComponents();

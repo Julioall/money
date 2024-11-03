@@ -8,11 +8,11 @@ import { NotificationService } from '../notification/notification.service';
 @Injectable({
   providedIn: 'root',
   useFactory: (http: HttpClient, notificationService: NotificationService) => {
-    return new CategoriesRepositoryService(http, notificationService);
+    return new CategoriesService(http, notificationService);
   },
   deps: [HttpClient, NotificationService]
 })
-export class CategoriesRepositoryService extends BaseRepositoryService<Category> {
+export class CategoriesService extends BaseRepositoryService<Category> {
   constructor(http: HttpClient, notificationService: NotificationService) {
     super(notificationService, http, 'Category');
   }
