@@ -3,19 +3,19 @@
     <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">Categories</h1>
     <button *ngIf="isIncomeCategory" type="button" data-bs-toggle="modal" data-bs-target="#incomeModal"
         class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
-        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
+        class="fa fa-plus-circle text-green-primary-darker text-medium"></i><span
         class="ms-3 d-none d-sm-block">Income Category</span></button>
     <button *ngIf="isExpenseCategory" type="button" data-bs-toggle="modal" data-bs-target="#expenseModal"
       class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small"><i
-        class="fa fa-plus-circle text-green-primary-darker text-medium" aria-hidden="true"></i><span
+        class="fa fa-plus-circle text-green-primary-darker text-medium"></i><span
         class="ms-3 d-none d-sm-block">Expense Category</span></button>
   </div>
   <div class="row mt-5">
     <div class="col mt-5">
       <div class="row">
-        <a (click)="toggleCategory()" [ngClass]="{'active-income  border-opacity-75': isIncomeCategory}"
+        <a (click)="onToggleCategory()" [ngClass]="{'active-income  border-opacity-75': isIncomeCategory}"
           class="col text-center text-small text-green-primary pb-2">Income</a>
-        <a (click)="toggleCategory()" [ngClass]="{'active-expense border-opacity-75': isExpenseCategory}"
+        <a (click)="onToggleCategory()" [ngClass]="{'active-expense border-opacity-75': isExpenseCategory}"
           class="col text-center text-small text-red-primary pb-2">Expense</a>
         <div class="border-bottom border-1  border-opacity-75">
         </div>
@@ -32,11 +32,11 @@
                       {{ item.name }}
                     </span>
                     <div>
-                      <button (click)="onEdit(item)" class="bg-transparent">
+                      <button (click)="onEdit(item)" class="bg-transparent" type="button" data-bs-toggle="modal" [attr.data-bs-target]="isIncomeCategory ? '#incomeModal' : '#expenseModal'">
                         <i
                           class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light rounded-5"></i>
                       </button>
-                      <button (click)="onRemove(item)" class="bg-transparent">
+                      <button (click)="onRemove(item.id!)" class="bg-transparent">
                         <i
                           class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light rounded-5"></i>
                       </button>
@@ -52,16 +52,17 @@
               <li *ngFor="let item of expenseCategories; let i = index">
                 <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1" id="category-{{i}}">
                   <div class="card-body d-flex align-items-center justify-content-between">
-                    <span class="d-flex align-items-center"><i [ngClass]="item.icon || 'fa-solid fa-file'"
+                    <span class="d-flex align-items-center">
+                      <i [ngClass]="item.icon || 'fa-solid fa-file'"
                         [ngStyle]="{'background-color': item.background || 'bg-text-gray-dark'}"
                         class="d-flex align-items-center justify-content-center text-small me-3 text-neutral-white-100  rounded-5"></i>
                       {{ item.name }}</span>
                     <div>
-                      <button (click)="onEdit(item)" class="bg-transparent">
+                      <button (click)="onEdit(item)" class="bg-transparent" type="button" data-bs-toggle="modal" [attr.data-bs-target]="isIncomeCategory ? '#incomeModal' : '#expenseModal'">
                         <i
                           class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
                       </button>
-                      <button (click)="onRemove(item)" class="bg-transparent">
+                      <button (click)="onRemove(item.id!)" class="bg-transparent">
                         <i
                           class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
                       </button>
@@ -76,8 +77,8 @@
       </div>
     </div>
     <form [formGroup]="categoryForm">
-      <app-modal [idModal]="idIncomeModal" [title]="'Título Personalizado'" [textButton]="'Create Income'"
-        (action)="onAddIncome()" (close)="resetSelections()">
+      <app-modal [idModal]="idIncomeModal" [textButton]="textButtonActionModalIncome"
+        (action)="onActionModal()" (close)="onResetSelections()">
         <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">Creating income category</p>
         <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <div class="d-flex align-items-center justify-content-start">
@@ -101,19 +102,19 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose a color</p>
-          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedIncome($event)"></app-color-picker>
+          <app-color-picker [colors]="colors" (colorSelected)="onSelectIncomeColor($event)"></app-color-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedColorIncome">Color is required.</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose an icon</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedIncome($event)">
+          <app-icon-picker [icons]="icons" (iconSelected)="onSelectIncomeIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">Icon is required.</small>
         </div>
       </app-modal>
 
-      <app-modal [idModal]="idExpenseModal" [title]="'Título Personalizado'" [textButton]="'Create Expense'"
-        (action)="onAddExpense()" (close)="resetSelections()">
+      <app-modal [idModal]="idExpenseModal" [textButton]="textButtonActionModalExpense"
+        (action)="onActionModal()" (close)="onResetSelections()">
         <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">Creating expense category</p>
         <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <div class="d-flex align-items-center justify-content-start">
@@ -137,12 +138,12 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose a color</p>
-          <app-color-picker [colors]="colors" (colorSelected)="onColorSelectedExpense($event)"></app-color-picker>
+          <app-color-picker [colors]="colors" (colorSelected)="onSelectExpenseColor($event)"></app-color-picker>
             <small class="text-danger" *ngIf="isSubmitted && !selectedColorExpense">Color is required.</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">Choose an icon</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onIconSelectedExpense($event)">
+          <app-icon-picker [icons]="icons" (iconSelected)="onSelectExpenseIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">Icon is required.</small>
         </div>

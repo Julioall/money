@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent]
+      declarations: [AppComponent, NavBarComponent],
+      imports: [NgxSpinnerModule, RouterTestingModule, ToastrModule.forRoot(), HttpClientTestingModule],
     }).compileComponents();
   });
 
@@ -13,18 +19,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'app-name'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('app-name');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('app-name app is running!');
   });
 });

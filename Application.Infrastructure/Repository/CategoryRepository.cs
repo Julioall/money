@@ -21,9 +21,11 @@ namespace Application.Infrastructure.Repository
                 if (user == null)
                     throw new InvalidOperationException("User not found.");
 
-                var nextNumber = GetNextCategoryNumber(user.Finance.Categories);
+                if (user.Finance.Categories.Any(c => c.Name == category.Name))
+                    throw new InvalidOperationException($"Category with the name '{category.Name}' already exists.");
 
-                category.Id = $"category-{nextNumber}";
+                category.Id = $"category-{Guid.NewGuid()}";
+
 
                 user.Finance.Categories.Add(category);
                 await session.StoreAsync(user);
@@ -101,26 +103,6 @@ namespace Application.Infrastructure.Repository
 
                 return existingCategory;
             }
-        }
-
-        private int GetNextCategoryNumber(IEnumerable<Category> categories)
-        {
-            var lastCategory = categories
-                .Where(c => c.Id.StartsWith("category-"))
-                .OrderByDescending(c => c.Id)
-                .FirstOrDefault();
-
-            int nextNumber = 1;
-            if (lastCategory != null)
-            {
-                var lastIdParts = lastCategory.Id.Split('-');
-                if (lastIdParts.Length == 2 && int.TryParse(lastIdParts[1], out int lastNumber))
-                {
-                    nextNumber = lastNumber + 1;
-                }
-            }
-
-            return nextNumber;
         }
     }
 }

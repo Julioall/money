@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from '../../core/model/entities/category';
-import { CategoriesRepositoryService } from '../../core/service/categories/categories-repository.service';
+import { CategoriesService } from '../../core/service/categories/categories.service';
 import { NotificationService } from '../../core/service/notification/notification.service';
 import { CategoryType } from '../../core/model/enums/categoryType.enum';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IconPickerComponent } from '../../shared/icon-picker/icon-picker.component';
 import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -21,6 +22,7 @@ export class CategoriesComponent implements OnInit {
   isExpenseCategory: boolean = true;
   isIncomeCategory: boolean = false;
   isSubmitted: boolean = false;
+  isEditing: boolean = false;
   incomeCategories: Category[] = [];
   expenseCategories: Category[] = [];
   categoryForm: FormGroup;
@@ -30,6 +32,10 @@ export class CategoriesComponent implements OnInit {
   selectedIconExpense: string = '';
   idExpenseModal: string =  'expenseModal';
   idIncomeModal: string = 'incomeModal';
+  idCategoryEdition?: string;
+  textButtonActionModalIncome: string = 'Create expense';
+  textButtonActionModalExpense: string = 'Create expense';
+
   colors: string[] = [
     '#ED1B25', '#A41A44', '#7A2990', '#392B8A', '#2F5AA8', '#018CCD', '#60AF46', '#CDDB26', '#F6ED24', '#F7BA12', '#F9971D', '#F14B21', "#F26A6A", "#C94B67", "#A158B5", "#5D4FB1", "#4B7EC2", "#42B8E1", "#88C876", "#E1ED6C", "#F8F17D", "#F8CD5C"
   ];
@@ -283,7 +289,7 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _categoriesRepository: CategoriesRepositoryService,
+    private _categoriesService: CategoriesService,
     private _notificationService: NotificationService,
   ) {
     this.categoryForm = this._fb.group({
@@ -293,17 +299,138 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.onGetAllCategories();
+    this._getAllCategories();
   }
 
-  toggleCategory() {
+  onToggleCategory() {
     this.isExpenseCategory = !this.isExpenseCategory;
     this.isIncomeCategory = !this.isIncomeCategory;
-    this.onGetAllCategories();
+    this._getAllCategories();
   }
 
-  onGetAllCategories() {
-    this._categoriesRepository.getAll().subscribe({
+  onActionModal(){
+    try {
+      if (this._isValidCategory()) {
+        if (this.idCategoryEdition){
+          this._editCategory();
+        }else{
+          this._addCategory();
+        }
+      } else {
+        this._notificationService.showError('Please ensure all fields are filled in correctly for the income category.');
+      }
+    } catch (error) {
+      this._notificationService.showError(`An error occurred while closing the category modal: ${error}`);
+    }
+  }
+
+  async onRemove(id: string) { debugger
+    try{
+      await firstValueFrom(this._categoriesService.delete(id))
+      this._getAllCategories();
+    } catch (error) {
+      this._notificationService.showError(`An error occurred while removing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}`);
+    }
+  }
+
+  onEdit(categoria: Category) {
+    try {
+      if (!categoria || !categoria.background || !categoria.icon) {
+        throw new Error('Invalid category data');
+      }
+      if (this.isIncomeCategory) {
+        this.textButtonActionModalIncome = "Edit Category"
+        this.categoryForm.get('incomeCategoryName')?.setValue(categoria.name)
+        this.selectedColorIncome = categoria.background;
+        this.selectedIconIncome = categoria.icon;
+        this.idCategoryEdition = categoria.id;
+      } else {
+        this.textButtonActionModalExpense = "Edit Category"
+        this.categoryForm.get('expenseCategoryName')?.setValue(categoria.name)
+        this.selectedColorExpense = categoria.background;
+        this.selectedIconExpense = categoria.icon;
+        this.idCategoryEdition = categoria.id;
+      }
+
+      this.colorPicker.selectedColor = categoria.background;
+      this.iconPicker.selectedIcon = categoria.icon;
+
+    } catch (error) {
+      this._notificationService.showError(
+        `An error occurred while editing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}}`
+      );
+    }
+  }
+
+  onResetSelections() {
+    this.selectedColorIncome = '';
+    this.selectedColorExpense = '';
+    this.selectedIconIncome = '';
+    this.selectedIconExpense = '';
+    this.idCategoryEdition = '';
+    this.textButtonActionModalIncome = 'Create income';
+    this.textButtonActionModalExpense = 'Create expense';
+    this.isSubmitted = false;
+    this.categoryForm.reset();
+    this.iconPicker.resetSelection();
+    this.colorPicker.resetSelection();
+  }
+
+  onSelectIncomeColor(color: string) {
+    this.selectedColorIncome = color;
+  }
+
+  onSelectExpenseColor(color: string) {
+    this.selectedColorExpense = color;
+  }
+
+  onSelectExpenseIcon(icon: string) {
+    this.selectedIconExpense = icon;
+  }
+
+  onSelectIncomeIcon(icon: string) {
+    this.selectedIconIncome = icon;
+  }
+
+  private _buildCategoryObject(): Category {
+    const categoryName = this.isIncomeCategory
+      ? this.categoryForm.get('incomeCategoryName')?.value
+      : this.categoryForm.get('expenseCategoryName')?.value;
+    const selectedIcon = this.isIncomeCategory ? this.selectedIconIncome : this.selectedIconExpense;
+    const selectedColor = this.isIncomeCategory ? this.selectedColorIncome : this.selectedColorExpense;
+    const categoryType = this.isIncomeCategory ? CategoryType.Income : CategoryType.Expense;
+
+    return {
+      id: this.idCategoryEdition,
+      name: categoryName,
+      type: categoryType,
+      icon: selectedIcon,
+      background: selectedColor,
+    };
+  }
+
+  private _addCategory() {
+    let newCategory: Category = this._buildCategoryObject();
+
+    this._categoriesService.create(newCategory).subscribe({
+      next: (category: Category) => {
+        if (this.isIncomeCategory) {
+          this.incomeCategories.push(category);
+        } else {
+          this.expenseCategories.push(category);
+        }
+        this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category added successfully!`);
+        this._closeModal()
+        this.onResetSelections();
+      },
+      error: (error) => {
+        this._notificationService.showError(`Error adding ${this.isIncomeCategory ? 'income' : 'expense'} category:`, error);
+      }
+    });
+  }
+
+  private _getAllCategories() {
+    this._categoriesService.getAll().subscribe({
       next: (data: Category[]) => {
         this.incomeCategories = data.filter(category => category.type === CategoryType.Income);
         this.expenseCategories = data.filter(category => category.type === CategoryType.Expense);
@@ -314,7 +441,35 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  private closeModal() {
+  private _editCategory(){
+    let newCategory: Category = this._buildCategoryObject();
+
+    this._categoriesService.update(newCategory).subscribe({
+      next: (updatedCategory: Category) => {
+        if (this.isIncomeCategory) {
+          const index = this.incomeCategories.findIndex(c => c.id === updatedCategory.id);
+          if (index !== -1) {
+            this.incomeCategories[index] = updatedCategory;
+          }
+        } else {
+          const index = this.expenseCategories.findIndex(c => c.id === updatedCategory.id);
+          if (index !== -1) {
+            this.expenseCategories[index] = updatedCategory;
+          }
+        }
+
+        this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category updated successfully!`);
+        this._closeModal();
+        this.onResetSelections();
+      },
+      error: (error) => {
+        this._notificationService.showError(`Error updating ${this.isIncomeCategory ? 'income' : 'expense'} category:`, error);
+      }
+    });
+
+  }
+
+  private _closeModal() {
     const idModal = this.isIncomeCategory ? this.idIncomeModal : this.idExpenseModal;
     const modal = document.getElementById(idModal);
 
@@ -327,31 +482,7 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  onAddIncome() {
-    try {
-      if (this.isValidCategoryData()) {
-        this.addCategory();
-      } else {
-        this._notificationService.showError('Please ensure all fields are filled in correctly for the income category.');
-      }
-    } catch (error) {
-      this._notificationService.showError(`An error occurred while closing the category modal: ${error}`);
-    }
-  }
-
-  onAddExpense() {
-    try {
-      if (this.isValidCategoryData()) {
-        this.addCategory();
-      } else {
-        this._notificationService.showError('Please ensure all fields are filled in correctly for the expense category.');
-      }
-    } catch (error) {
-      this._notificationService.showError(`An error occurred while adding the expense category: ${error}`);
-    }
-  }
-
-  private isValidCategoryData() {
+  private _isValidCategory() {
     this.isSubmitted = true;
     const categoryName = this.isIncomeCategory
       ? this.categoryForm.get('incomeCategoryName')?.value
@@ -370,70 +501,5 @@ export class CategoriesComponent implements OnInit {
     const isColorSelected = !!selectedColor;
 
     return isCategoryNameValid && isIconSelected && isColorSelected;
-  }
-
-  addCategory() {
-    const categoryName = this.isIncomeCategory ? this.categoryForm.get('incomeCategoryName')?.value : this.categoryForm.get('expenseCategoryName')?.value;
-    const selectedIcon = this.isIncomeCategory ? this.selectedIconIncome : this.selectedIconExpense;
-    const selectedColor = this.isIncomeCategory ? this.selectedColorIncome : this.selectedColorExpense;
-    const categoryType = this.isIncomeCategory ? CategoryType.Income : CategoryType.Expense;
-
-    const newCategory: Category = {
-      name: categoryName,
-      type: categoryType,
-      icon: selectedIcon,
-      background: selectedColor,
-    };
-
-    this._categoriesRepository.create(newCategory).subscribe({
-      next: (category: Category) => {
-        if (this.isIncomeCategory) {
-          this.incomeCategories.push(category);
-        } else {
-          this.expenseCategories.push(category);
-        }
-        this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category added successfully!`);
-        this.closeModal()
-        this.resetSelections();
-      },
-      error: (error) => {
-        this._notificationService.showError(`Error adding ${this.isIncomeCategory ? 'income' : 'expense'} category:`, error);
-      }
-    });
-  }
-
-  resetSelections() {
-    this.selectedColorIncome = '';
-    this.selectedColorExpense = '';
-    this.selectedIconIncome = '';
-    this.selectedIconExpense = '';
-    this.isSubmitted = false;
-    this.categoryForm.reset();
-    this.iconPicker.resetSelection();
-    this.colorPicker.resetSelection();
-  }
-
-  onRemove(_t27: Category) {
-    this._notificationService.showSuccess(`TODO - Ainda precisa ser implementado!!!`);
-  }
-
-  onEdit(_t27: Category) {
-    this._notificationService.showSuccess(`TODO - Ainda precisa ser implementado!!!`);
-  }
-
-  onColorSelectedIncome(color: string) {
-    this.selectedColorIncome = color;
-  }
-
-  onColorSelectedExpense(color: string) {
-    this.selectedColorExpense = color;
-  }
-
-  onIconSelectedExpense(icon: string) {
-    this.selectedIconExpense = icon;
-  }
-
-  onIconSelectedIncome(icon: string) {
-    this.selectedIconIncome = icon;
   }
 }

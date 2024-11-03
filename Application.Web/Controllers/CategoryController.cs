@@ -36,12 +36,12 @@ namespace Application.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { categoryId = createdCategory.Id }, createdCategory);
         }
 
-        [HttpDelete("{categoryId}")]
-        public async Task<IActionResult> Delete(string categoryId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
             
-            var  success = await _categoryService.DeleteAsync(userId, categoryId);
+            var  success = await _categoryService.DeleteAsync(userId, id);
             if (!success)
                 return NotFound("Category not found.");
 
