@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-credit-card',
+  standalone: true,
+  imports: [],
   templateUrl: './credit-card.component.html',
-  styleUrls: ['./credit-card.component.scss']
+  styleUrl: './credit-card.component.scss'
 })
-export class CreditCardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class CreditCardComponent {
 
 }

@@ -1,4 +1,4 @@
-import { CategoryType } from "../enums/categoryType.enum";
+import { CategoryType } from "./enums/categoryType.enum";
 
 export class Category {
     id?: string;

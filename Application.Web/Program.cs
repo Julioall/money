@@ -92,7 +92,6 @@ public class Program
                    .AllowAnyHeader();
         });
 
-        // Keep Swagger disabled in all environments
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -105,7 +104,6 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        app.MapFallbackToFile("/index.html");
 
         app.Run();
     }

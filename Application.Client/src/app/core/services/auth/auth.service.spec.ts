@@ -1,19 +1,12 @@
 import { TestBed } from '@angular/core/testing';
+
 import { AuthService } from './auth.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
-import { ToastrModule } from 'ngx-toastr';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
-
+    TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
 

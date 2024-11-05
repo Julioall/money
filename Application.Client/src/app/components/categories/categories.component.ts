@@ -1,18 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Category } from '../../core/model/entities/category';
-import { CategoriesService } from '../../core/service/categories/categories.service';
-import { NotificationService } from '../../core/service/notification/notification.service';
-import { CategoryType } from '../../core/model/enums/categoryType.enum';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalComponent } from '../../shared/modal/modal.component';
 import { IconPickerComponent } from '../../shared/icon-picker/icon-picker.component';
 import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
-import { ModalComponent } from '../../shared/modal/modal.component';
+import { Category } from '../../core/models/category';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CategoriesService } from '../../core/services/categories/categories.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
 import { firstValueFrom } from 'rxjs';
+import { CategoryType } from '../../core/models/enums/categoryType.enum';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-categories',
+  standalone: true,
+  imports: [CommonModule, IconPickerComponent, ColorPickerComponent, ModalComponent, ReactiveFormsModule],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss']
+  styleUrl: './categories.component.scss'
 })
 export class CategoriesComponent implements OnInit {
   @ViewChild(ModalComponent) modal!: ModalComponent;

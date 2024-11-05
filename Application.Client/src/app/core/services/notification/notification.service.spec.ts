@@ -1,15 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { ToastrModule } from 'ngx-toastr';
+
 import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
   let service: NotificationService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [NotificationService],
-      imports: [ToastrModule.forRoot()]
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(NotificationService);
   });
 

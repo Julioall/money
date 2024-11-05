@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { BaseRepositoryService } from '../baseRepository.service';
-import { Category } from '../../model/entities/category';
 import { NotificationService } from '../notification/notification.service';
+import { Category } from '../../models/category';
+import { BaseRepositoryService } from '../base-repository.service';
 
 @Injectable({
   providedIn: 'root',

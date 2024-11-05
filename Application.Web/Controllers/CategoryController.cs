@@ -3,7 +3,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Api.Controllers
+namespace Application.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -40,8 +40,8 @@ namespace Application.Api.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            
-            var  success = await _categoryService.DeleteAsync(userId, id);
+
+            var success = await _categoryService.DeleteAsync(userId, id);
             if (!success)
                 return NotFound("Category not found.");
 
@@ -74,7 +74,7 @@ namespace Application.Api.Controllers
             var category = await _categoryService.GetByIdAsync(userId, categoryId);
             if (category == null)
                 return NotFound("Category not found.");
-                
+
             return Ok(category);
         }
     }

@@ -1,18 +1,17 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ColorPickerComponent } from './color-picker.component';
 
 describe('ColorPickerComponent', () => {
   let component: ColorPickerComponent;
   let fixture: ComponentFixture<ColorPickerComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ColorPickerComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ColorPickerComponent]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(ColorPickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

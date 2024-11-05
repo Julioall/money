@@ -1,4 +1,4 @@
-import { TransactionType } from '../enums/transactionType.enum'; // Ajuste o caminho conforme necessário
+import { TransactionType } from "./enums/transactionType.enum";
 
 export class Transaction {
     id?: string;

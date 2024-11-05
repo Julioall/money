@@ -7,13 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
+          "style": "scss"
         }
       },
       "root": "",
@@ -23,13 +17,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/Application.Client",
+            "outputPath": "dist/application.client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -37,17 +32,14 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-toastr/toastr.css",
-              "node_modules/ngx-spinner/animations/ball-spin-fade.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.css"
+              "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/jquery/dist/jquery.min.js"
-            ]
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "server.ts"
+            }
           },
           "configurations": {
             "production": {
@@ -83,10 +75,7 @@
               "buildTarget": "Application.Client:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "src/proxy.conf.js"
-          }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
@@ -99,6 +88,7 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
@@ -108,14 +98,13 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "karmaConfig": "karma.conf.js"
+            "scripts": []
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "51c12231-3bac-4bc0-9bca-173fad932453"
+    "analytics": "7bef0860-149d-4535-9d8f-ac49d5010816"
   }
 }

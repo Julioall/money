@@ -1,11 +1,10 @@
-import { TestBed, waitForAsync, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ToastrModule } from 'ngx-toastr';
 
-import { BaseRepositoryService } from './baseRepository.service';
-import { NotificationService } from '../service/notification/notification.service';
-import { ENTITY_NAME_TOKEN } from './baseRepository.service';
-import { Category } from '../model/entities/category';
+import { NotificationService } from './notification/notification.service';
+import { Category } from '../models/category';
+import { BaseRepositoryService, ENTITY_NAME_TOKEN } from './base-repository.service';
 
 describe('Service: BaseRepository', () => {
   beforeEach(() => {
