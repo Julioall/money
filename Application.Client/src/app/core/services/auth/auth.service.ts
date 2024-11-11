@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
@@ -17,7 +18,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.checkLoginStatus();
   }
@@ -70,15 +72,22 @@ export class AuthService {
   }
 
   saveToken(token: string) {
-    localStorage.setItem('token', token);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('token', token);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
   }
 
   removeToken() {
-    localStorage.removeItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+    }
   }
 
   isTokenExpired(token: string): boolean {
@@ -116,10 +125,13 @@ export class AuthService {
   }
 
   getDeviceInfo() {
-    const userAgent = navigator.userAgent;
-    const browser = this.getBrowserInfo(userAgent);
-    const os = this.getOSInfo(userAgent);
-    return { browser, os };
+    if (isPlatformBrowser(this.platformId)) {
+      const userAgent = navigator.userAgent;
+      const browser = this.getBrowserInfo(userAgent);
+      const os = this.getOSInfo(userAgent);
+      return { browser, os };
+    }
+    return { browser: 'Unknown Browser', os: 'Unknown OS' };
   }
 
   private getBrowserInfo(userAgent: string): string {
@@ -151,6 +163,7 @@ export class AuthService {
       return 'Unknown OS';
     }
   }
+
   getIpAddress(): Observable<any> {
     const apiUrl = 'https://api.ipify.org?format=json';
     return this.http.get<any>(apiUrl);

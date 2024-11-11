@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-overview',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.scss'
 })
