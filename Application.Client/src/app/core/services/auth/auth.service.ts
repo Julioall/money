@@ -4,7 +4,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../../environment/environment';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 
@@ -38,7 +38,7 @@ export class AuthService {
 
     try {
       const ipResponse = await lastValueFrom(this.getIpAddress());
-      body.IpAddress = ipResponse.ip; // Adiciona o IP se obtido
+      body.IpAddress = ipResponse.ip;
     } catch (error) {
       console.error('Could not retrieve IP address, proceeding without it.', error);
     }
@@ -116,8 +116,11 @@ export class AuthService {
     this.checkLoginStatus();
   }
 
-  getAuthHeaders(): HttpHeaders {
+  getAuthHeaders(): HttpHeaders { debugger
     const token = this.getToken();
+    if (token){
+      this.logout();
+    }
     if (token && !this.isTokenExpired(token)) {
       return new HttpHeaders().set('Authorization', `Bearer ${token}`);
     }

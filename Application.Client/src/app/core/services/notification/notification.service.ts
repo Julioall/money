@@ -10,7 +10,7 @@ export class NotificationService {
   showSuccess(message: string, title: string = 'Success') {
     this.toast.success(message, title, {
       timeOut: 3000,
-      positionClass: 'toast-top-right'
+      positionClass: 'toast-top-right',
     });
   }
 

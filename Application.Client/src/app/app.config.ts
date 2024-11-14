@@ -3,9 +3,10 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { AuthInterceptor } from './core/services/auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,11 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch()),
     provideAnimations(),
-    provideToastr()
+    provideToastr(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
   ]
 };

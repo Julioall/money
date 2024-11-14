@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { firstValueFrom } from 'rxjs';
 import { User } from '../../core/models/user';
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })

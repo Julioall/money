@@ -26,6 +26,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpPost()]
+        [AllowAnonymous]
         public async Task<IActionResult> Add([FromBody] Category category)
         {
             if (category == null)
@@ -37,6 +38,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -49,6 +51,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpPut()]
+        [AllowAnonymous]
         public async Task<IActionResult> Updatey([FromBody] Category category)
         {
             if (category == null)
@@ -60,6 +63,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet()]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -68,6 +72,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpGet("{categoryId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(string categoryId)
         {
             var userId = await _authenticationService.GetUserIdLoged();

@@ -2,7 +2,7 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../environment/environment';
+import { environment } from '../../../environment/environment';
 import { NotificationService } from './notification/notification.service';
 
 export const ENTITY_NAME_TOKEN = new InjectionToken<string>('entityName');
