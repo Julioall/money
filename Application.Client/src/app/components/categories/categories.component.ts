@@ -327,7 +327,7 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  async onRemove(id: string) { debugger
+  async onRemove(id: string) {
     try{
       await firstValueFrom(this._categoriesService.delete(id))
       this._getAllCategories();

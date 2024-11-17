@@ -116,17 +116,6 @@ export class AuthService {
     this.checkLoginStatus();
   }
 
-  getAuthHeaders(): HttpHeaders { debugger
-    const token = this.getToken();
-    if (token){
-      this.logout();
-    }
-    if (token && !this.isTokenExpired(token)) {
-      return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    }
-    return new HttpHeaders();
-  }
-
   getDeviceInfo() {
     if (isPlatformBrowser(this.platformId)) {
       const userAgent = navigator.userAgent;
