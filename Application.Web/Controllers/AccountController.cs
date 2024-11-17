@@ -3,7 +3,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Api.Controllers
+namespace Application.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -73,7 +73,7 @@ namespace Application.Api.Controllers
             var account = await _accountService.GetByIdAsync(userId, accountId);
             if (account == null)
                 return NotFound("Account not found.");
-                
+
             return Ok(account);
         }
     }

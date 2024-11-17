@@ -3,7 +3,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Api.Controllers
+namespace Application.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -70,7 +70,7 @@ namespace Application.Api.Controllers
             var creditCard = await _creditCardService.GetByIdAsync(userId, creditCardId);
             if (creditCard == null)
                 return NotFound("Credit card not found.");
-            
+
             return Ok(creditCard);
         }
     }

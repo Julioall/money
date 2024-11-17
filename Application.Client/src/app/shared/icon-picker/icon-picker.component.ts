@@ -1,9 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-icon-picker',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './icon-picker.component.html',
-  styleUrls: ['./icon-picker.component.scss']
+  styleUrl: './icon-picker.component.scss'
 })
 export class IconPickerComponent {
   @Input() icons: string[] = [];

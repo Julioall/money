@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../core/service/auth/auth.service';
-import { NotificationService } from '../../core/service/notification/notification.service';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { NotificationService } from '../../core/services/notification/notification.service';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nav-bar',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss']
+  styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent implements OnInit {
   isLoggedIn: boolean = false;

@@ -3,7 +3,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Api.Controllers
+namespace Application.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -35,7 +35,7 @@ namespace Application.Api.Controllers
         public async Task<IActionResult> Delete(string transactionId)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            
+
             var success = await _transactionService.DeleteAsync(userId, transactionId);
             if (!success)
                 return NotFound("Transaction not found.");

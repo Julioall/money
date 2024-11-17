@@ -16,8 +16,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
-        // Disable Swagger (if necessary)
-        // If you do not want to activate it anymore, completely remove these lines
+
         builder.Services.AddSwaggerGen(options =>
         {
             options.SwaggerDoc("v1", new OpenApiInfo { Title = "Application API", Version = "v1" });
@@ -82,9 +81,6 @@ public class Program
 
         var app = builder.Build();
 
-        app.UseDefaultFiles();
-        app.UseStaticFiles();
-
         app.UseCors(options =>
         {
             options.AllowAnyOrigin()
@@ -92,7 +88,6 @@ public class Program
                    .AllowAnyHeader();
         });
 
-        // Keep Swagger disabled in all environments
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -105,7 +100,6 @@ public class Program
         app.UseAuthorization();
 
         app.MapControllers();
-        app.MapFallbackToFile("/index.html");
 
         app.Run();
     }

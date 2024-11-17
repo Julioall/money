@@ -1,4 +1,4 @@
-@import "../../../assets/theme.scss";
+@import "../../../assets/css/variables.scss";
 
 header {
   background-color: $green-primary;
@@ -16,7 +16,7 @@ i, a {
 .dropdown-menu{
   background: $neutral-white-100;
   box-shadow: 0 1px 6px rgba(0, 0, 0, .17);
-  transform: translate(-203px, 35px) !important;
+  transform: translate(14px, 35px) !important;
 }
 
 .dropdown-menu {
@@ -47,5 +47,9 @@ i, a {
 
 .dropdown-item:focus,
 .dropdown-item.active {
-  background-color: $green-light; /* Cor verde ou qualquer outra cor que você preferir */
+  background-color: $green-light;
+}
+
+.dropdownSettings, .dropdownProfile, .dropdownNotification{
+
 }

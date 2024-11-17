@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { User } from '../../core/model/entities/user';
-import { NotificationService } from '../../core/service/notification/notification.service';
-import { AuthService } from '../../core/service/auth/auth.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserFinance } from '../../core/model/entities/userFinance';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { NotificationService } from '../../core/services/notification/notification.service';
 import { firstValueFrom } from 'rxjs';
+import { User } from '../../core/models/user';
+import { UserFinance } from '../../core/models/userFinance';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })

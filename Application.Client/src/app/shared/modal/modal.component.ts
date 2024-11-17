@@ -1,9 +1,12 @@
-import { Component, Input, Output, EventEmitter, input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
   @Input() idModal?: string;

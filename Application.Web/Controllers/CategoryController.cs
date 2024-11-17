@@ -3,7 +3,7 @@ using Application.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Api.Controllers
+namespace Application.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -26,6 +26,7 @@ namespace Application.Api.Controllers
         }
 
         [HttpPost()]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Add([FromBody] Category category)
         {
             if (category == null)
@@ -37,11 +38,12 @@ namespace Application.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            
-            var  success = await _categoryService.DeleteAsync(userId, id);
+
+            var success = await _categoryService.DeleteAsync(userId, id);
             if (!success)
                 return NotFound("Category not found.");
 
@@ -49,6 +51,7 @@ namespace Application.Api.Controllers
         }
 
         [HttpPut()]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Updatey([FromBody] Category category)
         {
             if (category == null)
@@ -60,6 +63,7 @@ namespace Application.Api.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -68,13 +72,14 @@ namespace Application.Api.Controllers
         }
 
         [HttpGet("{categoryId}")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetById(string categoryId)
         {
             var userId = await _authenticationService.GetUserIdLoged();
             var category = await _categoryService.GetByIdAsync(userId, categoryId);
             if (category == null)
                 return NotFound("Category not found.");
-                
+
             return Ok(category);
         }
     }

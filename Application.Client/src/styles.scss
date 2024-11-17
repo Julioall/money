@@ -1,4 +1,4 @@
-@import "../src/assets/theme.scss";
+@import "../src/assets/css/variables.scss";
 
 * {
   border: none;
@@ -24,7 +24,6 @@ h1 {
   font-size: 2.75rem !important;
 }
 
-
 a {
   text-decoration: none !important;
   color: $green-gray-dark !important;
@@ -34,8 +33,6 @@ a:hover {
   color: $green-secondary !important;
   cursor: pointer !important;
 }
-
-
 
 input {
   border: none !important;
@@ -76,8 +73,8 @@ input {
   line-height: 30px;
 }
 
-
 @media (min-width: 1400px) {
+
   .container,
   .container-lg,
   .container-md,

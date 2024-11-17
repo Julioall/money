@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../core/service/auth/auth.service';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-overview',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
+  styleUrl: './overview.component.scss'
 })
 export class OverviewComponent implements OnInit {
   token: string | null | undefined;
