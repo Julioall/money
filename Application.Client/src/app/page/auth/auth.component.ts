@@ -7,11 +7,12 @@ import { User } from '../../core/models/user';
 import { UserFinance } from '../../core/models/userFinance';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslateModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })

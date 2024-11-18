@@ -1,0 +1,92 @@
+{
+  "login": {
+    "title": "Entrar",
+    "orUseAccount": "ou use sua conta",
+    "email": "Email",
+    "emailRequired": "Email é obrigatório.",
+    "emailInvalid": "Formato de email inválido.",
+    "password": "Senha",
+    "passwordRequired": "Senha é obrigatória.",
+    "passwordMinLength": "A senha deve ter pelo menos 6 caracteres.",
+    "signIn": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "register": "Cadastre-se",
+    "forgotPassword": "Esqueceu sua senha?",
+    "getItBack": "Recupere-a"
+  },
+  "signup": {
+    "title": "Criar Conta",
+    "orUseEmail": "ou use seu email para se registrar",
+    "fullName": "Nome Completo",
+    "fullNameRequired": "Nome é obrigatório.",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "signIn": "Entrar"
+  },
+  "header": {
+    "brand": "Dinheiro",
+    "nav": {
+      "overview": "Visão Geral",
+      "reports": "Relatórios",
+      "spendingLimit": "Limite de Gastos",
+      "launch": "Lançar"
+    },
+    "settings": {
+      "title": "Configurações",
+      "categories": "Categorias",
+      "accounts": "Contas",
+      "cards": "Cartões de Crédito",
+      "preferences": "Preferências",
+      "myPlan": "Meu Plano",
+      "tags": "Etiquetas",
+      "alerts": "Alertas",
+      "activities": "Atividades",
+      "moreOptions": "Mais Opções"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "item": "Notificação!"
+    },
+    "profile": {
+      "title": "Perfil",
+      "myAccount": "Minha Conta",
+      "logout": "Sair"
+    }
+  },
+  "settings": {
+    "categories": "Categorias",
+    "accounts": "Contas",
+    "creditCards": "Cartões de Crédito",
+    "preferences": "Preferências",
+    "plan": "Plano",
+    "tags": "Etiquetas",
+    "alerts": "Alertas",
+    "activities": "Atividades"
+  },
+  "categories": {
+    "title": "Categorias",
+    "incomeCategoryButton": "Categoria de Rendimento",
+    "expenseCategoryButton": "Categoria de Despesa",
+    "incomeTab": "Rendimentos",
+    "expenseTab": "Despesas",
+    "creatingIncomeCategory": "Criando categoria de rendimento",
+    "categoryNameLabel": "Nome da categoria",
+    "categoryNamePlaceholder": "Digite o nome da categoria",
+    "categoryNameRequired": "O nome da categoria é obrigatório.",
+    "categoryNameMinlength": "O nome da categoria deve ter pelo menos 3 caracteres.",
+    "chooseColor": "Escolha uma cor",
+    "chooseIcon": "Escolha um ícone",
+    "creatingExpenseCategory": "Criando categoria de despesa",
+    "incomeCategoryNameRequired": "O nome da categoria de rendimento é obrigatório.",
+    "incomeCategoryNameMinlength": "O nome da categoria de rendimento deve ter pelo menos 3 caracteres.",
+    "expenseCategoryNameRequired": "O nome da categoria de despesa é obrigatório.",
+    "expenseCategoryNameMinlength": "O nome da categoria de despesa deve ter pelo menos 3 caracteres.",
+    "colorRequired": "A cor é obrigatória.",
+    "iconRequired": "O ícone é obrigatório.",
+    "textButtonActionModalIncome": "Criar receita",
+    "textButtonActionModalExpense": "Criar despesa"
+  },
+  "modal": {
+    "cancelButton": "Cancelar",
+    "actionButton": "Salvar"
+  }
+}

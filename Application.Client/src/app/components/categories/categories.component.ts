@@ -9,11 +9,12 @@ import { NotificationService } from '../../core/services/notification/notificati
 import { firstValueFrom } from 'rxjs';
 import { CategoryType } from '../../core/models/enums/categoryType.enum';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, IconPickerComponent, ColorPickerComponent, ModalComponent, ReactiveFormsModule],
+  imports: [CommonModule, IconPickerComponent, ColorPickerComponent, ModalComponent, ReactiveFormsModule, TranslateModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss'
 })
@@ -36,8 +37,8 @@ export class CategoriesComponent implements OnInit {
   idExpenseModal: string =  'expenseModal';
   idIncomeModal: string = 'incomeModal';
   idCategoryEdition?: string;
-  textButtonActionModalIncome: string = 'Create expense';
-  textButtonActionModalExpense: string = 'Create expense';
+  textButtonActionModalIncome?: string;
+  textButtonActionModalExpense?: string;
 
   colors: string[] = [
     '#ED1B25', '#A41A44', '#7A2990', '#392B8A', '#2F5AA8', '#018CCD', '#60AF46', '#CDDB26', '#F6ED24', '#F7BA12', '#F9971D', '#F14B21', "#F26A6A", "#C94B67", "#A158B5", "#5D4FB1", "#4B7EC2", "#42B8E1", "#88C876", "#E1ED6C", "#F8F17D", "#F8CD5C"
@@ -294,11 +295,14 @@ export class CategoriesComponent implements OnInit {
     private _fb: FormBuilder,
     private _categoriesService: CategoriesService,
     private _notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     this.categoryForm = this._fb.group({
       incomeCategoryName: ['', [Validators.required, Validators.minLength(3)]],
       expenseCategoryName: ['', [Validators.required, Validators.minLength(3)]],
     });
+    this.textButtonActionModalIncome = this.translate.instant('categories.textButtonActionModalIncome');
+    this.textButtonActionModalExpense = this.translate.instant('categories.textButtonActionModalExpense');
   }
 
   ngOnInit() {

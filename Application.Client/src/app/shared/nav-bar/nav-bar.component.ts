@@ -3,11 +3,12 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.scss'
 })
