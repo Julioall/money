@@ -35,7 +35,7 @@ i, a {
 }
 
 .dropdown-item{
-  width: 230px;
+  width: 200px;
   color: $gray-light !important;
   font-weight: 500;
 }
@@ -43,6 +43,7 @@ i, a {
 .dropdown-item:hover {
   color: $green-primary !important;
   text-decoration: none;
+  background-color: transparent;
 }
 
 .dropdown-item:focus,

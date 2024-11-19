@@ -64,8 +64,8 @@
   },
   "categories": {
     "title": "Categorias",
-    "incomeCategoryButton": "Categoria de Rendimento",
-    "expenseCategoryButton": "Categoria de Despesa",
+    "incomeCategoryButton": "Receita",
+    "expenseCategoryButton": "Despesa",
     "incomeTab": "Rendimentos",
     "expenseTab": "Despesas",
     "creatingIncomeCategory": "Criando categoria de rendimento",
