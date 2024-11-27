@@ -1,7 +1,7 @@
-using Application.Api;
 using Application.Domain.Model;
 using Application.Infrastructure;
 using Application.Service;
+using Application.Web;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -52,9 +52,9 @@ public class Program
         })
         .AddJwtBearer(options =>
         {
-            var issuer = AplicationConstants.JWT_ISSUER;
-            var audience = AplicationConstants.JWT_AUDIENCE;
-            var signingKey = AplicationConstants.JWT_SIGNING_KEY;
+            var issuer = ApplicationConstants.JWT_ISSUER;
+            var audience = ApplicationConstants.JWT_AUDIENCE;
+            var signingKey = ApplicationConstants.JWT_SIGNING_KEY;
 
             if (string.IsNullOrEmpty(issuer))
                 throw new ArgumentNullException(nameof(issuer), "JWT issuer is not configured.");
