@@ -1,5 +1,5 @@
 # Money
-ProfitPay é uma aplicação de gerenciamento financeiro pessoal e familiar projetada para simplificar o controle de despesas e maximizar lucros nos investimentos. 
+É uma aplicação de gerenciamento financeiro pessoal e familiar projetada para simplificar o controle de despesas e maximizar lucros nos investimentos. 
 
 Os padrões de commit são essenciais para manter a clareza e a organização em projetos de desenvolvimento.
 Um bom padrão de commit ajuda a equipe a entender rapidamente o que foi alterado, facilitando a manutenção e a colaboração.
