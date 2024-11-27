@@ -1,24 +1,24 @@
 <div class="container-lg bg-neutral-white-100 rounded-4 p-3 p-sm-5">
   <div class="row">
-    <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">{{ 'categories.title' | translate }}</h1>
+    <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">{{ 'components.categories.title' | translate }}</h1>
     <button *ngIf="isIncomeCategory" type="button" data-bs-toggle="modal" data-bs-target="#incomeModal"
         class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small">
       <i class="fa fa-plus-circle text-green-primary-darker text-medium"></i>
-      <span class="ms-3 d-none d-sm-block">{{ 'categories.incomeCategoryButton' | translate }}</span>
+      <span class="ms-3 d-none d-sm-block">{{ 'components.categories.incomeCategoryButton' | translate }}</span>
     </button>
     <button *ngIf="isExpenseCategory" type="button" data-bs-toggle="modal" data-bs-target="#expenseModal"
-      class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small">
-      <i class="fa fa-plus-circle text-green-primary-darker text-medium"></i>
-      <span class="ms-3 d-none d-sm-block">{{ 'categories.expenseCategoryButton' | translate }}</span>
+      class="btn col rounded-2 bg-red-light text-red-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small">
+      <i class="fa fa-plus-circle text-red-primary text-medium"></i>
+      <span class="ms-3 d-none d-sm-block">{{ 'components.categories.expenseCategoryButton' | translate }}</span>
     </button>
   </div>
   <div class="row mt-5">
     <div class="col mt-5">
       <div class="row">
         <a (click)="onToggleCategory()" [ngClass]="{'active-income  border-opacity-75': isIncomeCategory}"
-          class="col text-center text-small text-green-primary pb-2">{{ 'categories.incomeTab' | translate }}</a>
+          class="col text-center text-small text-green-primary pb-2">{{ 'components.categories.incomeTab' | translate }}</a>
         <a (click)="onToggleCategory()" [ngClass]="{'active-expense border-opacity-75': isExpenseCategory}"
-          class="col text-center text-small text-red-primary pb-2">{{ 'categories.expenseTab' | translate }}</a>
+          class="col text-center text-small text-red-primary pb-2">{{ 'components.categories.expenseTab' | translate }}</a>
         <div class="border-bottom border-1  border-opacity-75"></div>
         <div class="row mt-5">
           <div class="col-12" *ngIf="isIncomeCategory">
@@ -38,7 +38,7 @@
                         <i class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light rounded-5"></i>
                       </button>
                       <button (click)="onRemove(item.id!)" class="bg-transparent">
-                        <i class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light rounded-5"></i>
+                        <i class="fa-solid fa-trash d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light rounded-5"></i>
                       </button>
                     </div>
                   </div>
@@ -64,7 +64,7 @@
                         <i class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
                       </button>
                       <button (click)="onRemove(item.id!)" class="bg-transparent">
-                        <i class="fa-solid fa-x d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
+                        <i class="fa-solid fa-trash d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
                       </button>
                     </div>
                   </div>
@@ -77,13 +77,13 @@
       </div>
     </div>
     <form [formGroup]="categoryForm">
-      <app-modal [idModal]="idIncomeModal" [textButton]="textButtonActionModalIncome" (action)="onActionModal()" (close)="onResetSelections()">
-        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'categories.creatingIncomeCategory' | translate }}</p>
+      <app-modal [idModal]="idIncomeModal" [textButton]="textButtonModalIncome" (action)="onActionModal()" (close)="onResetSelections()">
+        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'components.categories.creatingIncomeCategory' | translate }}</p>
         <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <div class="d-flex align-items-center justify-content-start">
             <div class="category-name col">
-              <label for="nameCategoryIncome" class="text-gray-dark mb-4">{{ 'categories.categoryNameLabel' | translate }}</label>
-              <input class="nameCategory mt-0" id="nameCategoryIncome" type="text" formControlName="incomeCategoryName" placeholder="{{ 'categories.categoryNamePlaceholder' | translate }}">
+              <label for="nameCategoryIncome" class="text-gray-dark mb-4">{{ 'components.categories.categoryNameLabel' | translate }}</label>
+              <input class="nameCategory mt-0" id="nameCategoryIncome" type="text" formControlName="incomeCategoryName" placeholder="{{ 'components.categories.categoryNamePlaceholder' | translate }}">
             </div>
             <div class="d-flex justify-content-end align-items-end mx-3">
               <div class="d-flex align-items-center justify-content-center text-large text-neutral-white-100 iconSelected mt-4" [ngStyle]="{'background-color': selectedColorIncome}">
@@ -92,30 +92,30 @@
             </div>
           </div>
           <div *ngIf="categoryForm.get('incomeCategoryName')?.invalid && isSubmitted">
-            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['required']">{{ 'categories.categoryNameRequired' | translate }}</small>
-            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['minlength']">{{ 'categories.categoryNameMinlength' | translate }}</small>
+            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['required']">{{ 'components.categories.categoryNameRequired' | translate }}</small>
+            <small class="text-danger" *ngIf="categoryForm.get('incomeCategoryName')?.errors?.['minlength']">{{ 'components.categories.categoryNameMinlength' | translate }}</small>
           </div>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
-          <p class="text-gray-dark mb-4">{{ 'categories.chooseColor' | translate }}</p>
+          <p class="text-gray-dark mb-4">{{ 'components.categories.chooseColor' | translate }}</p>
           <app-color-picker [colors]="colors" (colorSelected)="onSelectIncomeColor($event)"></app-color-picker>
-          <small class="text-danger" *ngIf="isSubmitted && !selectedColorIncome">{{ 'categories.colorRequired' | translate }}</small>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedColorIncome">{{ 'components.categories.colorRequired' | translate }}</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
-          <p class="text-gray-dark mb-4">{{ 'categories.chooseIcon' | translate }}</p>
+          <p class="text-gray-dark mb-4">{{ 'components.categories.chooseIcon' | translate }}</p>
           <app-icon-picker [icons]="icons" (iconSelected)="onSelectIncomeIcon($event)">
           </app-icon-picker>
-          <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">{{ 'categories.iconRequired' | translate }}</small>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">{{ 'components.categories.iconRequired' | translate }}</small>
         </div>
       </app-modal>
 
-      <app-modal [idModal]="idExpenseModal" [textButton]="textButtonActionModalExpense" (action)="onActionModal()" (close)="onResetSelections()">
-        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'categories.creatingExpenseCategory' | translate }}</p>
+      <app-modal [idModal]="idExpenseModal" [textButton]="textButtonModalExpense" (action)="onActionModal()" (close)="onResetSelections()">
+        <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'components.categories.creatingExpenseCategory' | translate }}</p>
         <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <div class="d-flex align-items-center justify-content-start">
             <div class="category-name col">
-              <label for="nameCategoryExpense" class="text-gray-dark mb-4">{{ 'categories.categoryNameLabel' | translate }}</label>
-              <input class="nameCategory mt-0" id="nameCategoryExpense" type="text" formControlName="expenseCategoryName" placeholder="{{ 'categories.categoryNamePlaceholder' | translate }}">
+              <label for="nameCategoryExpense" class="text-gray-dark mb-4">{{ 'components.categories.categoryNameLabel' | translate }}</label>
+              <input class="nameCategory mt-0" id="nameCategoryExpense" type="text" formControlName="expenseCategoryName" placeholder="{{ 'components.categories.categoryNamePlaceholder' | translate }}">
             </div>
             <div class="d-flex justify-content-end align-items-end mx-3">
               <div class="d-flex align-items-center justify-content-center text-large text-neutral-white-100 iconSelected mt-4" [ngStyle]="{'background-color': selectedColorExpense}">
@@ -124,20 +124,20 @@
             </div>
           </div>
           <div *ngIf="categoryForm.get('expenseCategoryName')?.invalid && isSubmitted">
-            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['required']">{{ 'categories.categoryNameRequired' | translate }}</small>
-            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['minlength']">{{ 'categories.categoryNameMinlength' | translate }}</small>
+            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['required']">{{ 'components.categories.categoryNameRequired' | translate }}</small>
+            <small class="text-danger" *ngIf="categoryForm.get('expenseCategoryName')?.errors?.['minlength']">{{ 'components.categories.categoryNameMinlength' | translate }}</small>
           </div>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
-          <p class="text-gray-dark mb-4">{{ 'categories.chooseColor' | translate }}</p>
+          <p class="text-gray-dark mb-4">{{ 'components.categories.chooseColor' | translate }}</p>
           <app-color-picker [colors]="colors" (colorSelected)="onSelectExpenseColor($event)"></app-color-picker>
-          <small class="text-danger" *ngIf="isSubmitted && !selectedColorExpense">{{ 'categories.colorRequired' | translate }}</small>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedColorExpense">{{ 'components.categories.colorRequired' | translate }}</small>
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
-          <p class="text-gray-dark mb-4">{{ 'categories.chooseIcon' | translate }}</p>
+          <p class="text-gray-dark mb-4">{{ 'components.categories.chooseIcon' | translate }}</p>
           <app-icon-picker [icons]="icons" (iconSelected)="onSelectExpenseIcon($event)">
           </app-icon-picker>
-          <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">{{ 'categories.iconRequired' | translate }}</small>
+          <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">{{ 'components.categories.iconRequired' | translate }}</small>
         </div>
       </app-modal>
     </form>

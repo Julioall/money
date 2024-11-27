@@ -3,23 +3,23 @@
     <div class="row">
       <div class="col d-flex align-items-center justify-content-start">
         <a class="navbar-brand d-flex justify-content-start align-items-center fw-bold text-medium">
-          <i class="fa-solid fa-wallet me-2"></i>{{ 'header.brand' | translate }}
+          <i class="fa-solid fa-wallet me-2"></i>{{ 'components.header.brand' | translate }}
         </a>
       </div>
 
       <div class="col-6 d-flex align-items-center justify-content-center">
         <nav class="nav justify-content-between">
           <a class="nav-item nav-link text-small text-green-light" aria-label="Go to overview">
-            {{ 'header.nav.overview' | translate }}
+            {{ 'components.header.nav.overview' | translate }}
           </a>
           <a class="nav-item nav-link text-small text-green-light" aria-label="Go to reports">
-            {{ 'header.nav.reports' | translate }}
+            {{ 'components.header.nav.reports' | translate }}
           </a>
           <a class="nav-item nav-link text-small text-green-light" aria-label="Go to spending limit">
-            {{ 'header.nav.spendingLimit' | translate }}
+            {{ 'components.header.nav.spendingLimit' | translate }}
           </a>
           <a class="nav-item nav-link text-small text-green-light" aria-label="Go to launch">
-            {{ 'header.nav.launch' | translate }}
+            {{ 'components.header.nav.launch' | translate }}
           </a>
         </nav>
       </div>
@@ -30,17 +30,17 @@
             <i class="fa-solid fa-gear text-small"></i>
           </a>
           <ul class="dropdownSettings dropdown-menu dropdown-menu-end settings-adm p-4" aria-labelledby="dropdownSettings">
-            <li><a class="dropdown-item text-muted" routerLink="/settings/categories">{{ 'header.settings.categories' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted" routerLink="/settings/accounts">{{ 'header.settings.accounts' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted" routerLink="/settings/cards">{{ 'header.settings.cards' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted" routerLink="/settings/categories">{{ 'components.header.settings.categories' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted" routerLink="/settings/accounts">{{ 'components.header.settings.accounts' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted" routerLink="/settings/cards">{{ 'components.header.settings.cards' | translate }}</a></li>
             <li><div class="border-bottom border-1 border-opacity-75"></div></li>
-            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'header.settings.preferences' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'header.settings.myPlan' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'header.settings.tags' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'header.settings.alerts' | translate }}</a></li>
-            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'header.settings.activities' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'components.header.settings.preferences' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'components.header.settings.myPlan' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'components.header.settings.tags' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'components.header.settings.alerts' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small py-0" routerLink="/">{{ 'components.header.settings.activities' | translate }}</a></li>
             <li><div class="border-bottom border-1 border-opacity-75"></div></li>
-            <li><a class="dropdown-item text-muted text-x-small" routerLink="/">{{ 'header.settings.moreOptions' | translate }}</a></li>
+            <li><a class="dropdown-item text-muted text-x-small" routerLink="/">{{ 'components.header.settings.moreOptions' | translate }}</a></li>
           </ul>
         </div>
 
@@ -49,9 +49,9 @@
             <i class="fa-solid fa-bell text-small"></i>
           </a>
           <ul class="dropdownNotification dropdown-menu dropdown-menu-end text-small" aria-labelledby="dropdownNotification">
-            <li><a class="dropdown-item" routerLink="/">{{ 'header.notifications.item' | translate }}</a></li>
-            <li><a class="dropdown-item" routerLink="/">{{ 'header.notifications.item' | translate }}</a></li>
-            <li><a class="dropdown-item" routerLink="/">{{ 'header.notifications.item' | translate }}</a></li>
+            <li><a class="dropdown-item" routerLink="/">{{ 'components.header.notifications.item' | translate }}</a></li>
+            <li><a class="dropdown-item" routerLink="/">{{ 'components.header.notifications.item' | translate }}</a></li>
+            <li><a class="dropdown-item" routerLink="/">{{ 'components.header.notifications.item' | translate }}</a></li>
           </ul>
         </div>
 
@@ -65,9 +65,9 @@
                 <i id="profile-icon" class="fas fa-user-circle text-x-large"></i>
               </a>
             </li>
-            <li><a class="dropdown-item text-center text-muted" routerLink="/">{{ 'header.profile.myAccount' | translate }}</a></li>
+            <li><a class="dropdown-item text-center text-muted" routerLink="/">{{ 'components.header.profile.myAccount' | translate }}</a></li>
             <li><div class="border-bottom border-1 border-opacity-75"></div></li>
-            <li><a class="dropdown-item text-center text-muted" (click)="onClickLogout()" routerLink="/auth">{{ 'header.profile.logout' | translate }}</a></li>
+            <li><a class="dropdown-item text-center text-muted" (click)="onClickLogout()" routerLink="/auth">{{ 'components.header.profile.logout' | translate }}</a></li>
           </ul>
         </div>
       </div>

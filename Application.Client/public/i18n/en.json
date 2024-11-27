@@ -1,92 +1,111 @@
 {
-  "login": {
-    "title": "Login",
-    "orUseAccount": "or use your account",
-    "email": "Email",
-    "emailRequired": "Email is required.",
-    "emailInvalid": "Invalid email format.",
-    "password": "Password",
-    "passwordRequired": "Password is required.",
-    "passwordMinLength": "Password must be at least 6 characters.",
-    "signIn": "Sign in",
-    "noAccount": "Don't have an account?",
-    "register": "Register",
-    "forgotPassword": "Lost your password?",
-    "getItBack": "Get it back"
-  },
-  "signup": {
-    "title": "Create Account",
-    "orUseEmail": "or use your email to register",
-    "fullName": "Full Name",
-    "fullNameRequired": "Name is required.",
-    "alreadyHaveAccount": "Already have an account?",
-    "signIn": "Sign in"
-  },
-  "header": {
-    "brand": "Money",
-    "nav": {
-      "overview": "Overview",
-      "reports": "Reports",
-      "spendingLimit": "Spending Limit",
-      "launch": "Launch"
+  "components": {
+    "auth": {
+      "titleLogin": "Login",
+      "orUseAccount": "or use your account",
+      "email": "Email",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Invalid email format.",
+      "password": "Password",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Password must be at least 6 characters long.",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "register": "Register",
+      "forgotPassword": "Forgot your password?",
+      "getItBack": "Get it back",
+      "titleSignup": "Sign Up",
+      "orUseEmail": "or use your email to register",
+      "fullName": "Full Name",
+      "fullNameRequired": "Full name is required.",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginSuccess": "Login successful!",
+      "loginError": "Login error. Please check your credentials.",
+      "signupSuccess": "Registration successful!",
+      "signupError": "Error during registration. Please try again."
     },
+
+    "header": {
+      "brand": "Money",
+      "nav": {
+        "overview": "Overview",
+        "reports": "Reports",
+        "spendingLimit": "Spending Limit",
+        "launch": "Launch"
+      },
+      "settings": {
+        "title": "Settings",
+        "categories": "Categories",
+        "accounts": "Accounts",
+        "cards": "Credit Cards",
+        "preferences": "Preferences",
+        "myPlan": "My Plan",
+        "tags": "Tags",
+        "alerts": "Alerts",
+        "activities": "Activities",
+        "moreOptions": "More Options"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "item": "Notification!"
+      },
+      "profile": {
+        "title": "Profile",
+        "myAccount": "My Account",
+        "logout": "Logout"
+      }
+    },
+
     "settings": {
-      "title": "Settings",
       "categories": "Categories",
       "accounts": "Accounts",
-      "cards": "Credit Cards",
+      "creditCards": "Credit Cards",
       "preferences": "Preferences",
-      "myPlan": "My Plan",
+      "plan": "Plan",
       "tags": "Tags",
       "alerts": "Alerts",
-      "activities": "Activities",
-      "moreOptions": "More Options"
+      "activities": "Activities"
     },
-    "notifications": {
-      "title": "Notifications",
-      "item": "Notification!"
+
+    "categories": {
+      "title": "Categories",
+      "incomeCategoryButton": "Income",
+      "expenseCategoryButton": "Expense",
+      "incomeTab": "Income",
+      "expenseTab": "Expenses",
+      "creatingIncomeCategory": "Creating income category",
+      "categoryNameLabel": "Category name",
+      "categoryNamePlaceholder": "Enter category name",
+      "categoryNameRequired": "Category name is required.",
+      "categoryNameMinlength": "Category name must be at least 3 characters long.",
+      "chooseColor": "Choose a color",
+      "chooseIcon": "Choose an icon",
+      "creatingExpenseCategory": "Creating expense category",
+      "incomeCategoryNameRequired": "Income category name is required.",
+      "incomeCategoryNameMinlength": "Income category name must be at least 3 characters long.",
+      "expenseCategoryNameRequired": "Expense category name is required.",
+      "expenseCategoryNameMinlength": "Expense category name must be at least 3 characters long.",
+      "colorRequired": "Color is required.",
+      "iconRequired": "Icon is required.",
+      "textButtonCreateModalIncome": "Create income",
+      "textButtonCreateModalExpense": "Create expense",
+      "textButtonEditModalIncome": "Edit income",
+      "textButtonEditModalExpense": "Edit expense"
     },
-    "profile": {
-      "title": "Profile",
-      "myAccount": "My Account",
-      "logout": "Logout"
+
+    "modal": {
+      "cancelButton": "Cancel",
+      "actionButton": "Save"
+    },
+
+    "accounts": {
+      "title": "Accounts",
+      "textButtonNewAccount": "New account",
+      "textActionButtonModal": "Create Account"
     }
   },
-  "settings": {
-    "categories": "Categories",
-    "accounts": "Accounts",
-    "creditCards": "Credit Cards",
-    "preferences": "Preferences",
-    "plan": "Plan",
-    "tags": "Tags",
-    "alerts": "Alerts",
-    "activities": "Activities"
-  },
-  "categories": {
-    "title": "Categories",
-    "incomeCategoryButton": "Income Category",
-    "expenseCategoryButton": "Expense Category",
-    "incomeTab": "Income",
-    "expenseTab": "Expense",
-    "creatingIncomeCategory": "Creating income category",
-    "categoryNameLabel": "Category name",
-    "categoryNamePlaceholder": "Enter category name",
-    "categoryNameRequired": "Category name is required.",
-    "categoryNameMinlength": "Category name must be at least 3 characters long.",
-    "chooseColor": "Choose a color",
-    "chooseIcon": "Choose an icon",
-    "creatingExpenseCategory": "Creating expense category",
-    "incomeCategoryNameRequired": "Income category name is required.",
-    "incomeCategoryNameMinlength": "Income category name must be at least 3 characters long.",
-    "expenseCategoryNameRequired": "Expense category name is required.",
-    "expenseCategoryNameMinlength": "Expense category name must be at least 3 characters long.",
-    "colorRequired": "Color is required.",
-    "iconRequired": "Icon is required.",
-    "textButtonActionModalIncome": "Create income",
-    "textButtonActionModalExpense": "Create expense"
-  },
-  "modal": {
-    "cancelButton": "Cancel",
-    "actionButton": "Save"
+
+  "services": {
+    "auth": {}
   }
 }

@@ -8,6 +8,8 @@ import { UserFinance } from '../../core/models/userFinance';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {TranslateModule} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-auth',
@@ -30,6 +32,7 @@ export class AuthComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private notificationService: NotificationService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -64,7 +67,6 @@ export class AuthComponent implements OnInit {
   async onLogin(): Promise<void> {
     this.loginSubmitted = true;
     if (this.loginForm.invalid) {
-      this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
 
@@ -73,19 +75,20 @@ export class AuthComponent implements OnInit {
       const response = await firstValueFrom(await this.authService.login(email, password));
       if (response?.token) {
         this.authService.saveToken(response.token);
-        this.notificationService.showSuccess('Login successfully!');
+        const successMessage = await firstValueFrom(this.translate.get('components.auth.loginSuccess'));
+        this.notificationService.showSuccess(successMessage);
         this.loginForm.reset();
         this.router.navigate(['/overview']);
       }
     } catch (error) {
-      this.notificationService.showError('Login error. Please check your credentials.');
+      const errorMessage = await firstValueFrom(this.translate.get('components.auth.loginError'));
+      this.notificationService.showError(errorMessage);
     }
   }
 
   onSignup() {
     this.signupSubmitted = true;
     if (this.signupForm.invalid) {
-      this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
 
@@ -106,13 +109,15 @@ export class AuthComponent implements OnInit {
     };
 
     this.authService.signup(newUser).subscribe({
-      next: () => {
-        this.notificationService.showSuccess('Registration successful!');
+      next: async () => {
+        const successMessage = await firstValueFrom(this.translate.get('components.auth.signupSuccess'));
+        this.notificationService.showSuccess(successMessage);
         this.showLogin();
         this.loginForm.patchValue({ email, password });
       },
-      error: () => {
-        this.notificationService.showError('Error during registration. Please try again.');
+      error: async () => {
+        const errorMessage = await firstValueFrom(this.translate.get('components.auth.signupError'));
+        this.notificationService.showError(errorMessage);
       }
     });
   }

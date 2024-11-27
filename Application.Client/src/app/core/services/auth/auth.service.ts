@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../../environment/environment';
@@ -31,17 +31,9 @@ export class AuthService {
     const body = {
       Email: email,
       Password: password,
-      IpAddress: "",
       OperatingSystem: deviceInfo.os,
       Browser: deviceInfo.browser,
     };
-
-    try {
-      const ipResponse = await lastValueFrom(this.getIpAddress());
-      body.IpAddress = ipResponse.ip;
-    } catch (error) {
-      console.error('Could not retrieve IP address, proceeding without it.', error);
-    }
 
     return this.http.post<any>(url, body).pipe(
       map((response) => {
@@ -154,10 +146,5 @@ export class AuthService {
     } else {
       return 'Unknown OS';
     }
-  }
-
-  getIpAddress(): Observable<any> {
-    const apiUrl = 'https://api.ipify.org?format=json';
-    return this.http.get<any>(apiUrl);
   }
 }

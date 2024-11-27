@@ -5,7 +5,7 @@
       *ngIf="loginFormVisible"
       [formGroup]="loginForm"
     >
-      <h1 class="fw-bold">{{ 'login.title' | translate }}</h1>
+      <h1 class="fw-bold">{{ 'components.auth.titleLogin' | translate }}</h1>
 
       <div class="d-inline-flex justify-content-center align-items-center text-center my-2"
         style="width: 50px; font-size: 2rem;">
@@ -14,43 +14,43 @@
         <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
 
-      <span>{{ 'login.orUseAccount' | translate }}</span>
+      <span>{{ 'components.auth.orUseAccount' | translate }}</span>
 
-      <input class="text-small" type="email" placeholder="{{ 'login.email' | translate }}" formControlName="email" />
+      <input class="text-small" type="email" placeholder="{{ 'components.auth.email' | translate }}" formControlName="email" />
       <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
         <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">
-          {{ 'login.emailRequired' | translate }}
+          {{ 'components.auth.emailRequired' | translate }}
         </small>
         <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">
-          {{ 'login.emailInvalid' | translate }}
+          {{ 'components.auth.emailInvalid' | translate }}
         </small>
       </div>
 
       <input
         class="text-small"
         type="password"
-        placeholder="{{ 'login.password' | translate }}"
+        placeholder="{{ 'components.auth.password' | translate }}"
         formControlName="password"
       />
       <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
         <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">
-          {{ 'login.passwordRequired' | translate }}
+          {{ 'components.auth.passwordRequired' | translate }}
         </small>
         <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">
-          {{ 'login.passwordMinLength' | translate }}
+          {{ 'components.auth.passwordMinLength' | translate }}
         </small>
       </div>
 
       <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onLogin()">
-        {{ 'login.signIn' | translate }}
+        {{ 'components.auth.signIn' | translate }}
       </button>
       <span class="mobile text-center">
-        {{ 'login.noAccount' | translate }}
-        <a class="link fw-bold" (click)="showSignUp()">{{ 'login.register' | translate }}</a>
+        {{ 'components.auth.noAccount' | translate }}
+        <a class="link fw-bold" (click)="showSignUp()">{{ 'components.auth.register' | translate }}</a>
       </span>
       <span>
-        {{ 'login.forgotPassword' | translate }}
-        <a class="link fw-bold">{{ 'login.getItBack' | translate }}</a>
+        {{ 'components.auth.forgotPassword' | translate }}
+        <a class="link fw-bold">{{ 'components.auth.getItBack' | translate }}</a>
       </span>
     </form>
 
@@ -59,49 +59,49 @@
       *ngIf="signupFormVisible"
       [formGroup]="signupForm"
     >
-      <h1 class="fw-bold m-0">{{ 'signup.title' | translate }}</h1>
+      <h1 class="fw-bold m-0">{{ 'components.auth.titleSignup' | translate }}</h1>
       <div class="d-inline-flex justify-content-center align-items-center my-2 rounded">
         <a class="me-3" id="google-login-btn"><i class="fa-brands fa-square-google-plus text-large"></i></a>
         <a class="me-3"><i class="fa-brands fa-square-facebook text-large"></i></a>
         <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
-      <span>{{ 'signup.orUseEmail' | translate }}</span>
-      <input class="text-small" type="text" placeholder="{{ 'signup.fullName' | translate }}" formControlName="fullName" />
+      <span>{{ 'components.auth.orUseEmail' | translate }}</span>
+      <input class="text-small" type="text" placeholder="{{ 'components.auth.fullName' | translate }}" formControlName="fullName" />
       <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
-        <small class="text-danger">{{ 'signup.fullNameRequired' | translate }}</small>
+        <small class="text-danger">{{ 'components.auth.fullNameRequired' | translate }}</small>
       </div>
 
-      <input class="text-small" type="email" placeholder="{{ 'login.email' | translate }}" formControlName="email" />
+      <input class="text-small" type="email" placeholder="{{ 'components.auth.email' | translate }}" formControlName="email" />
       <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
         <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">
-          {{ 'login.emailRequired' | translate }}
+          {{ 'components.auth.emailRequired' | translate }}
         </small>
         <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">
-          {{ 'login.emailInvalid' | translate }}
+          {{ 'components.auth.emailInvalid' | translate }}
         </small>
       </div>
 
       <input
         class="text-small"
         type="password"
-        placeholder="{{ 'login.password' | translate }}"
+        placeholder="{{ 'components.auth.password' | translate }}"
         formControlName="password"
       />
       <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
         <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">
-          {{ 'login.passwordRequired' | translate }}
+          {{ 'components.auth.passwordRequired' | translate }}
         </small>
         <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">
-          {{ 'login.passwordMinLength' | translate }}
+          {{ 'components.auth.passwordMinLength' | translate }}
         </small>
       </div>
 
       <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onSignup()">
-        {{ 'signup.title' | translate }}
+        {{ 'components.auth.titleSignup' | translate }}
       </button>
       <span class="mobile text-center">
-        {{ 'signup.alreadyHaveAccount' | translate }}
-        <a class="link fw-bold mt-2" (click)="showLogin()">{{ 'signup.signIn' | translate }}</a>
+        {{ 'components.auth.alreadyHaveAccount' | translate }}
+        <a class="link fw-bold mt-2" (click)="showLogin()">{{ 'components.auth.signIn' | translate }}</a>
       </span>
     </form>
   </div>

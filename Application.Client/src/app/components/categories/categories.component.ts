@@ -37,8 +37,12 @@ export class CategoriesComponent implements OnInit {
   idExpenseModal: string =  'expenseModal';
   idIncomeModal: string = 'incomeModal';
   idCategoryEdition?: string;
-  textButtonActionModalIncome?: string;
-  textButtonActionModalExpense?: string;
+  textButtonModalIncome?: string;
+  textButtonModalExpense?: string;
+  textButtonCreateModalIncome?: string;
+  textButtonCreateModalExpense?: string;
+  textButtonEditModalIncome?: string;
+  textButtonEditModalExpense?: string;
 
   colors: string[] = [
     '#ED1B25', '#A41A44', '#7A2990', '#392B8A', '#2F5AA8', '#018CCD', '#60AF46', '#CDDB26', '#F6ED24', '#F7BA12', '#F9971D', '#F14B21', "#F26A6A", "#C94B67", "#A158B5", "#5D4FB1", "#4B7EC2", "#42B8E1", "#88C876", "#E1ED6C", "#F8F17D", "#F8CD5C"
@@ -301,8 +305,13 @@ export class CategoriesComponent implements OnInit {
       incomeCategoryName: ['', [Validators.required, Validators.minLength(3)]],
       expenseCategoryName: ['', [Validators.required, Validators.minLength(3)]],
     });
-    this.textButtonActionModalIncome = this.translate.instant('categories.textButtonActionModalIncome');
-    this.textButtonActionModalExpense = this.translate.instant('categories.textButtonActionModalExpense');
+
+    this.textButtonCreateModalIncome = this.translate.instant('components.categories.textButtonCreateModalIncome');
+    this.textButtonCreateModalExpense = this.translate.instant('components.categories.textButtonCreateModalExpense');
+    this.textButtonEditModalIncome = this.translate.instant('components.categories.textButtonEditModalIncome');
+    this.textButtonEditModalExpense = this.translate.instant('components.categories.textButtonEditModalExpense');
+    this.textButtonModalIncome = this.textButtonCreateModalIncome;
+    this.textButtonModalExpense = this.textButtonCreateModalExpense;
   }
 
   ngOnInit() {
@@ -340,27 +349,27 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  onEdit(categoria: Category) {
+  onEdit(category: Category) {
     try {
-      if (!categoria || !categoria.background || !categoria.icon) {
+      if (!category || !category.background || !category.icon) {
         throw new Error('Invalid category data');
       }
       if (this.isIncomeCategory) {
-        this.textButtonActionModalIncome = "Edit Category"
-        this.categoryForm.get('incomeCategoryName')?.setValue(categoria.name)
-        this.selectedColorIncome = categoria.background;
-        this.selectedIconIncome = categoria.icon;
-        this.idCategoryEdition = categoria.id;
+        this.textButtonModalIncome = this.textButtonEditModalIncome
+        this.categoryForm.get('incomeCategoryName')?.setValue(category.name)
+        this.selectedColorIncome = category.background;
+        this.selectedIconIncome = category.icon;
+        this.idCategoryEdition = category.id;
       } else {
-        this.textButtonActionModalExpense = "Edit Category"
-        this.categoryForm.get('expenseCategoryName')?.setValue(categoria.name)
-        this.selectedColorExpense = categoria.background;
-        this.selectedIconExpense = categoria.icon;
-        this.idCategoryEdition = categoria.id;
+        this.textButtonModalExpense = this.textButtonEditModalExpense
+        this.categoryForm.get('expenseCategoryName')?.setValue(category.name)
+        this.selectedColorExpense = category.background;
+        this.selectedIconExpense = category.icon;
+        this.idCategoryEdition = category.id;
       }
 
-      this.colorPicker.selectedColor = categoria.background;
-      this.iconPicker.selectedIcon = categoria.icon;
+      this.colorPicker.selectedColor = category.background;
+      this.iconPicker.selectedIcon = category.icon;
 
     } catch (error) {
       this._notificationService.showError(
@@ -375,8 +384,8 @@ export class CategoriesComponent implements OnInit {
     this.selectedIconIncome = '';
     this.selectedIconExpense = '';
     this.idCategoryEdition = '';
-    this.textButtonActionModalIncome = 'Create income';
-    this.textButtonActionModalExpense = 'Create expense';
+    this.textButtonModalIncome = this.textButtonCreateModalIncome;;
+    this.textButtonModalExpense = this.textButtonCreateModalExpense;;
     this.isSubmitted = false;
     this.categoryForm.reset();
     this.iconPicker.resetSelection();
