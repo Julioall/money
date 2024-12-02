@@ -1,7 +1,9 @@
 ﻿using Application.Domain.Model;
 using Application.Service;
+using Application.Web.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace Application.Web.Controllers
 {
@@ -13,16 +15,19 @@ namespace Application.Web.Controllers
         private readonly UserService _userService;
         private readonly CategoryService _categoryService;
         private readonly AuthenticationService _authenticationService;
+        private readonly IStringLocalizer<Messages> _localizer;
 
         public CategoryController(
             UserService userService,
             CategoryService categoryService,
-            AuthenticationService authenticationService
+            AuthenticationService authenticationService,
+            IStringLocalizer<Messages> localizer
         )
         {
             _userService = userService;
             _categoryService = categoryService;
             _authenticationService = authenticationService;
+            _localizer = localizer;
         }
 
         [HttpPost()]
@@ -30,7 +35,7 @@ namespace Application.Web.Controllers
         public async Task<IActionResult> Add([FromBody] Category category)
         {
             if (category == null)
-                return BadRequest("Category data is null.");
+                return BadRequest(_localizer["CategoryCannotBeNull"].Value);
 
             var userId = await _authenticationService.GetUserIdLoged();
             var createdCategory = await _categoryService.AddAsync(userId, category);
@@ -45,7 +50,7 @@ namespace Application.Web.Controllers
 
             var success = await _categoryService.DeleteAsync(userId, id);
             if (!success)
-                return NotFound("Category not found.");
+                return NotFound(_localizer["CategoryNotFoundById", id].Value);
 
             return NoContent();
         }
@@ -55,7 +60,7 @@ namespace Application.Web.Controllers
         public async Task<IActionResult> Updatey([FromBody] Category category)
         {
             if (category == null)
-                return BadRequest("Category data is null.");
+                return BadRequest(_localizer["CategoryCannotBeNull"].Value);
 
             var userId = await _authenticationService.GetUserIdLoged();
             var updatedCategory = await _categoryService.UpdateAsync(userId, category);
@@ -71,14 +76,14 @@ namespace Application.Web.Controllers
             return Ok(categories);
         }
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("{id}")]
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> GetById(string categoryId)
+        public async Task<IActionResult> GetById(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            var category = await _categoryService.GetByIdAsync(userId, categoryId);
+            var category = await _categoryService.GetByIdAsync(userId, id);
             if (category == null)
-                return NotFound("Category not found.");
+                return NotFound(_localizer["UserCannotBeNull"].Value);
 
             return Ok(category);
         }

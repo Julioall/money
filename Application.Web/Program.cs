@@ -1,7 +1,7 @@
-using Application.Api;
 using Application.Domain.Model;
 using Application.Infrastructure;
 using Application.Service;
+using Application.Web;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -12,7 +12,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.Services.AddLocalization();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
@@ -52,9 +52,9 @@ public class Program
         })
         .AddJwtBearer(options =>
         {
-            var issuer = AplicationConstants.JWT_ISSUER;
-            var audience = AplicationConstants.JWT_AUDIENCE;
-            var signingKey = AplicationConstants.JWT_SIGNING_KEY;
+            var issuer = ApplicationConstants.JWT_ISSUER;
+            var audience = ApplicationConstants.JWT_AUDIENCE;
+            var signingKey = ApplicationConstants.JWT_SIGNING_KEY;
 
             if (string.IsNullOrEmpty(issuer))
                 throw new ArgumentNullException(nameof(issuer), "JWT issuer is not configured.");
@@ -95,6 +95,14 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        var supportedCultures = new[] { "en-US", "pt-BR" };
+
+        var localizationOptions = new RequestLocalizationOptions()
+            .SetDefaultCulture("en-US")
+            .AddSupportedCultures(supportedCultures)
+            .AddSupportedUICultures(supportedCultures);
+
+        app.UseRequestLocalization(localizationOptions);
 
         app.UseAuthentication();
         app.UseAuthorization();

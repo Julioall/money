@@ -2,18 +2,17 @@
 using Application.Infrastructure.Repository;
 using Application.Service;
 
-namespace Application.Api
+namespace Application.Web
 {
     public static class DependencyInjectionModuleWeb
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<UserService, UserService>();
+            services.AddScoped<AuthenticationService>();
+            services.AddScoped<UserService>();
             services.AddScoped<CategoryService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<UserService, UserService>();
-            services.AddScoped<AuthenticationService, AuthenticationService>();
         }
     }
 }

@@ -3,6 +3,7 @@
 
 * {
   color: #fbf7ea;
+  transition: color 0.3s ease;
 }
 
 .container-fluid {
@@ -23,20 +24,14 @@ button {
   outline: none!important;
   background: none!important;
   cursor: pointer !important;
-  background-color: $green-gray-dark !important;
+  background-color: $gray-primary !important;
+  transition: background-color 0.5s ease, box-shadow 0.3s ease;
 }
 
-button:active {
-  background-color: $green-primary !important;
-}
 
-button.ghost {
-  background-color: $neutral-white-300 !important;
-  color: $green-gray-dark !important;
-}
+
 
 button:hover {
   background-color: $green-secondary !important;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2) !important;
-  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 15px $green-primary !important;
 }

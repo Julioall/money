@@ -1,0 +1,139 @@
+{
+  "components": {
+
+    "auth": {
+      "titleLogin": "Login",
+      "orUseAccount": "or use your account",
+      "email": "Email",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Invalid email format.",
+      "password": "Password",
+      "passwordRequired": "Password is required.",
+      "passwordMinLength": "Password must be at least 6 characters long.",
+      "signIn": "Sign In",
+      "noAccount": "Don't have an account?",
+      "register": "Register",
+      "forgotPassword": "Forgot your password?",
+      "getItBack": "Get it back",
+      "titleSignup": "Sign Up",
+      "orUseEmail": "or use your email to register",
+      "fullName": "Full Name",
+      "fullNameRequired": "Full name is required.",
+      "alreadyHaveAccount": "Already have an account?",
+      "loginSuccess": "Login successful!",
+      "loginError": "Login error. Please check your credentials.",
+      "signupSuccess": "Registration successful!",
+      "signupError": "Error during registration. Please try again."
+    },
+
+    "header": {
+      "brand": "Money",
+      "nav": {
+        "overview": "Overview",
+        "reports": "Reports",
+        "spendingLimit": "Spending Limit",
+        "launch": "Launch"
+      },
+      "settings": {
+        "title": "Settings",
+        "categories": "Categories",
+        "accounts": "Accounts",
+        "cards": "Credit Cards",
+        "preferences": "Preferences",
+        "myPlan": "My Plan",
+        "tags": "Tags",
+        "alerts": "Alerts",
+        "activities": "Activities",
+        "moreOptions": "More Options"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "item": "Notification!"
+      },
+      "profile": {
+        "title": "Profile",
+        "myAccount": "My Account",
+        "logout": "Logout",
+        "logoutSuccess": "Logged out successfully"
+      }
+    },
+
+    "settings": {
+      "categories": "Categories",
+      "accounts": "Accounts",
+      "creditCards": "Credit Cards",
+      "preferences": "Preferences",
+      "plan": "Plan",
+      "tags": "Tags",
+      "alerts": "Alerts",
+      "activities": "Activities"
+    },
+
+    "categories": {
+      "title": "Categories",
+      "incomeCategoryButton": "Income",
+      "expenseCategoryButton": "Expense",
+      "incomeTab": "Income",
+      "expenseTab": "Expenses",
+      "creatingIncomeCategory": "Creating income category",
+      "categoryNameLabel": "Category name",
+      "categoryNamePlaceholder": "Enter category name",
+      "categoryNameRequired": "Category name is required.",
+      "categoryNameMinlength": "Category name must be at least 3 characters long.",
+      "chooseColor": "Choose a color",
+      "chooseIcon": "Choose an icon",
+      "creatingExpenseCategory": "Creating expense category",
+      "incomeCategoryNameRequired": "Income category name is required.",
+      "incomeCategoryNameMinlength": "Income category name must be at least 3 characters long.",
+      "expenseCategoryNameRequired": "Expense category name is required.",
+      "expenseCategoryNameMinlength": "Expense category name must be at least 3 characters long.",
+      "colorRequired": "Color is required.",
+      "iconRequired": "Icon is required.",
+      "textButtonCreateModalIncome": "Create income",
+      "textButtonCreateModalExpense": "Create expense",
+      "textButtonEditModalIncome": "Edit income",
+      "textButtonEditModalExpense": "Edit expense",
+      "notificationSuccessAddIncome": "Income category added successfully!",
+      "notificationSuccessAddExpense": "Expense category added successfully!",
+      "notificationSuccessEditIncome": "Income category updated successfully!",
+      "notificationSuccessEditExpense": "Expense category updated successfully!",
+      "notificationErrorAddIncome": "Error adding income category:",
+      "notificationErrorAddExpense": "Error adding expense category:",
+      "notificationErrorEditIncome": "Error updating income category:",
+      "notificationErrorEditExpense": "Error updating expense category:",
+      "notificationErrorFetch": "Error fetching categories:",
+      "notificationErrorRemoveIncome": "Error removing income category:",
+      "notificationErrorRemoveExpense": "Error removing expense category:",
+      "notificationInvalidCategory": "Please ensure all fields are filled in correctly for the category.",
+      "notificationErrorClosingModal": "An error occurred while closing the category modal:",
+      "notificationErrorLoadCategoryData": "Failed to load category data. Please try again or contact support if the issue persists."
+    },
+
+    "modal": {
+      "cancelButton": "Cancel",
+      "actionButton": "Save"
+    },
+
+    "accounts": {
+      "title": "Accounts",
+      "textButtonNewAccount": "New account",
+      "textActionButtonModal": "Create Account"
+    }
+  },
+
+  "services": {
+
+    "auth": {
+      "errorInvalidCredentials": "Invalid credentials",
+      "errorLoginFailed": "Login failed",
+      "errorSignUpFailed": "Sign up failed",
+      "errorUnauthorizedRequest": "Unauthorized request"
+    },
+    
+    "notifications": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning"
+    }
+  }
+}

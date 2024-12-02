@@ -8,8 +8,10 @@
         <ng-content></ng-content>
       </div>
       <div [ngClass]="{'d-flex justify-content-center': !isCancelEnabled}" class="modal-footer border-0 px-5 py-2 mb-4">
-        <button *ngIf="isCancelEnabled" type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" (click)="onClosedClick()">Cancel</button>
-        <button type="button" class="buttonAction btn fw-bold" (click)="onActionClick()">{{textButton}}</button>
+        <button *ngIf="isCancelEnabled" type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" (click)="onClosedClick()">
+          {{ 'components.modal.cancelButton' | translate }}
+        </button>
+        <button type="button" class="buttonAction btn fw-bold" (click)="onActionClick()">{{textButton || 'components.modal.actionButton' | translate }}</button>
       </div>
     </div>
   </div>

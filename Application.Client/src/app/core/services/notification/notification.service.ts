@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  constructor(private toast: ToastrService) {}
-
-  showSuccess(message: string, title: string = 'Success') {
-    this.toast.success(message, title, {
-      timeOut: 3000,
-      positionClass: 'toast-top-right',
-    });
+  constructor(
+    private toast: ToastrService,
+    private translate: TranslateService
+  ) {
   }
 
-  showError(message: string, title: string = 'Error') {
-    this.toast.error(message, title, {
-      timeOut: 3000,
-      progressBar: true,
-      positionClass: 'toast-top-right'
-    });
+  showSuccess(message: string, title?: string) {
+    if (!title) {
+      title = this.translate.instant('services.notifications.success');
+    }
+    this.toast.success(message, title);
   }
 
-  showWarning(message: string, title: string = 'Warning') {
-    this.toast.warning(message, title, {
-      timeOut: 3000,
-      progressBar: true,
-      positionClass: 'toast-top-right'
-    });
+  showError(message: string, title?: string) {
+    if (!title) {
+      title = this.translate.instant('services.notifications.error');
+    }
+    this.toast.error(message, title);
+  }
+
+  showWarning(message: string, title?: string) {
+    if (!title) {
+      title = this.translate.instant('services.notifications.warning');
+    }
+    this.toast.warning(message, title);
   }
 }

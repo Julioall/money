@@ -25,7 +25,7 @@ namespace Application.Web.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("accounts")]
+        [HttpPost()]
         public async Task<IActionResult> Add([FromBody] Account account)
         {
             if (account == null)
@@ -36,18 +36,18 @@ namespace Application.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { accountId = createdAccount.Id }, createdAccount);
         }
 
-        [HttpDelete("accounts/{accountId}")]
-        public async Task<IActionResult> Delete(string accountId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            var success = await _accountService.DeleteAsync(userId, accountId);
+            var success = await _accountService.DeleteAsync(userId, id);
             if (!success)
                 return NotFound("Account not found.");
 
             return NoContent();
         }
 
-        [HttpPut("accounts")]
+        [HttpPut()]
         public async Task<IActionResult> Update([FromBody] Account account)
         {
             if (account == null)
@@ -58,7 +58,7 @@ namespace Application.Web.Controllers
             return Ok(updatedAccount);
         }
 
-        [HttpGet("accounts")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -66,11 +66,11 @@ namespace Application.Web.Controllers
             return Ok(accounts);
         }
 
-        [HttpGet("accounts/{accountId}")]
-        public async Task<IActionResult> GetById(string accountId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            var account = await _accountService.GetByIdAsync(userId, accountId);
+            var account = await _accountService.GetByIdAsync(userId, id);
             if (account == null)
                 return NotFound("Account not found.");
 
