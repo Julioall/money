@@ -37,12 +37,9 @@ export class CategoriesComponent implements OnInit {
   idExpenseModal: string =  'expenseModal';
   idIncomeModal: string = 'incomeModal';
   idCategoryEdition?: string;
-  textButtonModalIncome?: string;
-  textButtonModalExpense?: string;
-  textButtonCreateModalIncome?: string;
-  textButtonCreateModalExpense?: string;
-  textButtonEditModalIncome?: string;
-  textButtonEditModalExpense?: string;
+
+  textButtonModalIncome: string;
+  textButtonModalExpense: string;
 
   colors: string[] = [
     '#ED1B25', '#A41A44', '#7A2990', '#392B8A', '#2F5AA8', '#018CCD', '#60AF46', '#CDDB26', '#F6ED24', '#F7BA12', '#F9971D', '#F14B21', "#F26A6A", "#C94B67", "#A158B5", "#5D4FB1", "#4B7EC2", "#42B8E1", "#88C876", "#E1ED6C", "#F8F17D", "#F8CD5C"
@@ -295,6 +292,7 @@ export class CategoriesComponent implements OnInit {
     'fa fa-users-cog',
   ];
 
+
   constructor(
     private _fb: FormBuilder,
     private _categoriesService: CategoriesService,
@@ -306,12 +304,8 @@ export class CategoriesComponent implements OnInit {
       expenseCategoryName: ['', [Validators.required, Validators.minLength(3)]],
     });
 
-    this.textButtonCreateModalIncome = this.translate.instant('components.categories.textButtonCreateModalIncome');
-    this.textButtonCreateModalExpense = this.translate.instant('components.categories.textButtonCreateModalExpense');
-    this.textButtonEditModalIncome = this.translate.instant('components.categories.textButtonEditModalIncome');
-    this.textButtonEditModalExpense = this.translate.instant('components.categories.textButtonEditModalExpense');
-    this.textButtonModalIncome = this.textButtonCreateModalIncome;
-    this.textButtonModalExpense = this.textButtonCreateModalExpense;
+    this.textButtonModalIncome = this.translate.instant('components.categories.textButtonCreateModalIncome');
+    this.textButtonModalExpense = this.translate.instant('components.categories.textButtonCreateModalExpense');
   }
 
   ngOnInit() {
@@ -333,10 +327,10 @@ export class CategoriesComponent implements OnInit {
           this._addCategory();
         }
       } else {
-        this._notificationService.showError('Please ensure all fields are filled in correctly for the income category.');
+        this._notificationService.showError(this.translate.instant('components.categories.notificationInvalidCategory'));
       }
     } catch (error) {
-      this._notificationService.showError(`An error occurred while closing the category modal: ${error}`);
+      this._notificationService.showError(`${this.translate.instant('components.categories.notificationErrorClosingModal')} ${error}`);
     }
   }
 
@@ -345,23 +339,23 @@ export class CategoriesComponent implements OnInit {
       await firstValueFrom(this._categoriesService.delete(id))
       this._getAllCategories();
     } catch (error) {
-      this._notificationService.showError(`An error occurred while removing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}`);
+      this._notificationService.showError(`${this.isIncomeCategory ? this.translate.instant('components.categories.notificationErrorRemoveIncome') : this.translate.instant('components.categories.notificationErrorRemoveExpense')} ${error}`);
     }
   }
 
   onEdit(category: Category) {
     try {
       if (!category || !category.background || !category.icon) {
-        throw new Error('Invalid category data');
+        throw new Error(this.translate.instant('components.categories.notificationErrorLoadCategoryData'));
       }
       if (this.isIncomeCategory) {
-        this.textButtonModalIncome = this.textButtonEditModalIncome
+        this.textButtonModalIncome = this.translate.instant('components.categories.textButtonEditModalIncome')
         this.categoryForm.get('incomeCategoryName')?.setValue(category.name)
         this.selectedColorIncome = category.background;
         this.selectedIconIncome = category.icon;
         this.idCategoryEdition = category.id;
       } else {
-        this.textButtonModalExpense = this.textButtonEditModalExpense
+        this.textButtonModalExpense = this.translate.instant('components.categories.textButtonEditModalExpense')
         this.categoryForm.get('expenseCategoryName')?.setValue(category.name)
         this.selectedColorExpense = category.background;
         this.selectedIconExpense = category.icon;
@@ -373,7 +367,7 @@ export class CategoriesComponent implements OnInit {
 
     } catch (error) {
       this._notificationService.showError(
-        `An error occurred while editing the ${this.isIncomeCategory ? 'income' : 'expense'} category: ${error}}`
+        `${this.isIncomeCategory ? this.translate.instant('components.categories.notificationErrorEditIncome') : this.translate.instant('components.categories.notificationErrorEditExpense')} ${error}}`
       );
     }
   }
@@ -384,8 +378,8 @@ export class CategoriesComponent implements OnInit {
     this.selectedIconIncome = '';
     this.selectedIconExpense = '';
     this.idCategoryEdition = '';
-    this.textButtonModalIncome = this.textButtonCreateModalIncome;;
-    this.textButtonModalExpense = this.textButtonCreateModalExpense;;
+    this.textButtonModalIncome = this.translate.instant('components.categories.textButtonCreateModalIncome');;
+    this.textButtonModalExpense = this.translate.instant('components.categories.textButtonCreateModalExpense');;
     this.isSubmitted = false;
     this.categoryForm.reset();
     this.iconPicker.resetSelection();
@@ -435,12 +429,12 @@ export class CategoriesComponent implements OnInit {
         } else {
           this.expenseCategories.push(category);
         }
-        this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category added successfully!`);
+        this._notificationService.showSuccess(`${this.isIncomeCategory ? this.translate.instant('components.categories.notificationErrorAddIncome') : this.translate.instant('components.categories.notificationErrorAddExpense')}`);
         this._closeModal()
         this.onResetSelections();
       },
       error: (error) => {
-        this._notificationService.showError(`Error adding ${this.isIncomeCategory ? 'income' : 'expense'} category:`, error);
+        this._notificationService.showError(`${this.isIncomeCategory ? this.translate.instant('components.categories.notificationErrorAddIncome') : this.translate.instant('components.categories.notificationErrorAddExpense')}`, error);
       }
     });
   }
@@ -452,7 +446,7 @@ export class CategoriesComponent implements OnInit {
         this.expenseCategories = data.filter(category => category.type === CategoryType.Expense);
       },
       error: (error) => {
-        this._notificationService.showError('Error fetching categories:', error);
+        this._notificationService.showError(this.translate.instant('components.categories.notificationErrorFetch'), error);
       }
     });
   }
@@ -474,12 +468,12 @@ export class CategoriesComponent implements OnInit {
           }
         }
 
-        this._notificationService.showSuccess(`${this.isIncomeCategory ? 'Income' : 'Expense'} category updated successfully!`);
+        this._notificationService.showSuccess(`${this.isIncomeCategory ? this.translate.instant('components.categories.notificationSuccessEditIncome') : this.translate.instant('components.categories.notificationSuccessEditExpense')}`);
         this._closeModal();
         this.onResetSelections();
       },
       error: (error) => {
-        this._notificationService.showError(`Error updating ${this.isIncomeCategory ? 'income' : 'expense'} category:`, error);
+        this._notificationService.showError(`${this.isIncomeCategory ? this.translate.instant('components.categories.notificationErrorEditIncome') : this.translate.instant('components.categories.notificationErrorEditExpense')}`, error);
       }
     });
 

@@ -20,7 +20,12 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideHttpClient(withFetch(), withInterceptorsFromDi()),
     provideAnimations(),
-    provideToastr(),
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      closeButton: true
+    }),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

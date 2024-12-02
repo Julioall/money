@@ -12,7 +12,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.Services.AddLocalization();
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpContextAccessor();
@@ -95,6 +95,14 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        var supportedCultures = new[] { "en-US", "pt-BR" };
+
+        var localizationOptions = new RequestLocalizationOptions()
+            .SetDefaultCulture("en-US")
+            .AddSupportedCultures(supportedCultures)
+            .AddSupportedUICultures(supportedCultures);
+
+        app.UseRequestLocalization(localizationOptions);
 
         app.UseAuthentication();
         app.UseAuthorization();

@@ -22,7 +22,7 @@ namespace Application.Web.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("creditcards")]
+        [HttpPost()]
         public async Task<IActionResult> Add([FromBody] CreditCard creditCard)
         {
             if (creditCard == null)
@@ -33,18 +33,18 @@ namespace Application.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { creditCardId = createdCreditCard.Id }, createdCreditCard);
         }
 
-        [HttpDelete("creditcards/{creditCardId}")]
-        public async Task<IActionResult> Delete(string creditCardId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            var success = await _creditCardService.DeleteAsync(userId, creditCardId);
+            var success = await _creditCardService.DeleteAsync(userId, id);
             if (!success)
                 return NotFound("Credit card not found.");
 
             return NoContent();
         }
 
-        [HttpPut("creditcards")]
+        [HttpPut()]
         public async Task<IActionResult> Update([FromBody] CreditCard creditCard)
         {
             if (creditCard == null)
@@ -55,7 +55,7 @@ namespace Application.Web.Controllers
             return Ok(updatedCreditCard);
         }
 
-        [HttpGet("creditcards")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -63,11 +63,11 @@ namespace Application.Web.Controllers
             return Ok(creditCards);
         }
 
-        [HttpGet("creditcards/{creditCardId}")]
-        public async Task<IActionResult> GetById(string creditCardId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
             var userId = await _authenticationService.GetUserIdLoged();
-            var creditCard = await _creditCardService.GetByIdAsync(userId, creditCardId);
+            var creditCard = await _creditCardService.GetByIdAsync(userId, id);
             if (creditCard == null)
                 return NotFound("Credit card not found.");
 

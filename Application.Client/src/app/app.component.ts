@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'Money';
 
   constructor(private translate: TranslateService) {
-    this.translate.addLangs(['pt', 'en', 'es', 'fr']);
+    this.translate.addLangs(['pt', 'en']);
     this.translate.setDefaultLang('en');
     this.translate.use(this.translate.getBrowserLang() || "en");
   }

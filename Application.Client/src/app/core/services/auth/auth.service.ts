@@ -7,18 +7,20 @@ import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../../environment/environment';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/User/add`;
+  private apiUrl = `${environment.apiUrl}/user/`;
   private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   public loggedIn$ = this.loggedInSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.checkLoginStatus();
@@ -45,16 +47,16 @@ export class AuthService {
       }),
       catchError(error => {
         if (error.status === 401) {
-          return throwError(() => new Error('Invalid credentials'));
+          return throwError(() => new Error(this.translate.instant('services.auth.errorInvalidCredentials')));
         }
-        return throwError(() => new Error('Login failed'));
+        return throwError(() => new Error(this.translate.instant('services.auth.errorLoginFailed')));
       })
     );
   }
 
   signup(user: User): Observable<any> {
     return this.http.post<any>(this.apiUrl, user).pipe(
-      catchError(() => throwError(() => new Error('Sign up failed')))
+      catchError(() => throwError(() => new Error(this.translate.instant('services.auth.errorSignUpFailed'))))
     );
   }
 

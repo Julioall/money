@@ -1,77 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from '../../../../environment/environment';
+import { NotificationService } from '../notification/notification.service';
 import { User } from '../../models/user';
+import { BaseRepositoryService } from '../base-repository.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  useFactory: (http: HttpClient, notificationService: NotificationService) => {
+    return new UserService(http, notificationService);
+  },
+  deps: [HttpClient, NotificationService]
 })
-export class UserService {
-  private apiUrl = environment.apiUrl + '/user';
-
-  constructor(private http: HttpClient) {}
-
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
-
-  addUser(user: User): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, user, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  deleteUser(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/all`, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/get/${id}`, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError(this.handleError)
-      );
+export class UserService extends BaseRepositoryService<User> {
+  constructor(
+    http: HttpClient,
+    notificationService: NotificationService
+  ) {
+    super(notificationService, http, 'user');
   }
 
   getUsersByRole(role: string): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/role/${role}`, { headers: this.getAuthHeaders() })
+    return this.http.get<User[]>(`${this.baseUrl}/user/get-by-role/${role}`)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.handleError<User[]>('getUsersByRole', []))
       );
   }
 
-  getUserByUsername(username: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/username/${username}`, { headers: this.getAuthHeaders() })
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/user/get-by-email/${email}`)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.handleError<User>('getUserByEmail'))
       );
-  }
-
-  updateUser(user: User): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update`, user, { headers: this.getAuthHeaders() })
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
-
-  private handleError(error: any): Observable<never> {
-    console.error('An error occurred:', error);
-    throw error;
   }
 }

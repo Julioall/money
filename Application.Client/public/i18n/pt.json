@@ -1,5 +1,6 @@
 {
   "components": {
+
     "auth": {
       "titleLogin": "Entrar",
       "orUseAccount": "ou use sua conta",
@@ -15,22 +16,22 @@
       "forgotPassword": "Esqueceu sua senha?",
       "getItBack": "Recupere-a",
       "titleSignup": "Criar Conta",
-      "orUseEmail": "ou use seu email para se registrar",
-      "fullName": "Nome Completo",
-      "fullNameRequired": "Nome é obrigatório.",
+      "orUseEmail": "ou use seu email para se cadastrar",
+      "fullName": "Nome completo",
+      "fullNameRequired": "Nome completo é obrigatório.",
       "alreadyHaveAccount": "Já tem uma conta?",
-      "loginSuccess": "Login realizado com sucesso!",
-      "loginError": "Erro no login. Verifique suas credenciais.",
-      "signupSuccess": "Cadastro realizado com sucesso!",
-      "signupError": "Erro durante o cadastro. Tente novamente."
+      "loginSuccess": "Login bem-sucedido!",
+      "loginError": "Erro ao fazer login. Verifique suas credenciais.",
+      "signupSuccess": "Cadastro bem-sucedido!",
+      "signupError": "Erro no cadastro. Por favor, tente novamente."
     },
 
     "header": {
-      "brand": "Dinheiro",
+      "brand": "Money",
       "nav": {
-        "overview": "Visão Geral",
+        "overview": "Visão geral",
         "reports": "Relatórios",
-        "spendingLimit": "Limite de Gastos",
+        "spendingLimit": "Limite de gastos",
         "launch": "Lançar"
       },
       "settings": {
@@ -39,11 +40,11 @@
         "accounts": "Contas",
         "cards": "Cartões de Crédito",
         "preferences": "Preferências",
-        "myPlan": "Meu Plano",
+        "myPlan": "Meu plano",
         "tags": "Etiquetas",
         "alerts": "Alertas",
         "activities": "Atividades",
-        "moreOptions": "Mais Opções"
+        "moreOptions": "Mais opções"
       },
       "notifications": {
         "title": "Notificações",
@@ -51,54 +52,88 @@
       },
       "profile": {
         "title": "Perfil",
-        "myAccount": "Minha Conta",
-        "logout": "Sair"
+        "myAccount": "Minha conta",
+        "logout": "Sair",
+        "logoutSuccess": "Logout realizado com sucesso!"
       }
     },
+
     "settings": {
       "categories": "Categorias",
       "accounts": "Contas",
-      "creditCards": "Cartões de Crédito",
+      "creditCards": "Cartões de crédito",
       "preferences": "Preferências",
       "plan": "Plano",
       "tags": "Etiquetas",
       "alerts": "Alertas",
       "activities": "Atividades"
     },
+
     "categories": {
       "title": "Categorias",
       "incomeCategoryButton": "Receita",
       "expenseCategoryButton": "Despesa",
-      "incomeTab": "Rendimentos",
+      "incomeTab": "Receitas",
       "expenseTab": "Despesas",
-      "creatingIncomeCategory": "Criando categoria de rendimento",
+      "creatingIncomeCategory": "Criando categoria de receita",
       "categoryNameLabel": "Nome da categoria",
       "categoryNamePlaceholder": "Digite o nome da categoria",
-      "categoryNameRequired": "O nome da categoria é obrigatório.",
+      "categoryNameRequired": "Nome da categoria é obrigatório.",
       "categoryNameMinlength": "O nome da categoria deve ter pelo menos 3 caracteres.",
       "chooseColor": "Escolha uma cor",
       "chooseIcon": "Escolha um ícone",
       "creatingExpenseCategory": "Criando categoria de despesa",
-      "incomeCategoryNameRequired": "O nome da categoria de rendimento é obrigatório.",
-      "incomeCategoryNameMinlength": "O nome da categoria de rendimento deve ter pelo menos 3 caracteres.",
-      "expenseCategoryNameRequired": "O nome da categoria de despesa é obrigatório.",
+      "incomeCategoryNameRequired": "Nome da categoria de receita é obrigatório.",
+      "incomeCategoryNameMinlength": "O nome da categoria de receita deve ter pelo menos 3 caracteres.",
+      "expenseCategoryNameRequired": "Nome da categoria de despesa é obrigatório.",
       "expenseCategoryNameMinlength": "O nome da categoria de despesa deve ter pelo menos 3 caracteres.",
       "colorRequired": "A cor é obrigatória.",
       "iconRequired": "O ícone é obrigatório.",
-      "textButtonActionModalIncome": "Criar receita",
-      "textButtonActionModalExpense": "Criar despesa"
+      "textButtonCreateModalIncome": "Criar receita",
+      "textButtonCreateModalExpense": "Criar despesa",
+      "textButtonEditModalIncome": "Editar receita",
+      "textButtonEditModalExpense": "Editar despesa",
+      "notificationSuccessAddIncome": "Categoria de receita adicionada com sucesso!",
+      "notificationSuccessAddExpense": "Categoria de despesa adicionada com sucesso!",
+      "notificationSuccessEditIncome": "Categoria de receita atualizada com sucesso!",
+      "notificationSuccessEditExpense": "Categoria de despesa atualizada com sucesso!",
+      "notificationErrorAddIncome": "Erro ao adicionar categoria de receita:",
+      "notificationErrorAddExpense": "Erro ao adicionar categoria de despesa:",
+      "notificationErrorEditIncome": "Erro ao atualizar categoria de receita:",
+      "notificationErrorEditExpense": "Erro ao atualizar categoria de despesa:",
+      "notificationErrorFetch": "Erro ao buscar categorias:",
+      "notificationErrorRemoveIncome": "Erro ao remover categoria de receita:",
+      "notificationErrorRemoveExpense": "Erro ao remover categoria de despesa:",
+      "notificationInvalidCategory": "Por favor, certifique-se de que todos os campos estão preenchidos corretamente para a categoria.",
+      "notificationErrorClosingModal": "Ocorreu um erro ao fechar o modal da categoria:",
+      "notificationErrorLoadCategoryData": "Falha ao carregar os dados da categoria. Por favor, tente novamente ou entre em contato com o suporte caso o problema persista."
     },
+
     "modal": {
       "cancelButton": "Cancelar",
       "actionButton": "Salvar"
     },
+
     "accounts": {
       "title": "Contas",
       "textButtonNewAccount": "Nova conta",
-      "textActionButtonModal": "Criar Conta"
+      "textActionButtonModal": "Criar conta"
     }
   },
+
   "services": {
-    "auth": {}
+
+    "auth": {
+      "errorInvalidCredentials": "Credenciais inválidas",
+      "errorLoginFailed": "Falha no login",
+      "errorSignUpFailed": "Falha no cadastro",
+      "errorUnauthorizedRequest": "Solicitação não autorizada"
+    },
+
+    "notifications": {
+      "success": "Sucesso",
+      "error": "Erro",
+      "warning": "Aviso"
+    }
   }
 }

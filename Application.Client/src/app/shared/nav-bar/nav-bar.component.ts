@@ -3,7 +3,7 @@ import { AuthService } from '../../core/services/auth/auth.service';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,12 +13,15 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './nav-bar.component.scss'
 })
 export class NavBarComponent implements OnInit {
+
   isLoggedIn: boolean = false;
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private notificationService: NotificationService,
-  ) { }
+    private translate: TranslateService,
+  ) {}
 
   ngOnInit() {
     this.authService.loggedIn$.subscribe(loggedIn => {
@@ -27,7 +30,7 @@ export class NavBarComponent implements OnInit {
   }
 
   onClickLogout() {
-    this.notificationService.showSuccess('Logged out successfully');
+    this.notificationService.showSuccess(this.translate.instant('components.header.profile.logoutSuccess'));
     this._logOut()
 
   }

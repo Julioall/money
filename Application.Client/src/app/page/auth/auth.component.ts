@@ -75,14 +75,12 @@ export class AuthComponent implements OnInit {
       const response = await firstValueFrom(await this.authService.login(email, password));
       if (response?.token) {
         this.authService.saveToken(response.token);
-        const successMessage = await firstValueFrom(this.translate.get('components.auth.loginSuccess'));
-        this.notificationService.showSuccess(successMessage);
+        this.notificationService.showSuccess(this.translate.instant('components.auth.loginSuccess'));
         this.loginForm.reset();
         this.router.navigate(['/overview']);
       }
     } catch (error) {
-      const errorMessage = await firstValueFrom(this.translate.get('components.auth.loginError'));
-      this.notificationService.showError(errorMessage);
+      this.notificationService.showError(this.translate.instant('components.auth.loginError'));
     }
   }
 
@@ -110,14 +108,12 @@ export class AuthComponent implements OnInit {
 
     this.authService.signup(newUser).subscribe({
       next: async () => {
-        const successMessage = await firstValueFrom(this.translate.get('components.auth.signupSuccess'));
-        this.notificationService.showSuccess(successMessage);
+        this.notificationService.showSuccess(this.translate.instant('components.auth.signupSuccess'));
         this.showLogin();
         this.loginForm.patchValue({ email, password });
       },
       error: async () => {
-        const errorMessage = await firstValueFrom(this.translate.get('components.auth.signupError'));
-        this.notificationService.showError(errorMessage);
+        this.notificationService.showError(this.translate.instant('components.auth.signupError'));
       }
     });
   }

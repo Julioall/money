@@ -11,7 +11,7 @@ export const ENTITY_NAME_TOKEN = new InjectionToken<string>('entityName');
   providedIn: 'root'
 })
 export class BaseRepositoryService<T> {
-  private baseUrl = environment.apiUrl;
+  public baseUrl = environment.apiUrl;
 
   constructor(
     private notificationService: NotificationService,
@@ -44,7 +44,7 @@ export class BaseRepositoryService<T> {
       .pipe(catchError(this.handleError<boolean>('delete', false)));
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       this.notificationService.showError(`${operation} failed: ${error.message}`);
       return of(result as T);

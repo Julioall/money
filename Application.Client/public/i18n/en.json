@@ -1,5 +1,6 @@
 {
   "components": {
+
     "auth": {
       "titleLogin": "Login",
       "orUseAccount": "or use your account",
@@ -52,7 +53,8 @@
       "profile": {
         "title": "Profile",
         "myAccount": "My Account",
-        "logout": "Logout"
+        "logout": "Logout",
+        "logoutSuccess": "Logged out successfully"
       }
     },
 
@@ -90,7 +92,21 @@
       "textButtonCreateModalIncome": "Create income",
       "textButtonCreateModalExpense": "Create expense",
       "textButtonEditModalIncome": "Edit income",
-      "textButtonEditModalExpense": "Edit expense"
+      "textButtonEditModalExpense": "Edit expense",
+      "notificationSuccessAddIncome": "Income category added successfully!",
+      "notificationSuccessAddExpense": "Expense category added successfully!",
+      "notificationSuccessEditIncome": "Income category updated successfully!",
+      "notificationSuccessEditExpense": "Expense category updated successfully!",
+      "notificationErrorAddIncome": "Error adding income category:",
+      "notificationErrorAddExpense": "Error adding expense category:",
+      "notificationErrorEditIncome": "Error updating income category:",
+      "notificationErrorEditExpense": "Error updating expense category:",
+      "notificationErrorFetch": "Error fetching categories:",
+      "notificationErrorRemoveIncome": "Error removing income category:",
+      "notificationErrorRemoveExpense": "Error removing expense category:",
+      "notificationInvalidCategory": "Please ensure all fields are filled in correctly for the category.",
+      "notificationErrorClosingModal": "An error occurred while closing the category modal:",
+      "notificationErrorLoadCategoryData": "Failed to load category data. Please try again or contact support if the issue persists."
     },
 
     "modal": {
@@ -106,6 +122,18 @@
   },
 
   "services": {
-    "auth": {}
+
+    "auth": {
+      "errorInvalidCredentials": "Invalid credentials",
+      "errorLoginFailed": "Login failed",
+      "errorSignUpFailed": "Sign up failed",
+      "errorUnauthorizedRequest": "Unauthorized request"
+    },
+    
+    "notifications": {
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning"
+    }
   }
 }
