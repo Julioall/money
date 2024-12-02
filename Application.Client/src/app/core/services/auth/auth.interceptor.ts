@@ -5,16 +5,20 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { catchError, delay, finalize, Observable } from 'rxjs';
+import { catchError, finalize, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { BusyService } from '../busy/busy.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private busyService: BusyService,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private translate: TranslateService
+  ) {
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
@@ -25,14 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
     });
 
     return next.handle(authReq).pipe(
-      delay(500),
       finalize(() => {
         this.busyService.hide();
       }),
       catchError((error) => {
         if (error.status === 401) {
           this.authService.logout();
-          throw error('Unauthorized request');
+          throw error(this.translate.instant('services.auth.errorUnauthorizedRequest'));
         }
         throw error;
       })

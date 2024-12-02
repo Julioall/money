@@ -1,21 +1,36 @@
 <div class="container-fluid d-flex justify-content-center align-items-start vh-100">
   <div class="container-lg vh-100">
-    <div class="row mt-5 p-0 p-sm-5">
-      <div class="col-2 d-none d-md-block">
-        <nav class="row nav px-4">
-          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/categories" routerLinkActive="active">Categories</a>
-          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/accounts" routerLinkActive="active">Accounts</a>
-          <a class="nav-item nav-link text-small text-gray fw-medium pb-4" routerLink="/settings/credit-cards" routerLinkActive="active">Credit Cards</a>
+    <div class="row p-0 p-sm-5">
+      <div class="col-3 d-none d-md-block">
+        <nav class="row nav">
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-3" routerLink="/settings/categories" routerLinkActive="active">
+            {{ 'components.settings.categories' | translate }}
+          </a>
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-3" routerLink="/settings/accounts" routerLinkActive="active">
+            {{ 'components.settings.accounts' | translate }}
+          </a>
+          <a class="nav-item nav-link text-small text-gray fw-medium pb-3" routerLink="/settings/credit-cards" routerLinkActive="active">
+            {{ 'components.settings.creditCards' | translate }}
+          </a>
 
           <hr class="line-divider w-75 text-center"/>
 
-          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/preferences" routerLinkActive="active">Preferences</a>
-          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/plan" routerLinkActive="active">Plan</a>
-          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/tags" routerLinkActive="active">Tags</a>
-          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/alerts" routerLinkActive="active">Alerts</a>
-          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-4" routerLink="/settings/activities" routerLinkActive="active">Activities</a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-2" routerLink="/settings/preferences" routerLinkActive="active">
+            {{ 'components.settings.preferences' | translate }}
+          </a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-2" routerLink="/settings/plan" routerLinkActive="active">
+            {{ 'components.settings.plan' | translate }}
+          </a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-2" routerLink="/settings/tags" routerLinkActive="active">
+            {{ 'components.settings.tags' | translate }}
+          </a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-2" routerLink="/settings/alerts" routerLinkActive="active">
+            {{ 'components.settings.alerts' | translate }}
+          </a>
+          <a class="nav-item nav-link text-x-small text-gray fw-medium pb-2" routerLink="/settings/activities" routerLinkActive="active">
+            {{ 'components.settings.activities' | translate }}
+          </a>
         </nav>
-
       </div>
       <div class="col vh-100">
         <router-outlet></router-outlet>

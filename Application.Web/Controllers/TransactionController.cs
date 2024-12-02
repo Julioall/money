@@ -21,7 +21,7 @@ namespace Application.Web.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("transactions")]
+        [HttpPost()]
         public async Task<IActionResult> Add([FromBody] Transaction transaction)
         {
             if (transaction == null)
@@ -31,7 +31,7 @@ namespace Application.Web.Controllers
             return CreatedAtAction(nameof(GetById), new { transactionId = createdTransaction.Id }, createdTransaction);
         }
 
-        [HttpDelete("transactions/{transactionId}")]
+        [HttpDelete("{transactionId}")]
         public async Task<IActionResult> Delete(string transactionId)
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -43,7 +43,7 @@ namespace Application.Web.Controllers
             return NoContent();
         }
 
-        [HttpPut("transactions")]
+        [HttpPut()]
         public async Task<IActionResult> Update([FromBody] Transaction transaction)
         {
             if (transaction == null)
@@ -53,7 +53,7 @@ namespace Application.Web.Controllers
             return Ok(updatedTransaction);
         }
 
-        [HttpGet("transactions")]
+        [HttpGet()]
         public async Task<IActionResult> GetAll()
         {
             var userId = await _authenticationService.GetUserIdLoged();
@@ -61,7 +61,7 @@ namespace Application.Web.Controllers
             return Ok(transactions);
         }
 
-        [HttpGet("transactions/{transactionId}")]
+        [HttpGet("{transactionId}")]
         public async Task<IActionResult> GetById(string transactionId)
         {
             var userId = await _authenticationService.GetUserIdLoged();

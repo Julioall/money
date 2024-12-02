@@ -1,6 +1,6 @@
 ﻿namespace Application.Domain.Model
 {
-    public static class AplicationConstants
+    public static class ApplicationConstants
     {
         public static readonly string DATABASE_URLS = Environment.GetEnvironmentVariable("RAVENDBSETTINGS_URLS");
         public static readonly string DATABASE_NAME = Environment.GetEnvironmentVariable("RAVENDBSETTINGS_DATABASE_NAME");

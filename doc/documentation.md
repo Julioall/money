@@ -60,3 +60,6 @@ Classe que define as propriedades básicas de uma transação financeira, compar
 ## Considerações Finais
 
 O sistema **ProfitPay** foi projetado para ser extensível e fácil de usar, permitindo que os usuários gerenciem suas finanças de maneira eficiente.
+
+## Recursos
+https://www.flaticon.com/free-icon/wallet_9165728?term=wallet&related_id=9165728

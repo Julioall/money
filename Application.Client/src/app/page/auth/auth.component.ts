@@ -7,11 +7,14 @@ import { User } from '../../core/models/user';
 import { UserFinance } from '../../core/models/userFinance';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TranslateModule],
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
 })
@@ -29,6 +32,7 @@ export class AuthComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private notificationService: NotificationService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -63,7 +67,6 @@ export class AuthComponent implements OnInit {
   async onLogin(): Promise<void> {
     this.loginSubmitted = true;
     if (this.loginForm.invalid) {
-      this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
 
@@ -72,19 +75,18 @@ export class AuthComponent implements OnInit {
       const response = await firstValueFrom(await this.authService.login(email, password));
       if (response?.token) {
         this.authService.saveToken(response.token);
-        this.notificationService.showSuccess('Login successfully!');
+        this.notificationService.showSuccess(this.translate.instant('components.auth.loginSuccess'));
         this.loginForm.reset();
         this.router.navigate(['/overview']);
       }
     } catch (error) {
-      this.notificationService.showError('Login error. Please check your credentials.');
+      this.notificationService.showError(this.translate.instant('components.auth.loginError'));
     }
   }
 
   onSignup() {
     this.signupSubmitted = true;
     if (this.signupForm.invalid) {
-      this.notificationService.showError('Please fill out the form correctly.');
       return;
     }
 
@@ -105,13 +107,13 @@ export class AuthComponent implements OnInit {
     };
 
     this.authService.signup(newUser).subscribe({
-      next: () => {
-        this.notificationService.showSuccess('Registration successful!');
+      next: async () => {
+        this.notificationService.showSuccess(this.translate.instant('components.auth.signupSuccess'));
         this.showLogin();
         this.loginForm.patchValue({ email, password });
       },
-      error: () => {
-        this.notificationService.showError('Error during registration. Please try again.');
+      error: async () => {
+        this.notificationService.showError(this.translate.instant('components.auth.signupError'));
       }
     });
   }

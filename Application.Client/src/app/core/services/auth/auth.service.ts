@@ -1,24 +1,26 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { BehaviorSubject, lastValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../../environment/environment';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = `${environment.apiUrl}/User/add`;
+  private apiUrl = `${environment.apiUrl}/user/`;
   private loggedInSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
   public loggedIn$ = this.loggedInSubject.asObservable();
 
   constructor(
     private http: HttpClient,
     private router: Router,
+    private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.checkLoginStatus();
@@ -31,17 +33,9 @@ export class AuthService {
     const body = {
       Email: email,
       Password: password,
-      IpAddress: "",
       OperatingSystem: deviceInfo.os,
       Browser: deviceInfo.browser,
     };
-
-    try {
-      const ipResponse = await lastValueFrom(this.getIpAddress());
-      body.IpAddress = ipResponse.ip;
-    } catch (error) {
-      console.error('Could not retrieve IP address, proceeding without it.', error);
-    }
 
     return this.http.post<any>(url, body).pipe(
       map((response) => {
@@ -53,16 +47,16 @@ export class AuthService {
       }),
       catchError(error => {
         if (error.status === 401) {
-          return throwError(() => new Error('Invalid credentials'));
+          return throwError(() => new Error(this.translate.instant('services.auth.errorInvalidCredentials')));
         }
-        return throwError(() => new Error('Login failed'));
+        return throwError(() => new Error(this.translate.instant('services.auth.errorLoginFailed')));
       })
     );
   }
 
   signup(user: User): Observable<any> {
     return this.http.post<any>(this.apiUrl, user).pipe(
-      catchError(() => throwError(() => new Error('Sign up failed')))
+      catchError(() => throwError(() => new Error(this.translate.instant('services.auth.errorSignUpFailed'))))
     );
   }
 
@@ -154,10 +148,5 @@ export class AuthService {
     } else {
       return 'Unknown OS';
     }
-  }
-
-  getIpAddress(): Observable<any> {
-    const apiUrl = 'https://api.ipify.org?format=json';
-    return this.http.get<any>(apiUrl);
   }
 }

@@ -1,8 +1,11 @@
 <div class="container-fluid d-flex justify-content-center align-items-center vh-100 p-0">
   <div class="col col-md-auto">
-    <form class="d-flex justify-content-center align-items-center flex-column" *ngIf="loginFormVisible"
-      [formGroup]="loginForm">
-      <h1 class="fw-bold">Login</h1>
+    <form
+      class="d-flex justify-content-center align-items-center flex-column"
+      *ngIf="loginFormVisible"
+      [formGroup]="loginForm"
+    >
+      <h1 class="fw-bold">{{ 'components.auth.titleLogin' | translate }}</h1>
 
       <div class="d-inline-flex justify-content-center align-items-center text-center my-2"
         style="width: 50px; font-size: 2rem;">
@@ -11,60 +14,94 @@
         <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
 
-      <span>or use your account</span>
+      <span>{{ 'components.auth.orUseAccount' | translate }}</span>
 
-      <input class="text-small" type="email" placeholder="Email" formControlName="email" />
+      <input class="text-small" type="email" placeholder="{{ 'components.auth.email' | translate }}" formControlName="email" />
       <div *ngIf="loginForm.get('email')?.invalid && loginSubmitted">
-        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
-        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">Invalid email format.</small>
+        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('required')">
+          {{ 'components.auth.emailRequired' | translate }}
+        </small>
+        <small class="text-danger" *ngIf="loginForm.get('email')?.hasError('email')">
+          {{ 'components.auth.emailInvalid' | translate }}
+        </small>
       </div>
 
-      <input class="text-small" type="password" placeholder="Password" formControlName="password" />
+      <input
+        class="text-small"
+        type="password"
+        placeholder="{{ 'components.auth.password' | translate }}"
+        formControlName="password"
+      />
       <div *ngIf="loginForm.get('password')?.invalid && loginSubmitted">
-        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">Password is
-          required.</small>
-        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at
-          least 6 characters.</small>
+        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('required')">
+          {{ 'components.auth.passwordRequired' | translate }}
+        </small>
+        <small class="text-danger" *ngIf="loginForm.get('password')?.hasError('minlength')">
+          {{ 'components.auth.passwordMinLength' | translate }}
+        </small>
       </div>
 
-      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onLogin()">Sing in</button>
-      <span class="mobile text-center">Don't have an account? <a class="link fw-bold"
-          (click)="showSignUp()">Register</a></span>
-      <span>Lost your password? <a class="link fw-bold">Get it back</a></span>
+      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onLogin()">
+        {{ 'components.auth.signIn' | translate }}
+      </button>
+      <span class="mobile text-center">
+        {{ 'components.auth.noAccount' | translate }}
+        <a class="link fw-bold" (click)="showSignUp()">{{ 'components.auth.register' | translate }}</a>
+      </span>
+      <span>
+        {{ 'components.auth.forgotPassword' | translate }}
+        <a class="link fw-bold">{{ 'components.auth.getItBack' | translate }}</a>
+      </span>
     </form>
 
-    <form class="d-flex justify-content-center align-items-center flex-column text-center" *ngIf="signupFormVisible"
-      [formGroup]="signupForm">
-      <h1 class="fw-bold m-0">Create Account</h1>
-      <div class="d-inline-flex justify-content-center align-items-center my-2 rouded">
+    <form
+      class="d-flex justify-content-center align-items-center flex-column text-center"
+      *ngIf="signupFormVisible"
+      [formGroup]="signupForm"
+    >
+      <h1 class="fw-bold m-0">{{ 'components.auth.titleSignup' | translate }}</h1>
+      <div class="d-inline-flex justify-content-center align-items-center my-2 rounded">
         <a class="me-3" id="google-login-btn"><i class="fa-brands fa-square-google-plus text-large"></i></a>
         <a class="me-3"><i class="fa-brands fa-square-facebook text-large"></i></a>
         <a><i class="fa-brands fa-square-twitter text-large"></i></a>
       </div>
-      <span>or use your email to register</span>
-      <input class="text-small" type="text" placeholder="Full Name" formControlName="fullName" />
+      <span>{{ 'components.auth.orUseEmail' | translate }}</span>
+      <input class="text-small" type="text" placeholder="{{ 'components.auth.fullName' | translate }}" formControlName="fullName" />
       <div *ngIf="signupForm.get('fullName')?.invalid && signupSubmitted">
-        <small class="text-danger">Name is required.</small>
+        <small class="text-danger">{{ 'components.auth.fullNameRequired' | translate }}</small>
       </div>
 
-      <input class="text-small" type="email" placeholder="Email" formControlName="email" />
+      <input class="text-small" type="email" placeholder="{{ 'components.auth.email' | translate }}" formControlName="email" />
       <div *ngIf="signupForm.get('email')?.invalid && signupSubmitted">
-        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">Email is required.</small>
-        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email format.</small>
+        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('required')">
+          {{ 'components.auth.emailRequired' | translate }}
+        </small>
+        <small class="text-danger" *ngIf="signupForm.get('email')?.hasError('email')">
+          {{ 'components.auth.emailInvalid' | translate }}
+        </small>
       </div>
 
-      <input class="text-small" type="password" placeholder="Password" formControlName="password" />
+      <input
+        class="text-small"
+        type="password"
+        placeholder="{{ 'components.auth.password' | translate }}"
+        formControlName="password"
+      />
       <div *ngIf="signupForm.get('password')?.invalid && signupSubmitted">
-        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">Password is
-          required.</small>
-        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">Password must be at
-          least 6 characters.</small>
+        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('required')">
+          {{ 'components.auth.passwordRequired' | translate }}
+        </small>
+        <small class="text-danger" *ngIf="signupForm.get('password')?.hasError('minlength')">
+          {{ 'components.auth.passwordMinLength' | translate }}
+        </small>
       </div>
 
-      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onSignup()">Register</button>
+      <button class="btn fw-bold text-uppercase mt-4 mb-5" type="submit" (click)="onSignup()">
+        {{ 'components.auth.titleSignup' | translate }}
+      </button>
       <span class="mobile text-center">
-        Already have an account?
-        <a class="link fw-bold mt-2" (click)="showLogin()">Sign in</a>
+        {{ 'components.auth.alreadyHaveAccount' | translate }}
+        <a class="link fw-bold mt-2" (click)="showLogin()">{{ 'components.auth.signIn' | translate }}</a>
       </span>
     </form>
   </div>
