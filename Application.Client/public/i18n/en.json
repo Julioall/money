@@ -116,6 +116,7 @@
 
     "accounts": {
       "title": "Accounts",
+      "creatingAccounts": "New Account",
       "textButtonNewAccount": "New account",
       "textActionButtonModal": "Create Account"
     }
@@ -129,7 +130,7 @@
       "errorSignUpFailed": "Sign up failed",
       "errorUnauthorizedRequest": "Unauthorized request"
     },
-    
+
     "notifications": {
       "success": "Success",
       "error": "Error",

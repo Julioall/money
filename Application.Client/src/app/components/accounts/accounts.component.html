@@ -28,7 +28,8 @@
   </div>
 
   <form [formGroup]="accountForm">
-    <app-modal [idModal]='accountModal' [textButton]="textButtonActionAccountModal" (action)="onActionModal()" (close)="onResetSelections()">
+    <app-modal [idModal]='idAccountModal' [textButton]="textButtonActionAccountModal" (action)="onActionModal()" (close)="onResetSelections()">
+      <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'components.accounts.creatingAccounts' | translate }}</p>
     </app-modal>
   </form>
 </div>

@@ -116,6 +116,7 @@
 
     "accounts": {
       "title": "Contas",
+      "creatingAccounts": "Nova Conta",
       "textButtonNewAccount": "Nova conta",
       "textActionButtonModal": "Criar conta"
     }

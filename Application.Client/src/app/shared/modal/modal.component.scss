@@ -2,6 +2,15 @@
 .btn{
   --bs-btn-focus-shadow: $green-primary-darker !important;
 }
+
+.btn-close{
+  background-color: $neutral-white-100 !important;
+}
+
+.btn-close:hover{
+  background-color: $red-primary !important;
+}
+
 .modal-dialog {
     --bs-modal-width: 550px;
     --bs-modal-margin: 8.75rem;

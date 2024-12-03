@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Account } from '../../core/models/account';
@@ -14,9 +14,10 @@ import { NotificationService } from '../../core/services/notification/notificati
   styleUrls: ['./accounts.component.scss'],
 })
 export class AccountsComponent implements OnInit {
+  @ViewChild(ModalComponent) modal!: ModalComponent;
   accountForm!: FormGroup;
   accounts: Account[] = [];
-  accountModal: string | undefined;
+  idAccountModal: string = "newAccountModal";
   textButtonActionAccountModal: string | undefined;
 
   constructor(
@@ -31,7 +32,7 @@ export class AccountsComponent implements OnInit {
       iconUrl: ['', Validators.required],
     });
 
-    this.textButtonActionAccountModal = this.translate.instant('accounts.textActionButtonModal');
+    this.textButtonActionAccountModal = this.translate.instant('components.accounts.textActionButtonModal');
   }
 
   ngOnInit(): void {
@@ -107,7 +108,19 @@ export class AccountsComponent implements OnInit {
 
       this.onResetSelections();
     } else {
-      this._notificationService.showError(this.translate.instant('accounts.errorFormInvalid'));
+      this._notificationService.showError(this.translate.instant('components.accounts.errorFormInvalid'));
+    }
+  }
+
+  private _closeModal() {
+    const modal = document.getElementById(this.idAccountModal);
+
+    if (modal != null) {
+      const closeButton = modal.querySelector('.btn-close');
+
+      if (closeButton != null) {
+        (closeButton as HTMLElement).click();
+      }
     }
   }
 }
