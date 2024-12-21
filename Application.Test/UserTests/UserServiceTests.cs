@@ -1,5 +1,6 @@
 ﻿using Application.Domain.Models;
 using Application.Service;
+using Application.Test.Setup;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Test.UserTests

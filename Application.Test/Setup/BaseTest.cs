@@ -10,7 +10,7 @@ using Raven.Client.Documents.Session;
 using Raven.Embedded;
 using Raven.TestDriver;
 
-namespace Application.Test
+namespace Application.Test.Setup
 {
     public class BaseTest : RavenTestDriver
     {
