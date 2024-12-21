@@ -1,6 +1,6 @@
-﻿using Application.Domain.Model.Enums;
+﻿using Application.Domain.Models.Enums;
 
-namespace Application.Domain.Model
+namespace Application.Domain.Models
 {
     public class Category
     {

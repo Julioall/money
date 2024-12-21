@@ -1,6 +1,6 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
-using Application.Domain.Model.Enums;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
+using Application.Domain.Models.Enums;
 
 namespace Application.Service
 {

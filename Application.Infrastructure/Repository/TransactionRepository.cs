@@ -1,21 +1,21 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 using Raven.Client.Documents;
 
 namespace Application.Infrastructure.Repository
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private readonly IDocumentStore _documentStore;
+        private readonly IServiceRavenDB _serviceRavenDB;
 
-        public TransactionRepository(IDocumentStore documentStore)
+        public TransactionRepository(IServiceRavenDB serviceRavenDB)
         {
-             _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
+             _serviceRavenDB = serviceRavenDB;
         }
 
         public async Task<Transaction> AddAsync(Transaction transaction)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(transaction.UserId);
                 if (user == null)
@@ -30,7 +30,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<Transaction> UpdateAsync(Transaction transaction)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var existingTransaction = await session.LoadAsync<Transaction>(transaction.Id);
                 if (existingTransaction == null)
@@ -47,7 +47,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(string userId, string transactionId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -66,7 +66,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<IEnumerable<Transaction>> GetAllAsync(string userId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -82,7 +82,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<Transaction> GetByIdAsync(string transactionId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 return await session.LoadAsync<Transaction>(transactionId);
             }

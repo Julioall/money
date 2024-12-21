@@ -1,21 +1,21 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 using Raven.Client.Documents;
 
 namespace Application.Infrastructure.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private readonly IDocumentStore _documentStore;
+        private readonly IServiceRavenDB _serviceRavenDB;
 
-        public UserRepository(IDocumentStore documentStore)
+        public UserRepository(IServiceRavenDB serviceRavenDB)
         {
-            _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
+            _serviceRavenDB = serviceRavenDB;
         }
 
         public async Task<User> AddAsync(User user)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 await session.StoreAsync(user);
                 await session.SaveChangesAsync();
@@ -25,7 +25,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(string id)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(id);
                 if (user == null)
@@ -39,7 +39,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 return await session.Query<User>().ToListAsync();
             }
@@ -47,7 +47,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<User> GetByIdAsync(string id)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 return await session.LoadAsync<User>(id);
             }
@@ -55,7 +55,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<User> GetByRoleAsync(string role)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 return await session.Query<User>()
                                     .FirstOrDefaultAsync(u => u.Account.Role == role);
@@ -64,7 +64,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<User> GetByEmailAsync(string email)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 return await session.Query<User>()
                                     .FirstOrDefaultAsync(u => u.Account.Email == email);
@@ -73,7 +73,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<User> UpdateAsync(User user)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var existingUser = await session.LoadAsync<User>(user.Id);
                 if (existingUser == null)

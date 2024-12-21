@@ -1,5 +1,5 @@
 ﻿using Application.Domain.Dtos;
-using Application.Domain.Model;
+using Application.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

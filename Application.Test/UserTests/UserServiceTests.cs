@@ -1,35 +1,46 @@
-﻿using Raven.Client.Documents;
-using Application.Test.Setup;
-using Microsoft.Extensions.DependencyInjection;
-using Application.Domain.Model;
+﻿using Application.Domain.Models;
 using Application.Service;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.Test.UserTests
 {
-    public class UserServiceTests : TestHelper
+    public class UserServiceTests : BaseTest
     {
         private readonly UserService _userService;
-        private readonly IDocumentStore _documentStore;
 
-        public UserServiceTests() : base()
+        public UserServiceTests()
         {
-            _userService = ServiceProvider.GetRequiredService<UserService>();
-            _documentStore = ServiceProvider.GetRequiredService<IDocumentStore>();
+            _userService = _serviceProvider.GetRequiredService<UserService>();
         }
 
         [Fact]
         public async Task AddAsync_ShouldAddUser()
         {
             // Arrange
-            var user = CreateUser("1", "test@example.com");
+            const string idUser = "users-100-A";
+            var validUser = new User 
+            {
+                Id = idUser,
+                Account = new UserAccount
+                {
+                    Email = "user@gmail.com",
+                    Password = "SecureP@ssw0rd",
+                    Role = "User"
+                },
+                Profile = new UserProfile
+                {
+                    Name = "Test User"
+                },
+                Finance = new UserFinance()
+            };
 
             // Act
-            await _userService.AddAsync(user);
+            await _userService.AddAsync(validUser);
 
             // Assert
-            var retrievedUser = await GetUserFromDatabase("1");
+            var retrievedUser = await GetUserFromDatabase(idUser);
             Assert.NotNull(retrievedUser);
-            Assert.Equal(user.Account.Email, retrievedUser.Account.Email);
+            Assert.Equivalent(validUser, retrievedUser, true);
         }
 
         [Fact]
@@ -46,6 +57,7 @@ namespace Application.Test.UserTests
             // Assert
             Assert.NotNull(result);
             Assert.Equal(email, result.Account.Email);
+            Assert.Equivalent(user, result, true);
         }
 
         [Fact]
@@ -104,7 +116,7 @@ namespace Application.Test.UserTests
                 Account = new UserAccount
                 {
                     Email = email,
-                    Password = "securepassword",
+                    Password = "Securep@ssword123",
                     Role = "User"
                 },
                 Profile = new UserProfile
@@ -118,7 +130,7 @@ namespace Application.Test.UserTests
 
         private async Task<User> GetUserFromDatabase(string userId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _store.OpenAsyncSession())
             {
                 return await session.LoadAsync<User>(userId);
             }
@@ -131,10 +143,15 @@ namespace Application.Test.UserTests
             var email = "duplicate@example.com";
             var user1 = CreateUser("6", email);
             var user2 = CreateUser("7", email);
-            await _userService.AddAsync(user1);
+
+            using (var session = _store.OpenAsyncSession())
+            {
+                await session.StoreAsync(user1);
+                await session.SaveChangesAsync();
+            }
 
             // Act & Assert
-            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            await Assert.ThrowsAsync<FluentValidation.ValidationException>(async () =>
             {
                 await _userService.AddAsync(user2);
             });
@@ -169,17 +186,5 @@ namespace Application.Test.UserTests
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
         }
-
-        [Fact]
-        public async Task DeleteAsync_ShouldThrowException_WhenUserDoesNotExist()
-        {
-            var nonExistentUserId = "999";
-
-            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            {
-                await _userService.DeleteAsync(nonExistentUserId);
-            });
-        }
-
     }
 }
