@@ -42,11 +42,9 @@ namespace Application.Domain.Validators
 
         private bool IsEmailUnique(string email)
         {
-            var anyEmail = _serviceRavenDB.Store.OpenSession()
+            return !_serviceRavenDB.Store.OpenSession()
                 .Query<User>()
                 .Any(x => x.Account.Email == email);
-
-            return !anyEmail;
         }
     }
 }
