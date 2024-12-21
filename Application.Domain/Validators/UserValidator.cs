@@ -1,15 +1,21 @@
-﻿using FluentValidation;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
+using FluentValidation;
 
-namespace Application.Domain.Validator
+namespace Application.Domain.Validators
 {
     public class UserValidator : AbstractValidator<User>
     {
-        public UserValidator()
+        private readonly IServiceRavenDB _serviceRavenDB;
+
+        public UserValidator(IServiceRavenDB serviceRavenDB)
         {
+            _serviceRavenDB = serviceRavenDB;
+
             RuleFor(user => user.Account.Email)
                 .NotEmpty().WithMessage("O email é obrigatório.")
-                .EmailAddress().WithMessage("O email deve ser válido.");
+                .EmailAddress().WithMessage("O email deve ser válido.")
+                .Must(IsEmailUnique).WithMessage("Este e-mail já existe na nossa base de dados");
 
             RuleFor(user => user.Account.Password)
                 .NotEmpty().WithMessage("A senha é obrigatória.")
@@ -32,6 +38,13 @@ namespace Application.Domain.Validator
                 .NotEmpty().WithMessage("A função do usuário é obrigatória.")
                 .Must(role => new[] { "User", "Admin", "Moderator" }.Contains(role))
                 .WithMessage("Função inválida. Use 'User', 'Admin' ou 'Moderator'.");
+        }
+
+        private bool IsEmailUnique(string email)
+        {
+            return !_serviceRavenDB.Store.OpenSession()
+                .Query<User>()
+                .Any(x => x.Account.Email == email);
         }
     }
 }

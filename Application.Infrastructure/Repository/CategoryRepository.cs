@@ -1,21 +1,20 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
-using Raven.Client.Documents;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 
 namespace Application.Infrastructure.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly IDocumentStore _documentStore;
+        private readonly IServiceRavenDB _serviceRavenDB;
 
-        public CategoryRepository(IDocumentStore documentStore)
+        public CategoryRepository(IServiceRavenDB serviceRavenDB)
         {
-             _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
+             _serviceRavenDB = serviceRavenDB;
         }
 
         public async Task<Category> AddAsync(string userId, Category category)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -38,7 +37,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(string userId, string categoryId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -58,7 +57,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<IEnumerable<Category>> GetAllAsync(string userId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -70,7 +69,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<Category> GetByIdAsync(string userId, string categoryId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -82,7 +81,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<Category> UpdateAsync(string userId, Category updatedCategory)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)

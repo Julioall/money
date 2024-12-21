@@ -1,10 +1,8 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
-using Raven.Client.Documents.Operations.Configuration;
 using System.Security.Cryptography.X509Certificates;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Application.Infrastructure.Repository.RavenDB
 {
@@ -47,7 +45,12 @@ namespace Application.Infrastructure.Repository.RavenDB
             //    new ClientConfiguration { IdentityPartsSeparator = '-' }
             //));
 
-            services.AddSingleton<IDocumentStore>(documentStore);
+            services.AddSingleton<IServiceRavenDB>((provider) => new ServiceRavenDB
+            {
+                Store = documentStore,
+                Session = documentStore.OpenSession()
+            });
+
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
