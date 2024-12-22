@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Model.Enums
+﻿namespace Application.Domain.Models.Enums
 {
     public enum TransactionMode
     {

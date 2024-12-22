@@ -1,5 +1,5 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 
 namespace Application.Service
 {

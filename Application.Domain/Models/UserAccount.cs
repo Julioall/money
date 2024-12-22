@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.Model
+﻿namespace Application.Domain.Models
 {
     public class UserAccount
     {

@@ -1,13 +1,13 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 
 namespace Application.Service
 {
     public class CreditCardService
     {
-        private readonly ICreditCardRepository _creditCardRepository;
+        private readonly ICreditCardsRepository _creditCardRepository;
 
-        public CreditCardService(ICreditCardRepository creditCardRepository)
+        public CreditCardService(ICreditCardsRepository creditCardRepository)
         {
             _creditCardRepository = creditCardRepository;
         }

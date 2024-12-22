@@ -1,25 +1,20 @@
-﻿using Application.Domain.Interface;
-using Application.Domain.Model;
-using Raven.Client.Documents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Application.Domain.Interfaces;
+using Application.Domain.Models;
 
 namespace Application.Infrastructure.Repository
 {
-    public class CreditCardRepository : ICreditCardRepository
+    public class CreditCardRepository : ICreditCardsRepository
     {
-        private readonly IDocumentStore _documentStore;
+        private readonly IServiceRavenDB _serviceRavenDB;
 
-        public CreditCardRepository(IDocumentStore documentStore)
+        public CreditCardRepository(IServiceRavenDB ServiceRavenDB)
         {
-            _documentStore = documentStore ?? throw new ArgumentNullException(nameof(documentStore));
+            _serviceRavenDB = ServiceRavenDB;
         }
 
         public async Task<CreditCard> AddAsync(string userId, CreditCard creditCard)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -35,7 +30,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<CreditCard> UpdateAsync(string userId, CreditCard creditCard)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -61,7 +56,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<bool> DeleteAsync(string userId, string creditCardId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -80,7 +75,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<IEnumerable<CreditCard>> GetAllAsync(string userId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)
@@ -92,7 +87,7 @@ namespace Application.Infrastructure.Repository
 
         public async Task<CreditCard> GetByIdAsync(string userId, string creditCardId)
         {
-            using (var session = _documentStore.OpenAsyncSession())
+            using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
                 var user = await session.LoadAsync<User>(userId);
                 if (user == null)

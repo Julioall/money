@@ -1,6 +1,6 @@
-﻿using Application.Domain.Model;
+﻿using Application.Domain.Models;
 
-namespace Application.Domain.Interface
+namespace Application.Domain.Interfaces
 {
     public interface ITransactionRepository
     {
