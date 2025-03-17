@@ -118,7 +118,18 @@
       "title": "Accounts",
       "creatingAccounts": "New Account",
       "textButtonNewAccount": "New account",
-      "textActionButtonModal": "Create Account"
+      "textActionButtonModal": "Create account",
+      "accountNameLabel": "Account Name",
+      "balanceLabel": "Balance",
+      "accountNamePlaceholder": "Give a name to identify this account.",
+      "balancePlaceholder": "US$ 0,00",
+      "accountNameRequired": "Account name is required.",
+      "accountNameMinlength": "Account name must be at least 3 characters long.",
+      "chooseColor": "Choose a color",
+      "chooseIcon": "Choose an icon",
+      "accountSaved":"The account {accountName} has been saved successfully.",
+      "errorFormInvalid": "There is an error in the form. Please check the entered data.",
+      "iconRequired": "Icon is required."
     }
   },
 

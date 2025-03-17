@@ -39,7 +39,7 @@ namespace Application.Web.Controllers
 
             var userId = await _authenticationService.GetUserIdLoged();
             var createdCategory = await _categoryService.AddAsync(userId, category);
-            return CreatedAtAction(nameof(GetById), new { categoryId = createdCategory.Id }, createdCategory);
+            return CreatedAtAction(nameof(GetById), new { id = createdCategory.Id }, createdCategory);
         }
 
         [HttpDelete("{id}")]

@@ -118,7 +118,18 @@
       "title": "Contas",
       "creatingAccounts": "Nova Conta",
       "textButtonNewAccount": "Nova conta",
-      "textActionButtonModal": "Criar conta"
+      "textActionButtonModal": "Criar conta",
+      "accountNameLabel": "Nome da conta",
+      "balanceLabel": "Saldo inicial",
+      "accountNamePlaceholder": "Dê um nome para identificar esta conta",
+      "balancePlaceholder": "R$ 0,00",
+      "accountNameRequired": "Nome da conta é obrigatório.",
+      "accountNameMinlength": "O nome da conta deve ter pelo menos 3 caracteres.",
+      "chooseColor": "Escolha uma cor",
+      "chooseIcon": "Escolha um ícone",
+      "accountSaved":"A conta {accountName} foi salva com sucesso.",
+      "errorFormInvalid": "Há um erro no formulário. Por favor, verifique os dados inseridos.",
+      "iconRequired": "O ícone é obrigatório."
     }
   },
 

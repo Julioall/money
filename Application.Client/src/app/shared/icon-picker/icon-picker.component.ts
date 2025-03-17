@@ -9,7 +9,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './icon-picker.component.scss'
 })
 export class IconPickerComponent {
-  @Input() icons: string[] = [];
+  @Input() iconsClass: string[] = [];
+  @Input() iconsImages: string[] = [];
   @Output() iconSelected = new EventEmitter<string>();
 
   selectedIcon: string = '';
@@ -19,8 +20,12 @@ export class IconPickerComponent {
     this.iconSelected.emit(icon);
   }
 
-  isIconActive(icon: string): string {
+  isIconSelected(icon: string): string {
     return this.selectedIcon === icon ? 'icon-active' : '';
+  }
+
+  isLogoSelected(icon: string): string {
+    return this.selectedIcon === icon ? 'logo-active' : '';
   }
 
   resetSelection() {

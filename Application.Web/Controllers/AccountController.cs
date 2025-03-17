@@ -26,6 +26,7 @@ namespace Application.Web.Controllers
         }
 
         [HttpPost()]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Add([FromBody] Account account)
         {
             if (account == null)
@@ -33,7 +34,7 @@ namespace Application.Web.Controllers
 
             var userId = await _authenticationService.GetUserIdLoged();
             var createdAccount = await _accountService.AddAsync(userId, account);
-            return CreatedAtAction(nameof(GetById), new { accountId = createdAccount.Id }, createdAccount);
+            return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);
         }
 
         [HttpDelete("{id}")]

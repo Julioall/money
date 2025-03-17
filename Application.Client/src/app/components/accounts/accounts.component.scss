@@ -1,9 +1,29 @@
+@import "../../../assets/css/variables.scss";
+
 .account-img
 {
-  width: 48px;
+  width: 40px;
 }
 
 .card-body i{
   width: 30px;
   height: 30px;
+}
+
+.nameAccounts .balance {
+  border: 3px solid #ebebeb !important;
+  border-radius: 6px !important;
+  background: #fefdf9 !important;
+  line-height: 18px !important;
+  padding: 7px 8px !important;
+  float: left !important;
+  border-radius: 3px !important;
+  transition: all .15s ease-out 0s !important;
+  color: #2e312d !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+
+  &:focus {
+    border-color: $green-primary !important;
+  }
 }

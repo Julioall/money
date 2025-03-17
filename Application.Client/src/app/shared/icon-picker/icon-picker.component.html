@@ -1,8 +1,20 @@
-<div class="icon-picker-container">
-  <a
-    *ngFor="let icon of icons"
-    [ngClass]="isIconActive(icon)"
-    (click)="selectIcon(icon)">
-    <i [class]="'text-gray-light '+icon"></i>
-  </a>
+<div class="icon-picker-container py-2">
+  <ng-container *ngIf="iconsClass.length > 0">
+    <a
+      *ngFor="let icon of iconsClass"
+      class="icon"
+      [ngClass]="isIconSelected(icon)"
+      (click)="selectIcon(icon)">
+      <i [class]="'text-gray-light ' + icon"></i>
+    </a>
+  </ng-container>
+
+  <ng-container *ngIf="iconsImages.length > 0">
+    <a
+      *ngFor="let icon of iconsImages"
+      [ngClass]="isLogoSelected(icon)"
+      (click)="selectIcon(icon)">
+      <img [src]="icon" alt="icon" class="logo" />
+    </a>
+  </ng-container>
 </div>

@@ -1,115 +1,150 @@
+import { firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Account } from '../../core/models/account';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { NotificationService } from '../../core/services/notification/notification.service';
+import { IconPickerComponent } from '../../shared/icon-picker/icon-picker.component';
+import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
+import { AccountsService } from '../../core/services/accounts/accounts.service';
+
+const STRING_VAZIA = '';
 
 @Component({
   selector: 'app-accounts',
   standalone: true,
-  imports: [CommonModule, ModalComponent, ReactiveFormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    IconPickerComponent,
+    ColorPickerComponent,
+    ModalComponent,
+    ReactiveFormsModule,
+    TranslateModule,
+  ],
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss'],
 })
 export class AccountsComponent implements OnInit {
   @ViewChild(ModalComponent) modal!: ModalComponent;
-  accountForm!: FormGroup;
+
+  colors: string[] = [
+    '#ED1B25',
+    '#A41A44',
+    '#7A2990',
+    '#392B8A',
+    '#2F5AA8',
+    '#018CCD',
+    '#60AF46',
+    '#CDDB26',
+    '#F6ED24',
+    '#F7BA12',
+    '#F9971D',
+    '#F14B21',
+    '#F26A6A',
+    '#C94B67',
+    '#A158B5',
+    '#5D4FB1',
+    '#4B7EC2',
+    '#42B8E1',
+    '#88C876',
+    '#E1ED6C',
+    '#F8F17D',
+    '#F8CD5C',
+  ];
+  icons: string[] = this._getLogos();
+  selectedColor: string = '';
+  selectedIcon: string = '';
+
   accounts: Account[] = [];
-  idAccountModal: string = "newAccountModal";
-  textButtonActionAccountModal: string | undefined;
+
+  accountForm!: FormGroup;
+  idAccountModal: string = 'newAccountModal';
+  textButtonActionAccountModal?: string;
+  isSubmitted: boolean = false;
 
   constructor(
     private _fb: FormBuilder,
     private _notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private _accountsService: AccountsService
   ) {
     this.accountForm = this._fb.group({
-      accountName: ['', [Validators.required, Validators.minLength(3)]],
-      balance: [0, [Validators.required, Validators.min(0)]],
-      hideBalance: [false, Validators.required],
-      iconUrl: ['', Validators.required],
+      accountName: [
+        STRING_VAZIA,
+        [Validators.required, Validators.minLength(3)],
+      ],
+      balance: [STRING_VAZIA, [Validators.min(0)]],
+      iconUrl: [STRING_VAZIA, Validators.required],
     });
 
-    this.textButtonActionAccountModal = this.translate.instant('components.accounts.textActionButtonModal');
+    this.textButtonActionAccountModal = this.translate.instant(
+      'components.accounts.textActionButtonModal'
+    );
   }
 
   ngOnInit(): void {
-    this.accounts = [
-      {
-        id: '1',
-        accountName: 'Poupança',
-        balance: 1000,
-        hideBalance: false,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/bb.png',
-      },
-      {
-        id: '2',
-        accountName: 'Conta Corrente',
-        balance: 2500,
-        hideBalance: false,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/itau.png',
-      },
-      {
-        id: '3',
-        accountName: 'Fundo de Emergência',
-        balance: 5000,
-        hideBalance: true,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/bradesco.png',
-      },
-      {
-        id: '4',
-        accountName: 'Conta de Investimento',
-        balance: 15000,
-        hideBalance: false,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/santander.png',
-      },
-      {
-        id: '5',
-        accountName: 'Economias para Viagem',
-        balance: 1200,
-        hideBalance: false,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/nubank.png',
-      },
-      {
-        id: '6',
-        accountName: 'Fundo de Aposentadoria',
-        balance: 25000,
-        hideBalance: true,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/caixa.png',
-      },
-      {
-        id: '7',
-        accountName: 'Carteira Pessoal',
-        balance: 200,
-        hideBalance: false,
-        iconUrl: 'https://assets.organizze.com.br/institutions/logos/picpay.png',
-      },
-    ];
+    this._getAllAccounts();
   }
 
   onResetSelections(): void {
     this.accountForm.reset({
-      accountName: '',
-      balance: 0,
+      accountName: STRING_VAZIA,
+      balance: STRING_VAZIA,
       hideBalance: false,
-      iconUrl: '',
+      iconUrl: STRING_VAZIA,
     });
+    this.isSubmitted = false;
   }
 
-  onActionModal(): void {
-    if (this.accountForm.valid) {
-      const account: Account = this.accountForm.value;
-
-      this._notificationService.showSuccess(
-        this.translate.instant('accounts.accountSaved', { accountName: account.accountName })
+  async onActionModal(): Promise<void> {
+    try {
+      this.isSubmitted = true;
+      if (this.accountForm.valid) {
+        const newAccount: Account = this.accountForm.value;
+        if (!newAccount.balance) {
+          newAccount.balance = 0;
+        }
+        await firstValueFrom(this._accountsService.create(newAccount));
+        await this._getAllAccounts();
+        this.onResetSelections();
+        this._closeModal();
+        this._notificationService.showSuccess(
+          this.translate.instant('components.accounts.accountSaved')
+        );
+      } else {
+        this._notificationService.showError(
+          this.translate.instant('components.accounts.errorFormInvalid')
+        );
+      }
+    } catch (error: any) {
+      this._notificationService.showError(
+        error,
+        this.translate.instant('components.accounts.errorCreateAccount')
       );
-
-      this.onResetSelections();
-    } else {
-      this._notificationService.showError(this.translate.instant('components.accounts.errorFormInvalid'));
     }
+  }
+
+  onSelectColor(color: string) {
+    this.selectedColor = color;
+  }
+
+  onSelectIcon(icon: string) {
+    this.accountForm.get('iconUrl')?.setValue(icon);
+  }
+
+  onRemove(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  onEdit(_t12: Account) {
+    throw new Error('Method not implemented.');
   }
 
   private _closeModal() {
@@ -122,5 +157,19 @@ export class AccountsComponent implements OnInit {
         (closeButton as HTMLElement).click();
       }
     }
+  }
+
+  private async _getAllAccounts() {
+    this.accounts = await firstValueFrom(this._accountsService.getAll());
+  }
+
+  private _getLogos(): string[] {
+    const logos: string[] = [];
+
+    for (let i = 1; i <= 276; i++) {
+      logos.push(`img/logo-${i}.svg`);
+    }
+
+    return logos;
   }
 }

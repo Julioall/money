@@ -11,7 +11,7 @@ namespace Application.Infrastructure.Repository.RavenDB
         public static void AddRavenDB(this IServiceCollection services)
         {
             // Uncomment this section if you want to use a certificate.
-            // var certificate = GetCertificateFromStore();
+            var certificate = GetCertificateFromStore();
 
             if (string.IsNullOrEmpty(ApplicationConstants.DATABASE_URLS))
             {
@@ -24,17 +24,17 @@ namespace Application.Infrastructure.Repository.RavenDB
             }
 
             // Uncomment this section if you want to use a certificate.
-            // if (certificate == null)
-            // {
-            //     throw new ApplicationException("The RavenDB certificate has not been configured correctly. Ensure the certificate is installed in the LocalMachine certificate store.");
-            // }
+            if (certificate == null)
+            {
+                throw new ApplicationException("The RavenDB certificate has not been configured correctly. Ensure the certificate is installed in the LocalMachine certificate store.");
+            }
 
             var documentStore = new DocumentStore
             {
                 Urls = new[] { ApplicationConstants.DATABASE_URLS },
                 Database = ApplicationConstants.DATABASE_NAME,
                 // Uncomment this section if you want to use a certificate.
-                // Certificate = certificate,
+                Certificate = certificate,
             };
 
             documentStore.Initialize();
@@ -64,7 +64,7 @@ namespace Application.Infrastructure.Repository.RavenDB
             using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
             {
                 store.Open(OpenFlags.ReadOnly);
-                var certs = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, ApplicationConstants.CERTIFICATE_SUBJECT, false);
+                var certs = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, $"CN={ApplicationConstants.CERTIFICATE_SUBJECT}", false);
                 if (certs.Count > 0)
                 {
                     var certificate = certs.FirstOrDefault();

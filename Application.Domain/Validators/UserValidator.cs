@@ -44,7 +44,7 @@ namespace Application.Domain.Validators
         {
             return !_serviceRavenDB.Store.OpenSession()
                 .Query<User>()
-                .Any(x => x.Account.Email == email);
+                .Any(x => x.Account.Email == email && x.Id == null);
         }
     }
 }
