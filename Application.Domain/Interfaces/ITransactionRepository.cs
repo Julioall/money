@@ -8,6 +8,6 @@ namespace Application.Domain.Interfaces
         Task<bool> DeleteAsync(string userId, string transactionId);
         Task<Transaction> UpdateAsync(Transaction transaction);
         Task<IEnumerable<Transaction>> GetAllAsync(string userId);
-        Task<Transaction> GetByIdAsync(string transactionId);
+        Task<Transaction> GetByIdAsync(string userId, string transactionId);
     }
 }

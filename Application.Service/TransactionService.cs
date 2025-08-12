@@ -52,10 +52,13 @@ namespace Application.Service
 
         public async Task<Transaction> GetByIdAsync(string userId, string transactionId)
         {
+            if (string.IsNullOrWhiteSpace(userId))
+                throw new ArgumentNullException(nameof(userId), "User ID cannot be null or empty.");
+
             if (string.IsNullOrWhiteSpace(transactionId))
                 throw new ArgumentNullException(nameof(transactionId), "Transaction ID cannot be null or empty.");
 
-            return await _transactionRepository.GetByIdAsync(transactionId);
+            return await _transactionRepository.GetByIdAsync(userId, transactionId);
         }
     }
 }

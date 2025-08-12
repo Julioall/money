@@ -11,6 +11,7 @@ namespace Application.Infrastructure
         {
             services.AddRavenDB();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
         }
     }
 }

@@ -12,7 +12,9 @@ namespace Application.Service
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<AuthenticationService>();
+            services.AddScoped<TransactionService>();
             services.AddScoped<IValidator<User>, UserValidator>();
         }
     }

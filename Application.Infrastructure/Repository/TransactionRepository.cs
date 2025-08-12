@@ -80,10 +80,17 @@ namespace Application.Infrastructure.Repository
             }
         }
 
-        public async Task<Transaction> GetByIdAsync(string transactionId)
+        public async Task<Transaction> GetByIdAsync(string userId, string transactionId)
         {
             using (var session = _serviceRavenDB.Store.OpenAsyncSession())
             {
+                var user = await session.LoadAsync<User>(userId);
+                if (user == null)
+                    throw new InvalidOperationException("User not found.");
+
+                if (!user.Finance.TransactionsIds.Contains(transactionId))
+                    throw new InvalidOperationException("Transaction not associated with user.");
+
                 return await session.LoadAsync<Transaction>(transactionId);
             }
         }

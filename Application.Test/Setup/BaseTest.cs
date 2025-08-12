@@ -40,8 +40,10 @@ namespace Application.Test.Setup
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddScoped<UserService, UserService>();
+            serviceCollection.AddScoped<TransactionService, TransactionService>();
             serviceCollection.AddScoped<IValidator<User>, UserValidator>();
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
+            serviceCollection.AddScoped<ITransactionRepository, TransactionRepository>();
 
             return serviceCollection;
         }
