@@ -56,29 +56,31 @@ namespace Application.Infrastructure.Repository.RavenDB
 
         private static X509Certificate2 GetCertificateFromStore()
         {
-            if (ApplicationConstants.CERTIFICATE_SUBJECT == null)
+            if (string.IsNullOrEmpty(ApplicationConstants.CERTIFICATE_SUBJECT))
             {
                 throw new InvalidOperationException("The environment variable RAVENDBSETTINGS_CERTIFICATE_SUBJECT has not been defined.");
             }
 
-            using (var store = new X509Store(StoreName.My, StoreLocation.LocalMachine))
+            using var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+
+            var certs = store.Certificates.Find(
+                X509FindType.FindBySubjectDistinguishedName,
+                ApplicationConstants.CERTIFICATE_SUBJECT,
+                validOnly: false);
+
+            if (certs.Count == 0)
             {
-                store.Open(OpenFlags.ReadOnly);
-                var certs = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, ApplicationConstants.CERTIFICATE_SUBJECT, false);
-                if (certs.Count > 0)
-                {
-                    var certificate = certs.FirstOrDefault();
-                    if (!certificate.HasPrivateKey)
-                    {
-                        throw new Exception($"Certificate with subject '{ApplicationConstants.CERTIFICATE_SUBJECT}' does not have a private key.");
-                    }
-                    return certificate;
-                }
-                else
-                {
-                    throw new Exception($"Certificate with subject '{ApplicationConstants.CERTIFICATE_SUBJECT}' not found in the LocalMachine certificate store.");
-                }
+                throw new InvalidOperationException($"Certificate with subject '{ApplicationConstants.CERTIFICATE_SUBJECT}' not found in the LocalMachine certificate store.");
             }
+
+            var certificate = certs[0];
+            if (!certificate.HasPrivateKey)
+            {
+                throw new InvalidOperationException($"Certificate with subject '{ApplicationConstants.CERTIFICATE_SUBJECT}' does not contain a private key. Ensure the certificate is imported with its private key.");
+            }
+
+            return certificate;
         }
     }
 }
