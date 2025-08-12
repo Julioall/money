@@ -6,32 +6,56 @@
   transition: color 0.3s ease;
 }
 
-.container-fluid {
-  background-color: #fbf7ea;
+.auth-wrapper {
+  background-color: $neutral-white-100;
 }
 
-form {
-  background-color: #16c64f;
-  padding: 50px;
+.auth-form {
+  background-color: $green-primary;
+  padding: 2rem;
   border-radius: 10px;
-  min-width: 450px;
+  min-width: 320px;
+  width: 100%;
 }
 
-button {
-  padding: 12px 45px !important;
-  letter-spacing: 1px !important;
-  border: none !important;
-  outline: none!important;
-  background: none!important;
-  cursor: pointer !important;
-  background-color: $gray-primary !important;
+.auth-form input {
+  background-color: $neutral-white-100;
+  border: none;
+  border-radius: 0.5rem;
+  color: $gray-primary;
+  padding: 0.75rem 1rem;
+}
+
+.auth-form input::placeholder {
+  color: $gray;
+}
+
+.auth-form input:focus {
+  border-color: $green-secondary;
+  box-shadow: 0 0 0 0.2rem rgba($green-secondary, 0.25);
+  outline: none;
+}
+
+.auth-form button {
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  border: none;
+  cursor: pointer;
+  background-color: $gray-primary;
   transition: background-color 0.5s ease, box-shadow 0.3s ease;
 }
 
+.auth-form button:hover {
+  background-color: $green-secondary;
+  box-shadow: 0 8px 15px $green-primary;
+}
 
+.social-login a {
+  font-size: 2rem;
+  color: $gray-primary;
+  transition: color 0.3s ease;
+}
 
-
-button:hover {
-  background-color: $green-secondary !important;
-  box-shadow: 0 8px 15px $green-primary !important;
+.social-login a:hover {
+  color: $green-secondary;
 }
