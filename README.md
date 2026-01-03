@@ -30,3 +30,13 @@ issue #1
    - Após finalizar as implementações, crie um pull request (PR) direcionado ao branch master.
 
 Seguindo essas diretrizes, garantimos um fluxo de trabalho organizado e eficiente, permitindo que a equipe mantenha a qualidade do código e colabore de forma eficaz.
+
+## Docker Compose
+
+- Copie `.env.example` para `.env` e ajuste as variaveis (use um JWT_SIGNING_KEY com pelo menos 32 caracteres).
+- Suba tudo com `docker compose up --build -d`. A API fica exposta em `http://localhost:8080` (Swagger habilitado quando ASPNETCORE_ENVIRONMENT=Development).
+- O RavenDB Studio estara em `http://localhost:8081` e usa armazenamento em `ravendb-data`.
+- O front Angular sobe no service `web` na porta configuravel `CLIENT_PORT` (padrao 4200) servindo o build estatico via Nginx.
+- Os valores padrao do compose apontam a API para o RavenDB interno (`http://ravendb:8080`) sem certificado.
+- O Angular ja esta configurado para chamar a API em `http://localhost:8080/api`; ajuste se usar outro host/porta.
+
