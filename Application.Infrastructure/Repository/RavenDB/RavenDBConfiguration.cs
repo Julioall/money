@@ -2,6 +2,9 @@
 using Application.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Exceptions;
+using Raven.Client.ServerWide;
+using Raven.Client.ServerWide.Operations;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Application.Infrastructure.Repository.RavenDB
@@ -38,6 +41,7 @@ namespace Application.Infrastructure.Repository.RavenDB
             };
 
             documentStore.Initialize();
+            EnsureDatabaseExists(documentStore, ApplicationConstants.DATABASE_NAME);
 
             //Replace / for -
             //documentStore.Maintenance.Send(
@@ -81,6 +85,19 @@ namespace Application.Infrastructure.Repository.RavenDB
             }
 
             return certificate;
+        }
+
+        private static void EnsureDatabaseExists(IDocumentStore documentStore, string databaseName)
+        {
+            try
+            {
+                var record = new DatabaseRecord(databaseName);
+                documentStore.Maintenance.Server.Send(new CreateDatabaseOperation(record));
+            }
+            catch (ConcurrencyException)
+            {
+                // Database already exists.
+            }
         }
     }
 }

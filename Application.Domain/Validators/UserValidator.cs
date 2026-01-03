@@ -1,4 +1,4 @@
-﻿using Application.Domain.Interfaces;
+using Application.Domain.Interfaces;
 using Application.Domain.Models;
 using FluentValidation;
 
@@ -15,7 +15,7 @@ namespace Application.Domain.Validators
             RuleFor(user => user.Account.Email)
                 .NotEmpty().WithMessage("O email é obrigatório.")
                 .EmailAddress().WithMessage("O email deve ser válido.")
-                .Must(IsEmailUnique).WithMessage("Este e-mail já existe na nossa base de dados");
+                .Must((user, email) => IsEmailUnique(user, email)).WithMessage("Este e-mail já existe na nossa base de dados");
 
             RuleFor(user => user.Account.Password)
                 .NotEmpty().WithMessage("A senha é obrigatória.")
@@ -24,7 +24,6 @@ namespace Application.Domain.Validators
                 .Matches(@"[a-z]").WithMessage("A senha deve conter pelo menos uma letra minúscula.")
                 .Matches(@"[0-9]").WithMessage("A senha deve conter pelo menos um número.")
                 .Matches(@"[!@#$%^&*()_+\-=\[\]{};':""\\|,.<>\/?~`]").WithMessage("A senha deve conter pelo menos um caractere especial (!@#$%^&*()_+-=[]{};':\"\\|,.<>/?~`).");
-
 
             RuleFor(user => user.Profile.Name)
                 .NotEmpty().WithMessage("O nome é obrigatório.")
@@ -40,11 +39,18 @@ namespace Application.Domain.Validators
                 .WithMessage("Função inválida. Use 'User', 'Admin' ou 'Moderator'.");
         }
 
-        private bool IsEmailUnique(string email)
+        private bool IsEmailUnique(User user, string email)
         {
-            return !_serviceRavenDB.Store.OpenSession()
-                .Query<User>()
-                .Any(x => x.Account.Email == email);
+            using var session = _serviceRavenDB.Store.OpenSession();
+            var existing = session.Query<User>()
+                                  .FirstOrDefault(x => x.Account.Email == email);
+
+            if (existing == null)
+            {
+                return true;
+            }
+
+            return existing.Id == user.Id;
         }
     }
 }
