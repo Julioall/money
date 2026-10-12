@@ -50,7 +50,8 @@ namespace Application.Test.UserTests
             // Arrange
             var email = "test@example.com";
             var user = CreateUser("2", email);
-            await _userService.AddAsync(user);
+            user = await _userService.AddAsync(user);
+            WaitForIndexing(_store);
 
             // Act
             var result = await _userService.GetByEmailAsync(email);

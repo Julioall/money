@@ -33,10 +33,29 @@ Seguindo essas diretrizes, garantimos um fluxo de trabalho organizado e eficient
 
 ## Docker Compose
 
-- Copie `.env.example` para `.env` e ajuste as variaveis (use um JWT_SIGNING_KEY com pelo menos 32 caracteres).
-- Suba tudo com `docker compose up --build -d`. A API fica exposta em `http://localhost:8080` (Swagger habilitado quando ASPNETCORE_ENVIRONMENT=Development).
-- O RavenDB Studio estara em `http://localhost:8081` e usa armazenamento em `ravendb-data`.
-- O front Angular sobe no service `web` na porta configuravel `CLIENT_PORT` (padrao 4200) servindo o build estatico via Nginx.
-- Os valores padrao do compose apontam a API para o RavenDB interno (`http://ravendb:8080`) sem certificado.
-- O Angular ja esta configurado para chamar a API em `http://localhost:8080/api`; ajuste se usar outro host/porta.
+Requisitos: Docker Desktop com o Docker Compose v2.
+
+1. Crie o arquivo local de variáveis e troque a chave JWT por um valor aleatório com pelo menos 32 caracteres:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+2. Na raiz do repositório, construa e inicie os serviços:
+
+   ```sh
+   docker compose up --build -d --wait
+   ```
+
+3. Acesse os serviços:
+
+   - Aplicação Angular: `http://localhost:4200`
+   - API e Swagger: `http://localhost:8080/swagger`
+   - RavenDB Studio: `http://localhost:8081`
+
+O Compose inicia o RavenDB antes da API, mantém os dados no volume `ravendb-data` e publica o front pelo Nginx. O front chama `/api` no mesmo host; o Nginx encaminha as requisições à API dentro da rede Docker. A API continua disponível diretamente na porta 8080 para o Swagger e depuração.
+
+As portas podem ser alteradas no `.env` com `CLIENT_PORT`, `API_PORT`, `RAVENDB_PORT` e `RAVENDB_TCP_PORT`. A URL `RAVENDBSETTINGS_URLS` deve continuar como `http://ravendb:8080` quando a API roda no Compose, pois esse é o endereço interno da rede Docker. O ambiente padrão é `Development`, que habilita o Swagger.
+
+Para acompanhar os logs, use `docker compose logs -f`. Para parar os serviços sem apagar os dados, use `docker compose down`.
 
