@@ -1,21 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ToastrModule } from 'ngx-toastr';
 
-import { NotificationService } from './notification/notification.service';
 import { Category } from '../models/category';
 import { BaseRepositoryService, ENTITY_NAME_TOKEN } from './base-repository.service';
+import { configureCommonTestBed } from '../../testing/test-bed';
 
 describe('Service: BaseRepository', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        ToastrModule.forRoot(),
-      ],
+  beforeEach(async () => {
+    await configureCommonTestBed({
       providers: [
         BaseRepositoryService,
-        NotificationService,
         { provide: ENTITY_NAME_TOKEN, useValue: 'category' },
       ]
     });

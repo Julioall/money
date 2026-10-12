@@ -1,6 +1,5 @@
 services:
   api:
-    container_name: money-api
     build:
       context: .
       dockerfile: Application.Web/Dockerfile
@@ -11,14 +10,14 @@ services:
       RAVENDBSETTINGS_DATABASE_NAME: ${RAVENDBSETTINGS_DATABASE_NAME:-MoneyDb}
       JWT_ISSUER: ${JWT_ISSUER:-money-api}
       JWT_AUDIENCE: ${JWT_AUDIENCE:-money-clients}
-      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:-ChangeMeToStrongKey_32chars_minimum}
+      JWT_SIGNING_KEY: ${JWT_SIGNING_KEY:?Defina JWT_SIGNING_KEY no arquivo .env}
     ports:
-      - "8080:8080"
+      - "${API_PORT:-8080}:8080"
     depends_on:
-      - ravendb
+      ravendb:
+        condition: service_healthy
 
   web:
-    container_name: money-web
     build:
       context: .
       dockerfile: Application.Client/Dockerfile
@@ -28,17 +27,16 @@ services:
       - api
 
   ravendb:
-    container_name: ravendb
-    image: ravendb/ravendb:6.0-ubuntu-latest
+    image: ravendb/ravendb:6.2-ubuntu-latest
     environment:
       RAVEN_License_Eula_Accepted: "true"
       RAVEN_Setup_Mode: None
       RAVEN_Security_UnsecuredAccessAllowed: PublicNetwork
     ports:
-      - "8081:8080"
-      - "38888:38888"
+      - "${RAVENDB_PORT:-8081}:8080"
+      - "${RAVENDB_TCP_PORT:-38888}:38888"
     volumes:
-      - ravendb-data:/opt/RavenDB/Server/RavenData
+      - ravendb-data:/var/lib/ravendb/data
 
 volumes:
   ravendb-data:

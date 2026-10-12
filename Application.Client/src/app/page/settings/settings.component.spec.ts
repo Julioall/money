@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsComponent } from './settings.component';
+import { configureCommonTestBed } from '../../testing/test-bed';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    await configureCommonTestBed({
       imports: [SettingsComponent]
-    })
-    .compileComponents();
+    });
 
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
