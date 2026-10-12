@@ -41,9 +41,9 @@ namespace Application.Domain.Validators
 
         private bool IsEmailUnique(User user, string email)
         {
-            return !_serviceRavenDB.Store.OpenSession()
-                .Query<User>()
-                .Any(x => x.Account.Email == email && x.Id == null);
+            using var session = _serviceRavenDB.Store.OpenSession();
+            return !session.Query<User>()
+                .Any(x => x.Account.Email == email && x.Id != user.Id);
         }
     }
 }

@@ -1,23 +1,35 @@
 @import "../../../assets/css/variables.scss";
 
-.account-img
-{
+.account-img {
   width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
-.card-body i{
+.account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.card-body i {
   width: 30px;
   height: 30px;
 }
 
-.nameAccounts .balance {
+.account-field-label {
+  display: block;
+  line-height: 1.2;
+}
+
+.account-input {
+  display: block;
+  width: 100% !important;
   border: 3px solid #ebebeb !important;
   border-radius: 6px !important;
   background: #fefdf9 !important;
   line-height: 18px !important;
   padding: 7px 8px !important;
-  float: left !important;
-  border-radius: 3px !important;
   transition: all .15s ease-out 0s !important;
   color: #2e312d !important;
   font-size: 13px !important;
@@ -26,4 +38,21 @@
   &:focus {
     border-color: $green-primary !important;
   }
+}
+
+.account-hide-balance {
+  width: fit-content;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.account-hide-balance-checkbox {
+  flex: 0 0 1rem;
+  width: 1rem !important;
+  height: 1rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid $gray-light !important;
+  background: $neutral-white-100 !important;
+  accent-color: $green-primary;
 }

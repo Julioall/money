@@ -1,6 +1,6 @@
 import { firstValueFrom } from 'rxjs';
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,10 +12,9 @@ import { Account } from '../../core/models/account';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { NotificationService } from '../../core/services/notification/notification.service';
 import { IconPickerComponent } from '../../shared/icon-picker/icon-picker.component';
-import { ColorPickerComponent } from '../../shared/color-picker/color-picker.component';
 import { AccountsService } from '../../core/services/accounts/accounts.service';
 
-const STRING_VAZIA = '';
+const EMPTY_STRING = '';
 
 @Component({
   selector: 'app-accounts',
@@ -23,7 +22,6 @@ const STRING_VAZIA = '';
   imports: [
     CommonModule,
     IconPickerComponent,
-    ColorPickerComponent,
     ModalComponent,
     ReactiveFormsModule,
     TranslateModule,
@@ -32,56 +30,32 @@ const STRING_VAZIA = '';
   styleUrls: ['./accounts.component.scss'],
 })
 export class AccountsComponent implements OnInit {
-  @ViewChild(ModalComponent) modal!: ModalComponent;
+  @ViewChild(IconPickerComponent) iconPicker?: IconPickerComponent;
 
-  colors: string[] = [
-    '#ED1B25',
-    '#A41A44',
-    '#7A2990',
-    '#392B8A',
-    '#2F5AA8',
-    '#018CCD',
-    '#60AF46',
-    '#CDDB26',
-    '#F6ED24',
-    '#F7BA12',
-    '#F9971D',
-    '#F14B21',
-    '#F26A6A',
-    '#C94B67',
-    '#A158B5',
-    '#5D4FB1',
-    '#4B7EC2',
-    '#42B8E1',
-    '#88C876',
-    '#E1ED6C',
-    '#F8F17D',
-    '#F8CD5C',
-  ];
   icons: string[] = this._getLogos();
-  selectedColor: string = '';
-  selectedIcon: string = '';
-
+  selectedIcon = EMPTY_STRING;
   accounts: Account[] = [];
-
-  accountForm!: FormGroup;
-  idAccountModal: string = 'newAccountModal';
-  textButtonActionAccountModal?: string;
-  isSubmitted: boolean = false;
+  accountForm: FormGroup;
+  idAccountModal = 'newAccountModal';
+  textButtonActionAccountModal: string;
+  isSubmitted = false;
+  editingAccountId?: string;
 
   constructor(
     private _fb: FormBuilder,
     private _notificationService: NotificationService,
     private translate: TranslateService,
-    private _accountsService: AccountsService
+    private _accountsService: AccountsService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.accountForm = this._fb.group({
       accountName: [
-        STRING_VAZIA,
-        [Validators.required, Validators.minLength(3)],
+        EMPTY_STRING,
+        [Validators.required, Validators.minLength(3), Validators.pattern(/\S/)],
       ],
-      balance: [STRING_VAZIA, [Validators.min(0)]],
-      iconUrl: [STRING_VAZIA, Validators.required],
+      balance: [0, [Validators.min(0)]],
+      hideBalance: [false],
+      iconUrl: [EMPTY_STRING, Validators.required],
     });
 
     this.textButtonActionAccountModal = this.translate.instant(
@@ -90,86 +64,157 @@ export class AccountsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._getAllAccounts();
+    if (isPlatformBrowser(this.platformId)) {
+      void this._getAllAccounts();
+    }
+  }
+
+  onNewAccount(): void {
+    this.onResetSelections();
   }
 
   onResetSelections(): void {
+    this.editingAccountId = undefined;
+    this.selectedIcon = EMPTY_STRING;
     this.accountForm.reset({
-      accountName: STRING_VAZIA,
-      balance: STRING_VAZIA,
+      accountName: EMPTY_STRING,
+      balance: 0,
       hideBalance: false,
-      iconUrl: STRING_VAZIA,
+      iconUrl: EMPTY_STRING,
     });
+    this.iconPicker?.resetSelection();
     this.isSubmitted = false;
+    this.textButtonActionAccountModal = this.translate.instant(
+      'components.accounts.textActionButtonModal'
+    );
   }
 
   async onActionModal(): Promise<void> {
-    try {
-      this.isSubmitted = true;
-      if (this.accountForm.valid) {
-        const newAccount: Account = this.accountForm.value;
-        if (!newAccount.balance) {
-          newAccount.balance = 0;
-        }
-        await firstValueFrom(this._accountsService.create(newAccount));
-        await this._getAllAccounts();
-        this.onResetSelections();
-        this._closeModal();
-        this._notificationService.showSuccess(
-          this.translate.instant('components.accounts.accountSaved')
-        );
-      } else {
-        this._notificationService.showError(
-          this.translate.instant('components.accounts.errorFormInvalid')
-        );
-      }
-    } catch (error: any) {
+    this.isSubmitted = true;
+
+    if (this.accountForm.invalid) {
       this._notificationService.showError(
-        error,
-        this.translate.instant('components.accounts.errorCreateAccount')
+        this.translate.instant('components.accounts.errorFormInvalid')
+      );
+      return;
+    }
+
+    const isEditing = !!this.editingAccountId;
+
+    try {
+      const formValue = this.accountForm.getRawValue();
+      const account: Account = {
+        id: this.editingAccountId,
+        accountName: formValue.accountName.trim(),
+        balance: Number(formValue.balance ?? 0),
+        hideBalance: Boolean(formValue.hideBalance),
+        iconUrl: this.selectedIcon,
+      };
+      const savedAccount = await firstValueFrom(
+        isEditing
+          ? this._accountsService.update(account)
+          : this._accountsService.create(account)
+      );
+
+      if (!savedAccount) {
+        // The base service already reports HTTP errors and returns an empty value.
+        return;
+      }
+
+      await this._getAllAccounts();
+      this._closeModal();
+      this.onResetSelections();
+      this._notificationService.showSuccess(
+        this.translate.instant('components.accounts.accountSaved', {
+          accountName: savedAccount.accountName ?? account.accountName,
+        })
+      );
+    } catch {
+      this._notificationService.showError(
+        this.translate.instant(
+          isEditing
+            ? 'components.accounts.errorUpdateAccount'
+            : 'components.accounts.errorCreateAccount'
+        )
       );
     }
   }
 
-  onSelectColor(color: string) {
-    this.selectedColor = color;
-  }
-
-  onSelectIcon(icon: string) {
+  onSelectIcon(icon: string): void {
+    this.selectedIcon = icon;
     this.accountForm.get('iconUrl')?.setValue(icon);
   }
 
-  onRemove(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
+  async onRemove(id: string | undefined): Promise<void> {
+    if (!id) {
+      this._notificationService.showError(
+        this.translate.instant('components.accounts.errorRemoveAccount')
+      );
+      return;
+    }
 
-  onEdit(_t12: Account) {
-    throw new Error('Method not implemented.');
-  }
-
-  private _closeModal() {
-    const modal = document.getElementById(this.idAccountModal);
-
-    if (modal != null) {
-      const closeButton = modal.querySelector('.btn-close');
-
-      if (closeButton != null) {
-        (closeButton as HTMLElement).click();
+    try {
+      const removed = await firstValueFrom(this._accountsService.delete(id));
+      if (removed === false) {
+        // The base service already reports HTTP errors and returns false.
+        return;
       }
+
+      await this._getAllAccounts();
+      this._notificationService.showSuccess(
+        this.translate.instant('components.accounts.accountRemoved')
+      );
+    } catch {
+      this._notificationService.showError(
+        this.translate.instant('components.accounts.errorRemoveAccount')
+      );
     }
   }
 
-  private async _getAllAccounts() {
-    this.accounts = await firstValueFrom(this._accountsService.getAll());
+  onEdit(account: Account): void {
+    if (!account.id || !account.accountName || !account.iconUrl) {
+      this._notificationService.showError(
+        this.translate.instant('components.accounts.errorLoadAccount')
+      );
+      return;
+    }
+
+    this.editingAccountId = account.id;
+    this.selectedIcon = account.iconUrl;
+    this.accountForm.reset({
+      accountName: account.accountName,
+      balance: account.balance ?? 0,
+      hideBalance: account.hideBalance ?? false,
+      iconUrl: account.iconUrl,
+    });
+    if (this.iconPicker) {
+      this.iconPicker.selectedIcon = account.iconUrl;
+    }
+    this.isSubmitted = false;
+    this.textButtonActionAccountModal = this.translate.instant(
+      'components.accounts.textEditActionButtonModal'
+    );
+  }
+
+  formatBalance(balance: number | null | undefined): string {
+    const isPortuguese = this.translate.currentLang?.startsWith('pt');
+    return new Intl.NumberFormat(isPortuguese ? 'pt-BR' : 'en-US', {
+      style: 'currency',
+      currency: isPortuguese ? 'BRL' : 'USD',
+    }).format(balance ?? 0);
+  }
+
+  private _closeModal(): void {
+    const modal = document.getElementById(this.idAccountModal);
+    const closeButton = modal?.querySelector('.btn-close');
+    (closeButton as HTMLElement | null)?.click();
+  }
+
+  private async _getAllAccounts(): Promise<void> {
+    this.accounts = (await firstValueFrom(this._accountsService.getAll())) ?? [];
   }
 
   private _getLogos(): string[] {
-    const logos: string[] = [];
-
-    for (let i = 1; i <= 276; i++) {
-      logos.push(`img/logo-${i}.svg`);
-    }
-
-    return logos;
+    return Array.from({ length: 276 }, (_, index) => `img/logo-${index + 1}.svg`);
   }
 }

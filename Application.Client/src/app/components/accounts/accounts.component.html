@@ -1,7 +1,7 @@
 <div class="container-lg bg-neutral-white-100 rounded-4 p-3 p-sm-5">
   <div class="row">
     <h1 class="col-10 col-sm-6 col-md-9 text-medium fw-bold">{{ 'components.accounts.title' | translate }}</h1>
-    <button type="button" data-bs-toggle="modal" data-bs-target="#newAccountModal"
+    <button type="button" data-bs-toggle="modal" data-bs-target="#newAccountModal" (click)="onNewAccount()"
       class="btn col rounded-2 bg-green-light text-green-primary d-flex justify-content-center justify-content-sm-between align-items-center text-small">
       <i class="fa fa-plus-circle text-green-primary-darker text-medium"></i>
       <span class="ms-3 d-none d-sm-block">{{ 'components.accounts.textButtonNewAccount' | translate }}</span>
@@ -16,15 +16,23 @@
               <span class="d-flex align-items-center">
                 <img
                   [src]="item.iconUrl"
+                  [alt]="item.accountName || ''"
                   class="account-img d-flex justify-content-center align-items-center me-3 text-neutral-white-100 text-small rounded-5">
-                <span class="ms-3">{{ item.accountName }}</span>
+                <span class="account-details ms-3">
+                  <span>{{ item.accountName }}</span>
+                  <small class="text-gray-dark">
+                    {{ item.hideBalance ? '••••••' : formatBalance(item.balance) }}
+                  </small>
+                </span>
               </span>
               <div>
                 <button (click)="onEdit(item)" class="bg-transparent" type="button" data-bs-toggle="modal"
-                  [attr.data-bs-target]="'#newAccountModal'">
+                  [attr.data-bs-target]="'#newAccountModal'"
+                  [attr.aria-label]="'components.accounts.editAccount' | translate">
                   <i class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
                 </button>
-                <button (click)="onRemove(item.id!)" class="bg-transparent">
+                <button (click)="onRemove(item.id)" class="bg-transparent" type="button"
+                  [attr.aria-label]="'components.accounts.removeAccount' | translate">
                   <i class="fa-solid fa-trash d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
                 </button>
               </div>
@@ -37,31 +45,38 @@
   </div>
 
   <form [formGroup]="accountForm">
-    <app-modal [idModal]='idAccountModal' [textButton]="textButtonActionAccountModal" (action)="onActionModal()" (close)="onResetSelections()">
-      <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">{{ 'components.accounts.creatingAccounts' | translate }}</p>
+    <app-modal [idModal]="idAccountModal" [textButton]="textButtonActionAccountModal" (action)="onActionModal()" (close)="onResetSelections()">
+      <p class="text-small text-gray-dark fw-medium mb-5 d-flex justify-content-start">
+        {{ (editingAccountId ? 'components.accounts.editingAccounts' : 'components.accounts.creatingAccounts') | translate }}
+      </p>
       <div class="border-bottom border-1 border-opacity-75 mb-2 pb-3">
-        <div class="d-flex align-items-center justify-content-start">
-          <div class="row">
-            <div class="accounts-name col-8">
-              <label for="nameAccount" class="text-gray-dark mb-4">{{ 'components.accounts.accountNameLabel' | translate }}</label>
-              <input class="nameAccounts mt-0" id="nameAccount" type="text" formControlName="accountName" placeholder="{{ 'components.accounts.accountNamePlaceholder' | translate }}">
-            </div>
-            <div class="balance col-4">
-              <label for="balance" class="text-gray-dark mb-4">{{ 'components.accounts.balanceLabel' | translate }}</label>
-              <input class="balance mt-0" id="balance" type="text" formControlName="balance" placeholder="{{ 'components.accounts.balancePlaceholder' | translate }}">
-            </div>
+        <div class="row g-3 align-items-start">
+          <div class="col-12 col-sm-8">
+            <label for="nameAccount" class="account-field-label text-gray-dark mb-2">{{ 'components.accounts.accountNameLabel' | translate }}</label>
+            <input class="account-input" id="nameAccount" type="text" formControlName="accountName" placeholder="{{ 'components.accounts.accountNamePlaceholder' | translate }}">
+          </div>
+          <div class="col-12 col-sm-4">
+            <label for="balance" class="account-field-label text-gray-dark mb-2">{{ 'components.accounts.balanceLabel' | translate }}</label>
+            <input class="account-input" id="balance" type="number" min="0" step="0.01" formControlName="balance" placeholder="{{ 'components.accounts.balancePlaceholder' | translate }}">
           </div>
         </div>
         <div *ngIf="accountForm.get('accountName')?.invalid && isSubmitted">
-          <small class="text-danger" *ngIf="accountForm.get('accountName')?.errors?.['required']">{{ 'components.accounts.accountNameRequired' | translate }}</small>
+          <small class="text-danger" *ngIf="accountForm.get('accountName')?.errors?.['required'] || accountForm.get('accountName')?.errors?.['pattern']">{{ 'components.accounts.accountNameRequired' | translate }}</small>
           <small class="text-danger" *ngIf="accountForm.get('accountName')?.errors?.['minlength']">{{ 'components.accounts.accountNameMinlength' | translate }}</small>
         </div>
+        <small class="text-danger" *ngIf="accountForm.get('balance')?.errors?.['min'] && isSubmitted">
+          {{ 'components.accounts.balanceMustBePositive' | translate }}
+        </small>
+        <label class="account-hide-balance d-flex align-items-center gap-2 mt-3" for="hideBalance">
+          <input class="account-hide-balance-checkbox" id="hideBalance" type="checkbox" formControlName="hideBalance">
+          <span>{{ 'components.accounts.hideBalanceLabel' | translate }}</span>
+        </label>
       </div>
       <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
-        <p class="text-gray-dark mb-4">{{ 'components.categories.chooseIcon' | translate }}</p>
+        <p class="text-gray-dark mb-4">{{ 'components.accounts.chooseIcon' | translate }}</p>
         <app-icon-picker [iconsImages]="icons" (iconSelected)="onSelectIcon($event)">
         </app-icon-picker>
-        <small class="text-danger" *ngIf="isSubmitted && !selectedIcon">{{ 'components.accounts.iconRequired' | translate }}</small>
+        <small class="text-danger" *ngIf="isSubmitted && accountForm.get('iconUrl')?.invalid">{{ 'components.accounts.iconRequired' | translate }}</small>
       </div>
     </app-modal>
   </form>
