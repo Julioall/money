@@ -121,8 +121,6 @@
       "balancePlaceholder": "R$ 0,00",
       "accountNameRequired": "Nome da conta é obrigatório.",
       "accountNameMinlength": "O nome da conta deve ter pelo menos 3 caracteres.",
-      "chooseColor": "Escolha uma cor",
-      "chooseIcon": "Escolha um ícone",
       "accountSaved": "A conta {{accountName}} foi salva com sucesso.",
       "accountRemoved": "Conta removida com sucesso.",
       "errorCreateAccount": "Não foi possível criar a conta.",
@@ -134,7 +132,6 @@
       "hideBalanceLabel": "Ocultar saldo na lista de contas",
       "editAccount": "Editar conta",
       "removeAccount": "Remover conta",
-      "iconRequired": "O ícone é obrigatório.",
       "confirmRemoveAccount": "Deseja realmente excluir esta conta?",
       "bankNameLabel": "Banco ou instituição",
       "bankNamePlaceholder": "Ex.: Nubank, Itaú, Banco do Brasil",
@@ -149,7 +146,17 @@
         "wallet": "Carteira",
         "investment": "Investimento",
         "other": "Outro"
-      }
+      },
+      "searchBankLabel": "Pesquisar instituição financeira",
+      "searchBankPlaceholder": "Nome, código COMPE ou ISPB",
+      "loadingBanks": "Carregando catálogo de instituições...",
+      "catalogUnavailable": "Não foi possível carregar o catálogo agora. Informe a instituição manualmente.",
+      "selectedBank": "Instituição selecionada",
+      "changeBank": "Alterar",
+      "bankResults": "Instituições encontradas",
+      "noBanksFound": "Nenhuma instituição encontrada. Informe o nome abaixo.",
+      "manualBankHint": "Não encontrou seu banco? Preencha o nome da instituição manualmente no campo abaixo.",
+      "bankNameRequired": "Informe o nome do banco ou da instituição."
     }
   },
   "services": {
