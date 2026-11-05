@@ -5,5 +5,6 @@ export class Account {
     hideBalance?: boolean = false;
     iconUrl?: string;
     bankName?: string;
+    bankIspb?: string | null;
     accountType?: 'checking' | 'savings' | 'digital' | 'wallet' | 'investment' | 'other';
 }
