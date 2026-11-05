@@ -21,6 +21,7 @@ namespace Application.Infrastructure.Repository
                     throw new InvalidOperationException("User not found.");
                 
                 account.Id = $"account-{Guid.NewGuid()}";
+                account.Id = $"account-{Guid.NewGuid():N}";
                 user.Finance.Accounts.Add(account);
                 await session.StoreAsync(user);
                 await session.SaveChangesAsync();
@@ -44,6 +45,8 @@ namespace Application.Infrastructure.Repository
                 existingAccount.Balance = account.Balance;
                 existingAccount.HideBalance = account.HideBalance;
                 existingAccount.IconUrl = account.IconUrl;
+                existingAccount.BankName = account.BankName;
+                existingAccount.AccountType = account.AccountType;
 
                 await session.SaveChangesAsync();
                 return existingAccount;
@@ -78,7 +81,23 @@ namespace Application.Infrastructure.Repository
                 if (user == null)
                     throw new InvalidOperationException("User not found.");
 
-                return user?.Finance.Accounts ?? new List<Account>();
+                // Backfill identifiers on legacy embedded accounts so they can be edited/deleted.
+                var accounts = user.Finance.Accounts;
+                var seen = new HashSet<string>(StringComparer.Ordinal);
+                var changed = false;
+                foreach (var account in accounts)
+                {
+                    if (string.IsNullOrWhiteSpace(account.Id) || !seen.Add(account.Id))
+                    {
+                        account.Id = $"account-{Guid.NewGuid():N}";
+                        seen.Add(account.Id);
+                        changed = true;
+                    }
+                }
+                if (changed)
+                    await session.SaveChangesAsync();
+
+                return accounts;
             }
         }
 
