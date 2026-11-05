@@ -20,7 +20,6 @@ namespace Application.Infrastructure.Repository
                 if (user == null)
                     throw new InvalidOperationException("User not found.");
                 
-                account.Id = $"account-{Guid.NewGuid()}";
                 account.Id = $"account-{Guid.NewGuid():N}";
                 user.Finance.Accounts.Add(account);
                 await session.StoreAsync(user);
