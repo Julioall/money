@@ -8,8 +8,14 @@
     </button>
   </div>
   <div class="row mt-5">
-    <div class="col mt-5">
-      <ul class="p-0">
+    <div class="col mt-3">
+      <p *ngIf="isLoadingAccounts" class="text-gray-dark" role="status">{{ 'components.accounts.loading' | translate }}</p>
+      <div *ngIf="!isLoadingAccounts && accounts.length === 0" class="empty-accounts text-center py-5">
+        <i class="fa-solid fa-building-columns text-medium text-green-primary mb-3"></i>
+        <p class="fw-semibold">{{ 'components.accounts.emptyTitle' | translate }}</p>
+        <p class="text-gray-dark mt-2">{{ 'components.accounts.emptyDescription' | translate }}</p>
+      </div>
+      <ul class="p-0" *ngIf="!isLoadingAccounts && accounts.length > 0">
         <li *ngFor="let item of accounts; let i = index">
           <div class="card d-flex justify-content-between bg-neutral-white-100 border-0 p-1" id="account-{{i}}">
             <div class="card-body d-flex align-items-center justify-content-between">
@@ -20,6 +26,9 @@
                   class="account-img d-flex justify-content-center align-items-center me-3 text-neutral-white-100 text-small rounded-5">
                 <span class="account-details ms-3">
                   <span>{{ item.accountName }}</span>
+                  <small class="text-gray-dark" *ngIf="item.bankName || item.accountType">
+                    {{ item.bankName || (('components.accounts.types.' + item.accountType) | translate) }}
+                  </small>
                   <small class="text-gray-dark">
                     {{ item.hideBalance ? '••••••' : formatBalance(item.balance) }}
                   </small>
@@ -31,7 +40,7 @@
                   [attr.aria-label]="'components.accounts.editAccount' | translate">
                   <i class="fa-solid fa-pencil d-flex align-items-center justify-content-center text-x-small me-3 text-yellow-primary bg-yellow-light  rounded-5"></i>
                 </button>
-                <button (click)="onRemove(item.id)" class="bg-transparent" type="button"
+                <button (click)="onRemove(item.id)" [disabled]="isDeletingId === item.id" class="bg-transparent" type="button"
                   [attr.aria-label]="'components.accounts.removeAccount' | translate">
                   <i class="fa-solid fa-trash d-flex align-items-center justify-content-center text-x-small text-red-primary bg-red-light  rounded-5"></i>
                 </button>
@@ -58,6 +67,24 @@
           <div class="col-12 col-sm-4">
             <label for="balance" class="account-field-label text-gray-dark mb-2">{{ 'components.accounts.balanceLabel' | translate }}</label>
             <input class="account-input" id="balance" type="number" min="0" step="0.01" formControlName="balance" placeholder="{{ 'components.accounts.balancePlaceholder' | translate }}">
+          </div>
+        </div>
+        <div class="row g-3 mt-1">
+          <div class="col-12 col-sm-7">
+            <label for="bankName" class="account-field-label text-gray-dark mb-2">{{ 'components.accounts.bankNameLabel' | translate }}</label>
+            <input class="account-input" id="bankName" type="text" maxlength="100" formControlName="bankName"
+              [placeholder]="'components.accounts.bankNamePlaceholder' | translate">
+          </div>
+          <div class="col-12 col-sm-5">
+            <label for="accountType" class="account-field-label text-gray-dark mb-2">{{ 'components.accounts.accountTypeLabel' | translate }}</label>
+            <select class="account-input" id="accountType" formControlName="accountType">
+              <option value="checking">{{ 'components.accounts.types.checking' | translate }}</option>
+              <option value="savings">{{ 'components.accounts.types.savings' | translate }}</option>
+              <option value="digital">{{ 'components.accounts.types.digital' | translate }}</option>
+              <option value="wallet">{{ 'components.accounts.types.wallet' | translate }}</option>
+              <option value="investment">{{ 'components.accounts.types.investment' | translate }}</option>
+              <option value="other">{{ 'components.accounts.types.other' | translate }}</option>
+            </select>
           </div>
         </div>
         <div *ngIf="accountForm.get('accountName')?.invalid && isSubmitted">
