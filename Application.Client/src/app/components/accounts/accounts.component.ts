@@ -39,6 +39,9 @@ export class AccountsComponent implements OnInit {
   idAccountModal = 'newAccountModal';
   textButtonActionAccountModal: string;
   isSubmitted = false;
+  isLoadingAccounts = false;
+  isSaving = false;
+  isDeletingId?: string;
   editingAccountId?: string;
 
   constructor(
@@ -49,6 +52,8 @@ export class AccountsComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.accountForm = this._fb.group({
+      bankName: [EMPTY_STRING, [Validators.maxLength(100)]],
+      accountType: ['checking', Validators.required],
       accountName: [
         EMPTY_STRING,
         [Validators.required, Validators.minLength(3), Validators.pattern(/\S/)],
@@ -78,6 +83,8 @@ export class AccountsComponent implements OnInit {
     this.selectedIcon = EMPTY_STRING;
     this.accountForm.reset({
       accountName: EMPTY_STRING,
+      bankName: EMPTY_STRING,
+      accountType: 'checking',
       balance: 0,
       hideBalance: false,
       iconUrl: EMPTY_STRING,
@@ -99,7 +106,9 @@ export class AccountsComponent implements OnInit {
       return;
     }
 
+    if (this.isSaving) return;
     const isEditing = !!this.editingAccountId;
+    this.isSaving = true;
 
     try {
       const formValue = this.accountForm.getRawValue();
@@ -109,7 +118,13 @@ export class AccountsComponent implements OnInit {
         balance: Number(formValue.balance ?? 0),
         hideBalance: Boolean(formValue.hideBalance),
         iconUrl: this.selectedIcon,
+        bankName: String(formValue.bankName ?? '').trim(),
+        accountType: formValue.accountType,
       };
+      if (!Number.isFinite(account.balance) || account.balance < 0) {
+        this._notificationService.showError(this.translate.instant('components.accounts.errorFormInvalid'));
+        return;
+      }
       const savedAccount = await firstValueFrom(
         isEditing
           ? this._accountsService.update(account)
@@ -137,6 +152,8 @@ export class AccountsComponent implements OnInit {
             : 'components.accounts.errorCreateAccount'
         )
       );
+    } finally {
+      this.isSaving = false;
     }
   }
 
@@ -153,6 +170,11 @@ export class AccountsComponent implements OnInit {
       return;
     }
 
+    if (!window.confirm(this.translate.instant('components.accounts.confirmRemoveAccount'))) {
+      return;
+    }
+
+    this.isDeletingId = id;
     try {
       const removed = await firstValueFrom(this._accountsService.delete(id));
       if (removed === false) {
@@ -168,6 +190,8 @@ export class AccountsComponent implements OnInit {
       this._notificationService.showError(
         this.translate.instant('components.accounts.errorRemoveAccount')
       );
+    } finally {
+      this.isDeletingId = undefined;
     }
   }
 
@@ -183,6 +207,8 @@ export class AccountsComponent implements OnInit {
     this.selectedIcon = account.iconUrl;
     this.accountForm.reset({
       accountName: account.accountName,
+      bankName: account.bankName ?? EMPTY_STRING,
+      accountType: account.accountType ?? 'checking',
       balance: account.balance ?? 0,
       hideBalance: account.hideBalance ?? false,
       iconUrl: account.iconUrl,
@@ -197,7 +223,7 @@ export class AccountsComponent implements OnInit {
   }
 
   formatBalance(balance: number | null | undefined): string {
-    const isPortuguese = this.translate.currentLang?.startsWith('pt');
+    const isPortuguese = !this.translate.currentLang?.startsWith('en');
     return new Intl.NumberFormat(isPortuguese ? 'pt-BR' : 'en-US', {
       style: 'currency',
       currency: isPortuguese ? 'BRL' : 'USD',
@@ -211,7 +237,12 @@ export class AccountsComponent implements OnInit {
   }
 
   private async _getAllAccounts(): Promise<void> {
-    this.accounts = (await firstValueFrom(this._accountsService.getAll())) ?? [];
+    this.isLoadingAccounts = true;
+    try {
+      this.accounts = (await firstValueFrom(this._accountsService.getAll())) ?? [];
+    } finally {
+      this.isLoadingAccounts = false;
+    }
   }
 
   private _getLogos(): string[] {
