@@ -56,3 +56,18 @@
   background: $neutral-white-100 !important;
   accent-color: $green-primary;
 }
+
+.empty-accounts {
+  border: 1px dashed #d1d1d1;
+  border-radius: 12px;
+  background: #fefdf9;
+}
+
+select.account-input {
+  appearance: auto;
+  min-height: 38px;
+}
+
+.account-details small {
+  font-size: 12px;
+}
