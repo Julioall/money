@@ -45,11 +45,13 @@ describe('AccountsComponent', () => {
       id: 'account-1',
       accountName: 'Checking',
       balance: 125.5,
+      bankName: 'Banco Exemplo',
+      accountType: 'digital',
       hideBalance: false,
       iconUrl: 'img/logo-1.svg',
     };
     accountsService.create.and.returnValue(of(savedAccount));
-    component.accountForm.patchValue({ accountName: 'Checking', balance: '125.5' });
+    component.accountForm.patchValue({ accountName: 'Checking', balance: '125.5', bankName: 'Banco Exemplo', accountType: 'digital' });
     component.onSelectIcon('img/logo-1.svg');
 
     await component.onActionModal();
@@ -58,6 +60,8 @@ describe('AccountsComponent', () => {
       accountName: 'Checking',
       balance: 125.5,
       hideBalance: false,
+      bankName: 'Banco Exemplo',
+      accountType: 'digital',
       iconUrl: 'img/logo-1.svg',
     }));
     expect(accountsService.update).not.toHaveBeenCalled();
@@ -157,6 +161,8 @@ describe('AccountsComponent', () => {
     expect(component.editingAccountId).toBeUndefined();
     expect(component.accountForm.getRawValue()).toEqual({
       accountName: '',
+      bankName: '',
+      accountType: 'checking',
       balance: 0,
       hideBalance: false,
       iconUrl: '',
@@ -166,6 +172,7 @@ describe('AccountsComponent', () => {
   });
 
   it('removes an account and reloads the list', async () => {
+    spyOn(window, 'confirm').and.returnValue(true);
     accountsService.delete.and.returnValue(of(null as unknown as boolean));
 
     await component.onRemove('account-1');
@@ -175,7 +182,16 @@ describe('AccountsComponent', () => {
     expect(notificationService.showSuccess).toHaveBeenCalled();
   });
 
+  it('keeps account when removal is canceled', async () => {
+    spyOn(window, 'confirm').and.returnValue(false);
+
+    await component.onRemove('account-1');
+
+    expect(accountsService.delete).not.toHaveBeenCalled();
+  });
+
   it('does not reload or show success when deletion fails', async () => {
+    spyOn(window, 'confirm').and.returnValue(true);
     accountsService.delete.and.returnValue(of(false));
 
     await component.onRemove('account-1');
