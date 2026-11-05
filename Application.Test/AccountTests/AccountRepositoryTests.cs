@@ -27,6 +27,7 @@ namespace Application.Test.AccountTests
                 HideBalance = false,
                 IconUrl = "img/logo-1.svg",
                 BankName = "Banco exemplo",
+                BankIspb = "18236120",
                 AccountType = "checking"
             };
 
@@ -36,14 +37,17 @@ namespace Application.Test.AccountTests
             var loaded = await _accounts.GetByIdAsync(userId, created.Id!);
             Assert.NotNull(loaded);
             Assert.Equal("Banco exemplo", loaded.BankName);
+            Assert.Equal("18236120", loaded.BankIspb);
 
             created.AccountName = "Conta atualizada";
             created.BankName = "Outro banco";
+            created.BankIspb = "60701190";
             await _accounts.UpdateAsync(userId, created);
 
             var updated = await _accounts.GetByIdAsync(userId, created.Id!);
             Assert.Equal("Conta atualizada", updated.AccountName);
             Assert.Equal("Outro banco", updated.BankName);
+            Assert.Equal("60701190", updated.BankIspb);
 
             Assert.True(await _accounts.DeleteAsync(userId, created.Id!));
             Assert.Empty(await _accounts.GetAllAsync(userId));
