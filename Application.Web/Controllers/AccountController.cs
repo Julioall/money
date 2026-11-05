@@ -32,6 +32,8 @@ namespace Application.Web.Controllers
                 && account.Balance >= 0
                 && !string.IsNullOrWhiteSpace(account.IconUrl)
                 && (account.BankName == null || account.BankName.Length <= 100)
+                && (account.BankIspb == null ||
+                    (account.BankIspb.Length == 8 && account.BankIspb.All(char.IsDigit)))
                 && (account.AccountType == null ||
                     new[] { "checking", "savings", "digital", "wallet", "investment", "other" }.Contains(account.AccountType));
         }
