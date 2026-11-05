@@ -45,6 +45,7 @@ namespace Application.Infrastructure.Repository
                 existingAccount.HideBalance = account.HideBalance;
                 existingAccount.IconUrl = account.IconUrl;
                 existingAccount.BankName = account.BankName;
+                existingAccount.BankIspb = account.BankIspb;
                 existingAccount.AccountType = account.AccountType;
 
                 await session.SaveChangesAsync();
