@@ -121,8 +121,6 @@
       "balancePlaceholder": "US$ 0,00",
       "accountNameRequired": "Account name is required.",
       "accountNameMinlength": "Account name must be at least 3 characters long.",
-      "chooseColor": "Choose a color",
-      "chooseIcon": "Choose an icon",
       "accountSaved": "Account {{accountName}} saved successfully.",
       "accountRemoved": "Account removed successfully.",
       "errorCreateAccount": "Could not create the account.",
@@ -134,7 +132,6 @@
       "hideBalanceLabel": "Hide balance in the account list",
       "editAccount": "Edit account",
       "removeAccount": "Remove account",
-      "iconRequired": "Icon is required.",
       "confirmRemoveAccount": "Are you sure you want to delete this account?",
       "bankNameLabel": "Bank or institution",
       "bankNamePlaceholder": "E.g. Bank of America, Revolut",
@@ -149,7 +146,17 @@
         "wallet": "Wallet",
         "investment": "Investment",
         "other": "Other"
-      }
+      },
+      "searchBankLabel": "Search financial institution",
+      "searchBankPlaceholder": "Name, COMPE code or ISPB",
+      "loadingBanks": "Loading financial institutions...",
+      "catalogUnavailable": "The catalog is unavailable. Enter the institution name manually.",
+      "selectedBank": "Selected institution",
+      "changeBank": "Change",
+      "bankResults": "Matching institutions",
+      "noBanksFound": "No institution found. Enter the name below.",
+      "manualBankHint": "Can't find your bank? Enter its name manually in the field below.",
+      "bankNameRequired": "Please enter the bank or institution name."
     }
   },
   "services": {
