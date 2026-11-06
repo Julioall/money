@@ -40,7 +40,9 @@ namespace Application.Test.Setup
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddScoped<UserService, UserService>();
+            serviceCollection.AddScoped<AccountService, AccountService>();
             serviceCollection.AddScoped<IValidator<User>, UserValidator>();
+            serviceCollection.AddScoped<IAccountRepository, AccountRepository>();
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
 
             return serviceCollection;

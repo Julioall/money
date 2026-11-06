@@ -1,6 +1,5 @@
 {
   "components": {
-
     "auth": {
       "titleLogin": "Entrar",
       "orUseAccount": "ou use sua conta",
@@ -25,7 +24,6 @@
       "signupSuccess": "Cadastro bem-sucedido!",
       "signupError": "Erro no cadastro. Por favor, tente novamente."
     },
-
     "header": {
       "brand": "Money",
       "nav": {
@@ -57,7 +55,6 @@
         "logoutSuccess": "Logout realizado com sucesso!"
       }
     },
-
     "settings": {
       "categories": "Categorias",
       "accounts": "Contas",
@@ -68,7 +65,6 @@
       "alerts": "Alertas",
       "activities": "Atividades"
     },
-
     "categories": {
       "title": "Categorias",
       "incomeCategoryButton": "Receita",
@@ -108,28 +104,68 @@
       "notificationErrorClosingModal": "Ocorreu um erro ao fechar o modal da categoria:",
       "notificationErrorLoadCategoryData": "Falha ao carregar os dados da categoria. Por favor, tente novamente ou entre em contato com o suporte caso o problema persista."
     },
-
     "modal": {
       "cancelButton": "Cancelar",
       "actionButton": "Salvar"
     },
-
     "accounts": {
       "title": "Contas",
+      "creatingAccounts": "Nova Conta",
+      "editingAccounts": "Editar conta",
       "textButtonNewAccount": "Nova conta",
-      "textActionButtonModal": "Criar conta"
+      "textActionButtonModal": "Criar conta",
+      "textEditActionButtonModal": "Salvar alterações",
+      "accountNameLabel": "Nome da conta",
+      "balanceLabel": "Saldo inicial",
+      "accountNamePlaceholder": "Dê um nome para identificar esta conta",
+      "balancePlaceholder": "R$ 0,00",
+      "accountNameRequired": "Nome da conta é obrigatório.",
+      "accountNameMinlength": "O nome da conta deve ter pelo menos 3 caracteres.",
+      "accountSaved": "A conta {{accountName}} foi salva com sucesso.",
+      "accountRemoved": "Conta removida com sucesso.",
+      "errorCreateAccount": "Não foi possível criar a conta.",
+      "errorUpdateAccount": "Não foi possível atualizar a conta.",
+      "errorRemoveAccount": "Não foi possível remover a conta.",
+      "errorLoadAccount": "Não foi possível carregar os dados da conta.",
+      "errorFormInvalid": "Há um erro no formulário. Por favor, verifique os dados inseridos.",
+      "balanceMustBePositive": "O saldo não pode ser negativo.",
+      "hideBalanceLabel": "Ocultar saldo na lista de contas",
+      "editAccount": "Editar conta",
+      "removeAccount": "Remover conta",
+      "confirmRemoveAccount": "Deseja realmente excluir esta conta?",
+      "bankNameLabel": "Banco ou instituição",
+      "bankNamePlaceholder": "Ex.: Nubank, Itaú, Banco do Brasil",
+      "accountTypeLabel": "Tipo de conta",
+      "loading": "Carregando contas...",
+      "emptyTitle": "Nenhuma conta cadastrada",
+      "emptyDescription": "Cadastre sua primeira conta para começar a organizar suas finanças.",
+      "types": {
+        "checking": "Conta corrente",
+        "savings": "Poupança",
+        "digital": "Conta digital",
+        "wallet": "Carteira",
+        "investment": "Investimento",
+        "other": "Outro"
+      },
+      "searchBankLabel": "Pesquisar instituição financeira",
+      "searchBankPlaceholder": "Nome, código COMPE ou ISPB",
+      "loadingBanks": "Carregando catálogo de instituições...",
+      "catalogUnavailable": "Não foi possível carregar o catálogo agora. Informe a instituição manualmente.",
+      "selectedBank": "Instituição selecionada",
+      "changeBank": "Alterar",
+      "bankResults": "Instituições encontradas",
+      "noBanksFound": "Nenhuma instituição encontrada. Informe o nome abaixo.",
+      "manualBankHint": "Não encontrou seu banco? Preencha o nome da instituição manualmente no campo abaixo.",
+      "bankNameRequired": "Informe o nome do banco ou da instituição."
     }
   },
-
   "services": {
-
     "auth": {
       "errorInvalidCredentials": "Credenciais inválidas",
       "errorLoginFailed": "Falha no login",
       "errorSignUpFailed": "Falha no cadastro",
       "errorUnauthorizedRequest": "Solicitação não autorizada"
     },
-
     "notifications": {
       "success": "Sucesso",
       "error": "Erro",

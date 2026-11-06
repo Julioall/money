@@ -42,15 +42,8 @@ namespace Application.Domain.Validators
         private bool IsEmailUnique(User user, string email)
         {
             using var session = _serviceRavenDB.Store.OpenSession();
-            var existing = session.Query<User>()
-                                  .FirstOrDefault(x => x.Account.Email == email);
-
-            if (existing == null)
-            {
-                return true;
-            }
-
-            return existing.Id == user.Id;
+            return !session.Query<User>()
+                .Any(x => x.Account.Email == email && x.Id != user.Id);
         }
     }
 }

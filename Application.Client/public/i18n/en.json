@@ -1,6 +1,5 @@
 {
   "components": {
-
     "auth": {
       "titleLogin": "Login",
       "orUseAccount": "or use your account",
@@ -25,7 +24,6 @@
       "signupSuccess": "Registration successful!",
       "signupError": "Error during registration. Please try again."
     },
-
     "header": {
       "brand": "Money",
       "nav": {
@@ -57,7 +55,6 @@
         "logoutSuccess": "Logged out successfully"
       }
     },
-
     "settings": {
       "categories": "Categories",
       "accounts": "Accounts",
@@ -68,7 +65,6 @@
       "alerts": "Alerts",
       "activities": "Activities"
     },
-
     "categories": {
       "title": "Categories",
       "incomeCategoryButton": "Income",
@@ -108,28 +104,68 @@
       "notificationErrorClosingModal": "An error occurred while closing the category modal:",
       "notificationErrorLoadCategoryData": "Failed to load category data. Please try again or contact support if the issue persists."
     },
-
     "modal": {
       "cancelButton": "Cancel",
       "actionButton": "Save"
     },
-
     "accounts": {
       "title": "Accounts",
+      "creatingAccounts": "New Account",
+      "editingAccounts": "Edit account",
       "textButtonNewAccount": "New account",
-      "textActionButtonModal": "Create Account"
+      "textActionButtonModal": "Create account",
+      "textEditActionButtonModal": "Save changes",
+      "accountNameLabel": "Account Name",
+      "balanceLabel": "Balance",
+      "accountNamePlaceholder": "Give a name to identify this account.",
+      "balancePlaceholder": "US$ 0,00",
+      "accountNameRequired": "Account name is required.",
+      "accountNameMinlength": "Account name must be at least 3 characters long.",
+      "accountSaved": "Account {{accountName}} saved successfully.",
+      "accountRemoved": "Account removed successfully.",
+      "errorCreateAccount": "Could not create the account.",
+      "errorUpdateAccount": "Could not update the account.",
+      "errorRemoveAccount": "Could not remove the account.",
+      "errorLoadAccount": "Could not load the account details.",
+      "errorFormInvalid": "There is an error in the form. Please check the entered data.",
+      "balanceMustBePositive": "The balance cannot be negative.",
+      "hideBalanceLabel": "Hide balance in the account list",
+      "editAccount": "Edit account",
+      "removeAccount": "Remove account",
+      "confirmRemoveAccount": "Are you sure you want to delete this account?",
+      "bankNameLabel": "Bank or institution",
+      "bankNamePlaceholder": "E.g. Bank of America, Revolut",
+      "accountTypeLabel": "Account type",
+      "loading": "Loading accounts...",
+      "emptyTitle": "No accounts yet",
+      "emptyDescription": "Create your first account to start organizing your finances.",
+      "types": {
+        "checking": "Checking",
+        "savings": "Savings",
+        "digital": "Digital account",
+        "wallet": "Wallet",
+        "investment": "Investment",
+        "other": "Other"
+      },
+      "searchBankLabel": "Search financial institution",
+      "searchBankPlaceholder": "Name, COMPE code or ISPB",
+      "loadingBanks": "Loading financial institutions...",
+      "catalogUnavailable": "The catalog is unavailable. Enter the institution name manually.",
+      "selectedBank": "Selected institution",
+      "changeBank": "Change",
+      "bankResults": "Matching institutions",
+      "noBanksFound": "No institution found. Enter the name below.",
+      "manualBankHint": "Can't find your bank? Enter its name manually in the field below.",
+      "bankNameRequired": "Please enter the bank or institution name."
     }
   },
-
   "services": {
-
     "auth": {
       "errorInvalidCredentials": "Invalid credentials",
       "errorLoginFailed": "Login failed",
       "errorSignUpFailed": "Sign up failed",
       "errorUnauthorizedRequest": "Unauthorized request"
     },
-    
     "notifications": {
       "success": "Success",
       "error": "Error",

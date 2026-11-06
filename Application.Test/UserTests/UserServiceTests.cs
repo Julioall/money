@@ -151,6 +151,7 @@ namespace Application.Test.UserTests
                 await session.StoreAsync(user1);
                 await session.SaveChangesAsync();
             }
+            WaitForIndexing(_store);
 
             // Act & Assert
             await Assert.ThrowsAsync<FluentValidation.ValidationException>(async () =>

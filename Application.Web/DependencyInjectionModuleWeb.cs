@@ -11,7 +11,9 @@ namespace Application.Web
             services.AddScoped<AuthenticationService>();
             services.AddScoped<UserService>();
             services.AddScoped<CategoryService>();
+            services.AddScoped<AccountService>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
     }

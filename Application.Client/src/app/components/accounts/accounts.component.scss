@@ -1,0 +1,159 @@
+@import "../../../assets/css/variables.scss";
+
+.account-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.account-field-label {
+  display: block;
+  line-height: 1.2;
+}
+
+.account-input {
+  display: block;
+  width: 100% !important;
+  min-height: 38px;
+  border: 2px solid #ebebeb !important;
+  border-radius: 6px !important;
+  background: #fefdf9 !important;
+  line-height: 18px !important;
+  padding: 7px 8px !important;
+  transition: border-color .15s ease-out !important;
+  color: #2e312d !important;
+  font-size: 13px !important;
+  box-shadow: none !important;
+
+  &:focus {
+    border-color: $green-primary !important;
+  }
+
+  &[readonly] {
+    background-color: #f2f4ef !important;
+  }
+}
+
+select.account-input {
+  appearance: auto;
+}
+
+.account-hide-balance {
+  width: fit-content;
+  max-width: 100%;
+  cursor: pointer;
+}
+
+.account-hide-balance-checkbox {
+  flex: 0 0 1rem;
+  width: 1rem !important;
+  height: 1rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid $gray-light !important;
+  background: $neutral-white-100 !important;
+  accent-color: $green-primary;
+}
+
+.empty-accounts {
+  border: 1px dashed #d1d1d1;
+  border-radius: 12px;
+  background: #fefdf9;
+}
+
+.account-details small,
+.bank-option-text small {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.bank-avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 10px;
+  background: #eef3ed;
+  color: $green-primary-darker;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  i {
+    font-size: 20px;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #fff;
+  }
+}
+
+.bank-results {
+  max-height: 248px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #e4e8e2;
+  border-radius: 9px;
+  margin-top: 6px;
+}
+
+.bank-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 11px;
+  background: #fff;
+  text-align: left;
+  border-bottom: 1px solid #f0f2f0;
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &:hover, &:focus-visible {
+    background: $green-light;
+    outline-offset: -2px;
+  }
+}
+
+.bank-option-text {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+
+  strong {
+    font-weight: 600;
+  }
+
+  small {
+    color: $gray;
+  }
+}
+
+.selected-bank {
+  border: 1px solid #cde9d2;
+  background: $green-light;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+
+.account-action {
+  background: transparent;
+  padding: 8px;
+  border-radius: 8px;
+
+  &:hover {
+    background: #f2f4ef;
+  }
+}

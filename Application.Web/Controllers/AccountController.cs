@@ -25,15 +25,32 @@ namespace Application.Web.Controllers
             _authenticationService = authenticationService;
         }
 
+        private static bool IsValidAccount(Account account)
+        {
+            var name = account.AccountName?.Trim();
+            return name is { Length: >= 3 and <= 100 }
+                && account.Balance >= 0
+                && !string.IsNullOrWhiteSpace(account.IconUrl)
+                && (account.BankName == null || account.BankName.Length <= 100)
+                && (account.BankIspb == null ||
+                    (account.BankIspb.Length == 8 && account.BankIspb.All(char.IsDigit)))
+                && (account.AccountType == null ||
+                    new[] { "checking", "savings", "digital", "wallet", "investment", "other" }.Contains(account.AccountType));
+        }
+
         [HttpPost()]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Add([FromBody] Account account)
         {
             if (account == null)
                 return BadRequest("Account data is null.");
 
+            if (!IsValidAccount(account))
+                return BadRequest("Invalid account. Enter a name (3-100 characters), a nonnegative balance and an icon.");
+
             var userId = await _authenticationService.GetUserIdLoged();
             var createdAccount = await _accountService.AddAsync(userId, account);
-            return CreatedAtAction(nameof(GetById), new { accountId = createdAccount.Id }, createdAccount);
+            return CreatedAtAction(nameof(GetById), new { id = createdAccount.Id }, createdAccount);
         }
 
         [HttpDelete("{id}")]
@@ -52,6 +69,9 @@ namespace Application.Web.Controllers
         {
             if (account == null)
                 return BadRequest("Account data is null.");
+
+            if (string.IsNullOrWhiteSpace(account.Id) || !IsValidAccount(account))
+                return BadRequest("Invalid account data.");
 
             var userId = await _authenticationService.GetUserIdLoged();
             var updatedAccount = await _accountService.UpdateAsync(userId, account);

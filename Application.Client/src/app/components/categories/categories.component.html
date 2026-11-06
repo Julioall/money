@@ -103,7 +103,7 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">{{ 'components.categories.chooseIcon' | translate }}</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onSelectIncomeIcon($event)">
+          <app-icon-picker [iconsClass]="icons" (iconSelected)="onSelectIncomeIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconIncome">{{ 'components.categories.iconRequired' | translate }}</small>
         </div>
@@ -135,7 +135,7 @@
         </div>
         <div class="circle-container border-bottom border-1 border-opacity-75 mb-2 pb-3">
           <p class="text-gray-dark mb-4">{{ 'components.categories.chooseIcon' | translate }}</p>
-          <app-icon-picker [icons]="icons" (iconSelected)="onSelectExpenseIcon($event)">
+          <app-icon-picker [iconsClass]="icons" (iconSelected)="onSelectExpenseIcon($event)">
           </app-icon-picker>
           <small class="text-danger" *ngIf="isSubmitted && !selectedIconExpense">{{ 'components.categories.iconRequired' | translate }}</small>
         </div>
